@@ -1,7 +1,12 @@
-import React from "react";
+import React from 'react';
+import ShowPostList from '../components/ShowPostList';
 
 const MainPage = () => {
-  return <div>MainPage</div>;
+  return (
+    <div>
+      <ShowPostList />
+    </div>
+  );
 };
 
 export default MainPage;
