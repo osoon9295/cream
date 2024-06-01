@@ -29,6 +29,7 @@ const StPostItem = styled.article`
   margin: 5% auto;
   height: 90%;
   width: 90%;
+  min-width: 285px;
 `;
 
 const StMoreButton = styled.button`
