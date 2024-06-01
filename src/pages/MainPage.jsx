@@ -1,7 +1,12 @@
-import React from "react";
+import React from 'react';
+import MainCategory from '../components/MainCategory';
 
 const MainPage = () => {
-  return <div>MainPage</div>;
+  return (
+    <>
+      <MainCategory />
+    </>
+  );
 };
 
 export default MainPage;
