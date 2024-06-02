@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import PostItem from './PostItem';
 
 const StWrap = styled.main`
   max-width: 1240px;
@@ -22,15 +23,6 @@ const StPostItemOutline = styled.div`
   border: 1px dashed black;
   width: 100%;
   height: 100%;
-`;
-
-const StPostItem = styled.article`
-  background-color: orange;
-  margin: 5% auto;
-  height: 90%;
-  width: 90%;
-  min-width: 285px;
-  min-height: 427px;
 `;
 
 const StMoreButton = styled.button`
@@ -67,14 +59,7 @@ const ShowPostList = () => {
         {showList.map((post) => {
           return (
             <StPostItemOutline key={post.id}>
-              <StPostItem>
-                <div>{post.postDate}</div>
-                <div>{post.image}</div>
-                <div>{post.userId}</div>
-                <div>{post.productName}</div>
-                <div>{post.postContent}</div>
-                <div>{post.popularity}</div>
-              </StPostItem>
+              <PostItem post={post} />
             </StPostItemOutline>
           );
         })}
