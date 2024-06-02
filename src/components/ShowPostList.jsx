@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import PostItem from './PostItem';
 
-const StWrap = styled.main`
-  max-width: 1240px;
-  height: fit-content;
+const StWrapper = styled.main`
+  background-color: blue;
+  width: 100%;
   margin: 10% auto;
   display: flex;
   flex-direction: column;
@@ -13,17 +13,25 @@ const StWrap = styled.main`
 `;
 
 const StContainer = styled.section`
+  background-color: red;
+  max-width: 1240px;
   width: 100%;
+  max-height: 1397px;
+  height: 100%;
   min-height: 1320px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+  @media screen and (max-width: 600px) {
+    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+  }
 `;
 
-const StPostItemOutline = styled.div`
-  border: 1px dashed black;
-  width: 100%;
-  height: 100%;
-`;
+// const StPostItemOutline = styled.div`
+//   border: 1px dashed black;
+//   width: 100%;
+//   height: 100%;
+// `;
 
 const StMoreButton = styled.button`
   margin: 50px;
@@ -52,20 +60,20 @@ const ShowPostList = () => {
   };
 
   return (
-    <StWrap>
+    <StWrapper>
       <button onClick={popularPosts}>인기게시글</button>
       <button onClick={latestPosts}>최신게시글</button>
       <StContainer>
         {showList.map((post) => {
           return (
-            <StPostItemOutline key={post.id}>
-              <PostItem post={post} />
-            </StPostItemOutline>
+            // <StPostItemOutline key={post.id}>
+            <PostItem post={post} />
+            // </StPostItemOutline>
           );
         })}
       </StContainer>
       <StMoreButton onClick={moreShowList}>{showList.length <= 12 ? '더보기' : '줄이기'}</StMoreButton>
-    </StWrap>
+    </StWrapper>
   );
 };
 

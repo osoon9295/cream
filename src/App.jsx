@@ -6,13 +6,9 @@ const ResponsiveDiv = styled.div`
   background-color: gray;
   width: 100%;
 
-  @media (max-width: 1023px) {
-    width: 100%;
-  }
-
-  @media (max-width: 768px) {
+  /* @media screen and (max-width: 500px) {
     width: 50%;
-  }
+  } */
 `;
 
 const App = () => {
