@@ -1,7 +1,9 @@
-import React from "react";
+import React from 'react';
+import Join from './pages/Join';
 
 const App = () => {
-  return <div>App</div>;
+  // return <Login />;
+  return <Join />;
 };
 
 export default App;
