@@ -30,6 +30,7 @@ const StPostItem = styled.article`
   height: 90%;
   width: 90%;
   min-width: 285px;
+  min-height: 427px;
 `;
 
 const StMoreButton = styled.button`
@@ -54,7 +55,7 @@ const ShowPostList = () => {
   };
 
   const latestPosts = () => {
-    const latestRank = [...postList].sort((a, b) => b.id - a.id);
+    const latestRank = [...postList].sort((a, b) => b.postDate - a.postDate);
     setShowList(latestRank);
   };
 
@@ -67,7 +68,7 @@ const ShowPostList = () => {
           return (
             <StPostItemOutline key={post.id}>
               <StPostItem>
-                <div>{post.id}</div>
+                <div>{post.postDate}</div>
                 <div>{post.image}</div>
                 <div>{post.userId}</div>
                 <div>{post.productName}</div>

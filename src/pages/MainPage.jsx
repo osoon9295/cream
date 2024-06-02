@@ -5,8 +5,8 @@ import MainCategory from '../components/MainCategory';
 const MainPage = () => {
   return (
     <div>
-      <ShowPostList />
       <MainCategory />
+      <ShowPostList />
     </div>
   );
 };
