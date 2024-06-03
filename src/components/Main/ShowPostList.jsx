@@ -7,7 +7,7 @@ import SortButtons from './SortButtons';
 const StWrapper = styled.main`
   /* background-color: blue; */
   width: 100%;
-  margin: 10% auto;
+  margin: 4% auto;
   display: flex;
   flex-direction: column;
   align-items: center;
