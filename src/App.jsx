@@ -1,9 +1,8 @@
 import React from 'react';
-import Join from './pages/Join';
+import Router from './router/Router';
 
 const App = () => {
-  // return <Login />;
-  return <Join />;
+  return <Router />;
 };
 
 export default App;

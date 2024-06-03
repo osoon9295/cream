@@ -59,7 +59,7 @@ export default function InputImage({ name = 'image' }) {
   const [imageSrc, setImageSrc] = useState();
   const inputId = useId();
 
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = () => {
