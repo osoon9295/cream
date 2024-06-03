@@ -8,8 +8,11 @@ const StInput = styled.input`
   border-radius: 10px;
 `;
 
-const ProductName = () => {
-  return <StInput required />;
+const ProductName = ({ name, setName }) => {
+  const NameHandler = (e) => {
+    setName(e.target.value);
+  };
+  return <StInput onChange={NameHandler} value={name} required />;
 };
 
 export default ProductName;

@@ -9,8 +9,13 @@ const StTextarea = styled.textarea`
   padding: 10px;
 `;
 
-const ProductReview = () => {
-  return <StTextarea placeholder="아이스크림 맛은 어땠나요?"></StTextarea>;
+const ProductReview = ({ content, setContent }) => {
+  const ContentHandler = (e) => {
+    setContent(e.target.value);
+  };
+  return (
+    <StTextarea placeholder="아이스크림 맛은 어땠나요?" onChange={ContentHandler} value={content} required></StTextarea>
+  );
 };
 
 export default ProductReview;

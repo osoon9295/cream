@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import uuid from 'react-uuid';
 import Tag from './post/Tag';
 import { BrandTag, FlavorTag, TypeTag } from './post/Tag';
+import PostName from '../components/post/ProductName';
+import PostImage from '../components/post/ProductImage';
+import PostReview from '../components/post/ProductReview';
 
 const PostInner = styled.div`
   max-width: 1240px;
@@ -67,38 +71,88 @@ const SubmitButton = styled.div`
   cursor: pointer;
 `;
 
-const PostContainer = ({ postName, postImage, postReview }) => {
+const PostContainer = () => {
+  const [name, setName] = useState('');
+  const [content, setContent] = useState('');
+  const [image, setImage] = useState('');
+  const [brand, setBrand] = useState('오리온');
+  const [flavor, setFlavor] = useState('딸기');
+  const [type, setType] = useState('콘');
+  const [list, setList] = useState([]);
+
+  const DataHandler = () => {
+    setList((prev) => [
+      ...prev,
+      {
+        id: uuid(),
+        productName: name,
+        productBrand: brand,
+        userId: '지영',
+        productContent: content,
+        productImageSrc: image,
+        createdAt: Date.now(),
+        popularity: 0
+      }
+    ]);
+
+    console.log(list);
+  };
+
   return (
     <>
       <StTitle>게시글</StTitle>
       <PostInner>
         <PostBox>
           <PostTitle>제품명</PostTitle>
-          {postName}
+          <PostName name={name} setName={setName} />
         </PostBox>
         <PostBox>
           <PostTitle>이미지</PostTitle>
-          {postImage}
+          <PostImage image={image} setImage={setImage} />
         </PostBox>
         <PostBox>
           <PostTitle>내용</PostTitle>
-          {postReview}
+          <PostReview content={content} setContent={setContent} />
         </PostBox>
         <PostBox>
           <PostTitle>브랜드</PostTitle>
-          <Tag tagArr={BrandTag}></Tag>
+          <Tag
+            tagArr={BrandTag}
+            brand={brand}
+            flavor={flavor}
+            type={type}
+            setBrand={setBrand}
+            setFlavor={setFlavor}
+            setType={setType}
+          ></Tag>
         </PostBox>
         <PostBox>
           <PostTitle>맛</PostTitle>
-          <Tag tagArr={FlavorTag}></Tag>
+          <Tag
+            tagArr={FlavorTag}
+            brand={brand}
+            flavor={flavor}
+            type={type}
+            setBrand={setBrand}
+            setFlavor={setFlavor}
+            setType={setType}
+          ></Tag>
         </PostBox>
         <PostBox>
           <PostTitle>콘 / 바 / 컵</PostTitle>
-          <Tag tagArr={TypeTag}></Tag>
+          <Tag
+            tagArr={TypeTag}
+            brand={brand}
+            flavor={flavor}
+            type={type}
+            setBrand={setBrand}
+            setFlavor={setFlavor}
+            setType={setType}
+          ></Tag>
         </PostBox>
       </PostInner>
       <SubmitBox>
-        <SubmitButton>등록</SubmitButton>
+        <SubmitButton onClick={DataHandler}>등록</SubmitButton>
       </SubmitBox>
     </>
   );

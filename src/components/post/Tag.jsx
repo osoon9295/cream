@@ -18,22 +18,40 @@ const BrandTag = ['오리온', '빙그레', '롯데제과', '해태제과', '매
 const FlavorTag = ['딸기', '바닐라', '초코', '민트초코', '기타'];
 const TypeTag = ['콘', '바', '컵'];
 
-const Tag = ({ state, tagArr }) => {
-  const [brand, setBrand] = useState('오리온');
-  const [flavor, setFlavor] = useState('딸기');
-  const [type, setType] = useState('콘');
+const Tag = ({ tagArr, brand, flavor, type, setBrand, setFlavor, setType }) => {
+  const BrandHandler = (e) => {
+    setBrand(e.target.id);
+  };
+
+  const FlavorHandler = (e) => {
+    setFlavor(e.target.id);
+  };
+
+  const TypeHandler = (e) => {
+    setType(e.target.id);
+  };
+
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
       {tagArr.map((tag, idx) => {
-        if (tag === brand || tag === flavor || tag === type) {
+        if (
+          (tagArr === BrandTag && tag === brand) ||
+          (tagArr === FlavorTag && tag === flavor) ||
+          (tagArr === TypeTag && tag === type)
+        ) {
           return (
-            <TagBox key={idx} backgroundcolor="#99FF89">
+            <TagBox key={tag} id={tag} backgroundcolor="#99FF89">
               {tag}
             </TagBox>
           );
         }
         return (
-          <TagBox key={idx} backgroundcolor="#efefef">
+          <TagBox
+            key={tag}
+            id={tag}
+            backgroundcolor="#efefef"
+            onClick={tagArr === BrandTag ? BrandHandler : tagArr === FlavorTag ? FlavorHandler : TypeHandler}
+          >
             {tag}
           </TagBox>
         );
