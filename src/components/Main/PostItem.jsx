@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import { stringPostDate } from '../../store/slices/postSlice';
 
 const StPostItem = styled.button`
-  background-color: orange;
-  margin: 5%;
+  background-color: transparent;
   width: 100%;
   height: auto;
   border-radius: 5%;
@@ -16,9 +15,10 @@ const StPostItem = styled.button`
   justify-content: center;
   padding: 5%;
   cursor: pointer;
+  border: none;
 
   /* @media screen and (max-width: 500px) {
-    width: 50%;
+    width: 40%;
   } */
 `;
 
@@ -29,7 +29,7 @@ const StImage = styled.img`
 `;
 
 const StIdAndLikeButtons = styled.div`
-  background-color: aqua;
+  /* background-color: aqua; */
   width: 90%;
   display: flex;
   flex-direction: row;
@@ -42,7 +42,7 @@ const StPostUserId = styled.span`
 `;
 
 const StPostContentWrapper = styled.div`
-  background-color: green;
+  /* background-color: green; */
   width: 90%;
   height: 100%;
 `;
