@@ -9,7 +9,7 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={DefaultLayout}>
+        <Route element={<DefaultLayout />}>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/join" element={<Join />} />
