@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import { CiBookmark } from 'react-icons/ci';
 import { IoHeartOutline } from 'react-icons/io5';
-import { stringPostDate } from '../store/slices/postSlice';
+import styled from 'styled-components';
+import { stringPostDate } from '../../store/slices/postSlice';
 
 const StPostItem = styled.button`
   background-color: orange;
