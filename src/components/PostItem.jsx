@@ -43,7 +43,7 @@ const StPostUserId = styled.span`
 
 const StPostContentWrapper = styled.div`
   background-color: green;
-  width: 100%;
+  width: 90%;
   height: 100%;
 `;
 
@@ -54,6 +54,13 @@ const StPostContent = styled.p`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
   text-align: justify;
+`;
+
+const StPostDate = styled.div`
+  background-color: aliceblue;
+  width: 90%;
+  display: flex;
+  justify-content: left;
 `;
 const PostItem = ({ post }) => {
   const { image, userId, productName, postContent, popularity } = post;
@@ -72,8 +79,7 @@ const PostItem = ({ post }) => {
       <StPostContentWrapper>
         <StPostContent>{postContent}</StPostContent>
       </StPostContentWrapper>
-      <div>{stringPostDate}</div>
-      {/* <div>{postDate}</div> */}
+      <StPostDate>{stringPostDate}</StPostDate>
     </StPostItem>
   );
 };
