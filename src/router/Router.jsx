@@ -4,6 +4,7 @@ import DefaultLayout from '../layout/DefaultLayout';
 import Join from '../pages/Join';
 import Login from '../pages/Login';
 import MainPage from '../pages/MainPage';
+import CreatePost from '../pages/CreatePost';
 
 export default function Router() {
   return (
@@ -13,6 +14,7 @@ export default function Router() {
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/join" element={<Join />} />
+          <Route path="/createPost" element={<CreatePost />} />
         </Route>
       </Routes>
     </BrowserRouter>
