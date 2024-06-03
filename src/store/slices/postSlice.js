@@ -15,7 +15,7 @@ export const stringPostDate = `${year}.${month}.${day} ${hour}:${min}:${sec}`;
 
 const initialState = [
   {
-    id: 1 + uuid(),
+    id: uuid(),
     productName: '메로나',
     productBrand: '빙그레',
     image: '/img/Rectangle10.png',
@@ -26,7 +26,7 @@ const initialState = [
     postDate: postDate + 1
   },
   {
-    id: 2 + uuid(),
+    id: uuid(),
     productName: '비비빅',
     productBrand: '빙그레',
     image: '/img/Rectangle1.png',
@@ -46,7 +46,7 @@ const initialState = [
     postDate: postDate + 3
   },
   {
-    id: 4 + uuid(),
+    id: uuid(),
     productName: '바닐라 파인트',
     productBrand: '하겐다즈',
     image: '/img/Rectangle4.png',
@@ -56,7 +56,7 @@ const initialState = [
     postDate: postDate + 4
   },
   {
-    id: 5 + uuid(),
+    id: uuid(),
     productName: '초콜릿무스',
     productBrand: '베스킨라빈스',
     image: '/img/Rectangle4.png',
@@ -66,7 +66,7 @@ const initialState = [
     postDate: postDate + 5
   },
   {
-    id: 6 + uuid(),
+    id: uuid(),
     productName: '메로나',
     productBrand: '빙그레',
     image: '/img/Rectangle4.png',
