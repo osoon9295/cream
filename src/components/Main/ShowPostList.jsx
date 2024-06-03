@@ -20,9 +20,8 @@ const StContainer = styled.section`
   height: 100%;
   min-height: 1320px;
   display: grid;
-  gap: 30px;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-template-rows: repeat(auto-fill, minmax(300px, 1fr));
+
   @media screen and (max-width: 600px) {
     grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
   }
