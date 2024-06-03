@@ -1,6 +1,5 @@
 import React from 'react';
-import ShowPostList from '../components/ShowPostList';
-import MainCategory from '../components/MainCategory';
+import ShowPostList from '../../components/ShowPostList';
 
 const MainPage = () => {
   return (

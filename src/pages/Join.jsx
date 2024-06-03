@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import Input from '../components/Input';
 import InputImage from '../components/InputImage';
 import * as S from '../styles/Auth.styled';
-import Input from './../components/Input';
 
 const StyleSubmit = styled.input`
   border: 0;
