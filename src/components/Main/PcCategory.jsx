@@ -18,6 +18,7 @@ const StPcCategory = styled.div`
   border-radius: 30px;
   background-color: #d5e0fc;
   box-sizing: border-box;
+  z-index: 1;
   transform: ${(props) => (props.isOn ? 'translateX(0%)' : 'translateX(-100%)')};
   transition: transform 0.5s ease-in;
 
@@ -95,7 +96,7 @@ const StPcCategoryToggle = styled.button`
   border-color: transparent;
   background-color: #d5e0fc;
   cursor: pointer;
-  z-index: -1;
+  z-index: 1;
 
   svg {
     padding-left: 40px;
