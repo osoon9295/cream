@@ -59,7 +59,6 @@ const Carousel = () => {
           );
         })}
       </StAllSlides>
-
       <StPrevBtn onClick={toPrevBanner}> prev </StPrevBtn>
       <StNextBtn onClick={toNextBanner}> next </StNextBtn>
     </StContainer>
