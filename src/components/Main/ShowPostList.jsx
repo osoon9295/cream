@@ -16,8 +16,9 @@ const StWrapper = styled.main`
 const StContainer = styled.section`
   max-width: 1240px;
   width: 100%;
-  min-height: 1320px;
+  /* min-height: 1320px; */
   display: grid;
+  padding: 0 0 5% 0;
 
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 
@@ -27,7 +28,19 @@ const StContainer = styled.section`
 `;
 
 const StMoreButton = styled.button`
-  margin: 50px;
+  background-color: #ededed;
+  width: 120px;
+  min-height: 40px;
+  border-radius: 20px;
+  font-size: 16px;
+  padding: 8px 16px;
+  border: none;
+
+  @media screen and (max-width: 600px) {
+    width: 100px;
+    font-size: 14px;
+    padding: 6px 12px;
+  }
 `;
 
 const ShowPostList = () => {

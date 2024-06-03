@@ -50,13 +50,13 @@ const SortButtons = ({ showList, setShowList }) => {
         onClick={() => handleButtonClick('popular')}
         style={{ color: activeButton === 'popular' ? 'black' : '#bdbdbd' }}
       >
-        ✨인기게시물
+        {activeButton === 'popular' ? '✨인기게시물' : '인기게시물'}
       </StPopularPost>
       <StlatestPost
         onClick={() => handleButtonClick('latest')}
         style={{ color: activeButton === 'latest' ? 'black' : '#bdbdbd' }}
       >
-        최신게시물
+        {activeButton === 'latest' ? '✨최신게시물' : '최신게시물'}
       </StlatestPost>
     </StSortButtons>
   );
