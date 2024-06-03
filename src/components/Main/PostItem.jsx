@@ -6,7 +6,6 @@ import { stringPostDate } from '../../store/slices/postSlice';
 
 const StPostItem = styled.button`
   background-color: orange;
-  margin: 5%;
   width: 100%;
   height: auto;
   border-radius: 5%;

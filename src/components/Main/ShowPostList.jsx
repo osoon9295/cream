@@ -16,10 +16,10 @@ const StContainer = styled.section`
   background-color: red;
   max-width: 1240px;
   width: 100%;
-  max-height: 1397px;
-  height: 100%;
+  height: auto;
   min-height: 1320px;
   display: grid;
+  gap: 10px;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 
   @media screen and (max-width: 600px) {
