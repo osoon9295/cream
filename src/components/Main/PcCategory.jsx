@@ -5,20 +5,39 @@ import { FaCrown, FaIceCream } from 'react-icons/fa';
 import { GiSpoon } from 'react-icons/gi';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6';
 import { PiEqualsBold } from 'react-icons/pi';
-import CategoryButton from './CategoryButton';
 
 const StPcCategory = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   position: fixed;
-  top: 100px;
+  top: calc((100vh - 640px) / 2);
   width: 138px;
   padding: 45px 37px;
   gap: 50px;
   border-radius: 30px;
   background-color: #d5e0fc;
   box-sizing: border-box;
+  transform: ${(props) => (props.isOn ? 'translateX(0%)' : 'translateX(-100%)')};
+  transition: transform 0.5s ease-in;
+
+  /* @media (max-height: 1024px) {
+    
+  } */
+
+  @media (max-height: 1024px) and (max-width: 1440px) {
+    width: 100px;
+    padding: 20px 11px;
+    gap: 15px;
+    border-radius: 25px;
+    top: calc((100vh - 407px) / 2);
+  }
+
+  svg {
+    @media (max-height: 1024px) and (max-width: 1440px) {
+      width: 45px;
+    }
+  }
 `;
 
 const StPcCategoryUl = styled.ul`
@@ -26,20 +45,40 @@ const StPcCategoryUl = styled.ul`
   flex-direction: column;
   gap: 70px;
   padding-bottom: 40px;
+
+  @media (max-height: 1024px) and (max-width: 1440px) {
+    gap: 21px;
+  }
+
   li {
     text-align: center;
-    font-size: 15px;
     letter-spacing: 1px;
-
-    span {
-      display: block;
-      margin-top: 12px;
-    }
 
     button {
       border: transparent;
       background-color: transparent;
       cursor: pointer;
+      color: #a0abc9;
+
+      svg {
+        @media (max-height: 1024px) and (max-width: 1440px) {
+          width: 35px;
+        }
+      }
+    }
+
+    button.active {
+      color: #fff;
+    }
+
+    span {
+      display: block;
+      margin-top: 12px;
+      font-size: 15px;
+      @media (max-height: 1024px) and (max-width: 1440px) {
+        margin-top: 0px;
+        font-size: 13px;
+      }
     }
   }
 `;
@@ -57,72 +96,73 @@ const StPcCategoryToggle = styled.button`
   background-color: #d5e0fc;
   cursor: pointer;
   z-index: -1;
+
+  svg {
+    padding-left: 40px;
+    @media (max-height: 1024px) and (max-width: 1440px) {
+      width: 20px;
+      padding-left: 30px;
+    }
+  }
+
+  @media (max-height: 1024px) and (max-width: 1440px) {
+    width: 80px;
+    height: 80px;
+    left: 60px;
+    top: 163px;
+  }
 `;
 
 const PcCategory = () => {
   const [isOn, setIsOn] = useState(false);
-  // const [toggleSlide, setToggleSlide]
-  const liArray = [
+  const [activeState, setActiveState] = useState([false, false, false]);
+  const iconBtn = [
     {
-      id: 1,
-      isActive: false,
-      icon: <FaCrown size="46" />,
-      name: '브랜드별'
+      icon: <FaCrown size="56" />,
+      text: '브랜드별'
     },
     {
-      id: 2,
-      isActive: false,
-      icon: <GiSpoon size="46" />,
-      name: '맛별'
+      icon: <GiSpoon size="56" />,
+      text: '맛별'
     },
     {
-      id: 3,
-      isActive: false,
-      icon: <FaIceCream size="46" />,
-      name: '콘/바/컵'
+      icon: <FaIceCream size="56" />,
+      text: '콘/바/컵'
     }
   ];
-  const [iconElement, setIconElement] = useState(liArray);
-  const PcCategoryIconClick = (iconId) => {
-    const clickedElement = iconElement.map((element) => {
-      if (element.id === iconId) {
-        return { ...element, isActive: true };
-      } else {
-        return { ...element, isActive: false };
-      }
-    });
-    // 눌렀을때 isActive를 변경해주는 배열,,
-    setIconElement(clickedElement);
-  };
   const pcToggleHandler = () => {
     setIsOn(!isOn);
-    console.log('하이');
   };
   // console.log(iconElement);
   return (
-    <StPcCategory>
+    <StPcCategory isOn={isOn}>
       {/* active 아이콘 컬러 변경 넣어야함 */}
       <PiEqualsBold size="56" color="#fff" />
       <StPcCategoryUl>
-        {iconElement.map((pcIcon) => {
+        {iconBtn.map((item, index) => {
           return (
-            <li
-              key={pcIcon.id}
-              onClick={() => {
-                PcCategoryIconClick(pcIcon.id);
-              }}
-            >
-              <CategoryButton isActive={pcIcon.isActive} pcIcon={pcIcon.icon} pcIconName={pcIcon.name} />
+            <li key={index}>
+              <button
+                className={activeState[index] ? 'active' : ''}
+                onClick={() => {
+                  const newState = activeState.map((state, stateIndex) => {
+                    if (index === stateIndex) {
+                      return !state;
+                    }
+                    return false;
+                  });
+                  setActiveState(newState);
+                }}
+              >
+                {item.icon}
+                <span>{item.text}</span>
+              </button>
             </li>
           );
         })}
       </StPcCategoryUl>
       <StPcCategoryToggle onClick={pcToggleHandler}>
-        {isOn ? (
-          <FaAngleLeft size="36" color="#FFF" style={{ paddingLeft: '40px' }} />
-        ) : (
-          <FaAngleRight size="36" color="#FFF" style={{ paddingLeft: '40px' }} />
-        )}
+        {isOn ? <FaAngleLeft size="36" color="#FFF" /> : <FaAngleRight size="36" color="#FFF" />}
       </StPcCategoryToggle>
     </StPcCategory>
   );

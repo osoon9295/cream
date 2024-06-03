@@ -1,11 +1,11 @@
 import React from 'react';
 import ShowPostList from '../components/main/ShowPostList';
 import Carousel from '../components/main/Carousel';
-// import MainCategory from '../components/Main/MainCategory';
+import MainCategory from '../components/main/MainCategory';
 const MainPage = () => {
   return (
     <div>
-      {/* <MainCategory /> */}
+      <MainCategory />
       <Carousel />
       <ShowPostList />
     </div>

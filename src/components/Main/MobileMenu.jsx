@@ -6,12 +6,13 @@ const StMobileNav = styled.ul`
   display: flex;
   justify-content: center;
   gap: 134px;
-  width: 100vw;
   position: fixed;
   bottom: 0;
+  width: 100vw;
   padding: 16px 66px;
   border-top: 1px solid #cfcfcf;
   box-sizing: border-box;
+  background-color: #fff;
 
   li {
     text-align: center;
