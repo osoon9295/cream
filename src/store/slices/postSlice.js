@@ -170,7 +170,12 @@ const initialState = [
 const postSlice = createSlice({
   name: 'postList',
   initialState: initialState,
-  reducers: {}
+  reducers: {
+    addPost: (state, action) => {
+      return [...state, action.payload];
+    }
+  }
 });
 
+export const { addPost } = postSlice.actions;
 export default postSlice.reducer;

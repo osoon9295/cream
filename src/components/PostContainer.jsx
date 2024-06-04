@@ -6,6 +6,8 @@ import { BrandTag, FlavorTag, TypeTag } from './post/Tag';
 import PostName from '../components/post/ProductName';
 import PostImage from '../components/post/ProductImage';
 import PostReview from '../components/post/ProductReview';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPost } from '../store/slices/postSlice';
 
 const PostInner = styled.div`
   max-width: 1240px;
@@ -78,12 +80,30 @@ const PostContainer = () => {
   const [brand, setBrand] = useState('오리온');
   const [flavor, setFlavor] = useState('딸기');
   const [type, setType] = useState('콘');
-  const [list, setList] = useState([]);
 
+  // 예시
+  // const [values, setValues] = useState({
+  //   name: '',
+  //   content: '',
+  //   image: '',
+  //   brand: '오리온',
+  //   flavor: '딸기',
+  //   type: '콘'
+  // });
+
+  // const onChangeHandler = (e) => {
+  //   const { name, value } = e.target;
+  //   setValues({
+  //     ...values,
+  //     [name]: value
+  //   });
+  // };
+
+  const posts = useSelector((state) => state.postList);
+  const dispatch = useDispatch();
   const DataHandler = () => {
-    setList((prev) => [
-      ...prev,
-      {
+    dispatch(
+      addPost({
         id: uuid(),
         productName: name,
         productBrand: brand,
@@ -92,10 +112,10 @@ const PostContainer = () => {
         productImageSrc: image,
         createdAt: Date.now(),
         popularity: 0
-      }
-    ]);
+      })
+    );
 
-    console.log(list);
+    console.log(posts);
   };
 
   return (
@@ -105,6 +125,7 @@ const PostContainer = () => {
         <PostBox>
           <PostTitle>제품명</PostTitle>
           <PostName name={name} setName={setName} />
+          {/* <input type="text" value={values.name} name="name" onChange={onChangeHandler} /> */}
         </PostBox>
         <PostBox>
           <PostTitle>이미지</PostTitle>
@@ -113,6 +134,7 @@ const PostContainer = () => {
         <PostBox>
           <PostTitle>내용</PostTitle>
           <PostReview content={content} setContent={setContent} />
+          {/* <textarea name="content" value={values.content} onChange={onChangeHandler} /> */}
         </PostBox>
         <PostBox>
           <PostTitle>브랜드</PostTitle>
