@@ -24,6 +24,10 @@ const StPcCategory = styled.div`
   transform: ${(props) => (props.$isOn ? 'translateX(0%)' : 'translateX(-100%)')};
   transition: transform 0.5s ease-in;
 
+  @media (max-width: 1120px) {
+    display: none;
+  }
+
   /* @media (max-height: 1024px) {
     
   } */

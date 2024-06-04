@@ -8,7 +8,6 @@ import CategoryTabs from './CategoryTabs';
 const StWrapper = styled.main`
   /* background-color: blue; */
   /* width: 100%; */
-
   margin: 4% auto;
   display: flex;
   flex-direction: column;
