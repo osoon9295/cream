@@ -1,5 +1,5 @@
 import React from 'react';
-import ShowPostList from '../components/Main/ShowPostList';
+import ShowPostList from '../components/main/ShowPostList';
 const MainPage = () => {
   return (
     <div>
