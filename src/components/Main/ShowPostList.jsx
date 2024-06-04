@@ -8,7 +8,6 @@ import CategoryTabs from './CategoryTabs';
 const StWrapper = styled.main`
   /* background-color: blue; */
   /* width: 100%; */
-
   margin: 4% auto;
   display: flex;
   flex-direction: column;
@@ -50,7 +49,6 @@ const ShowPostList = () => {
   useEffect(() => {
     setShowList(postList.slice(0, 12));
   }, []);
-  // console.log(showList);
 
   const moreShowList = () => {
     showList.length <= 12 ? setShowList(postList) : setShowList(postList.slice(0, 12));

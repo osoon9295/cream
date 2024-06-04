@@ -19,7 +19,7 @@ const StyleInput = styled.input`
   border-radius: 0.5rem;
 `;
 
-export default function Input({ value, type = 'text', label, isRequired = false, name, placeholder }) {
+export default function Input({ value, type = 'text', label, isRequired = false, name, placeholder, inputRef }) {
   const [inputValue, setInputValue] = useState(value);
   const inputId = useId();
   const handleChange = (e) => {
@@ -36,6 +36,7 @@ export default function Input({ value, type = 'text', label, isRequired = false,
       <StyleInput
         id={inputId}
         type={type}
+        ref={inputRef}
         value={inputValue}
         onChange={handleChange}
         required={isRequired}
