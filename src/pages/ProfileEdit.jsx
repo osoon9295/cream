@@ -1,11 +1,40 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import InputImage from '../components/InputImage';
-import Input from './../components/Input';
 import { useNavigate } from 'react-router-dom';
+import supabase from '../supabase';
+import InputImage from '../components/InputImage';
+import Input from '../components/Input';
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState([]);
+  const [nickname, setNickname] = useState('');
+  const [pwd, setPwd] = useState('');
+
+  async function getUser() {
+    const textEmail = 'ly0608@naver.com';
+
+    const { data, error } = await supabase.from('member').select('*').eq('user_id', textEmail);
+    if (error) {
+      console.error('Error fetching posts', error);
+    } else {
+      setUser(data);
+      if (data.length > 0) {
+        const userData = data[0];
+        setNickname(userData.user_name);
+        setPwd(userData.user_pw);
+      }
+    }
+    console.log('data', data);
+  }
+
+  console.log('nickname', nickname);
+  console.log('pwd', pwd);
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <>
       <StyleWrap>
@@ -14,17 +43,30 @@ const ProfileEdit = () => {
           <InputImage />
           <EditList>
             <Label htmlFor="profileid">아이디</Label>
-            wnswns722
+            {user.length > 0 ? user[0].user_id : ''}
           </EditList>
 
           <EditList>
             <Label htmlFor="nickname">닉네임</Label>
-            <Input isRequired={true} name="name" id="nickname" placeholder="닉네임" />
+            <Input
+              isRequired={true}
+              name="name"
+              id="nickname"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+            />
           </EditList>
 
           <EditList>
-            <Label htmlFor="password">비밀번호</Label>
-            <Input isRequired={true} name="pwChk" id="password" placeholder="비밀번호 확인" />
+            <Label htmlFor="pwd">비밀번호</Label>
+            <Input
+              isRequired={true}
+              type="password"
+              name="pwChk"
+              id="pwd"
+              value={pwd}
+              onChange={(e) => setPwd(e.target.value)}
+            />
           </EditList>
 
           <StyleBtns>

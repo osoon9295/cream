@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import WrittenPost from './../components/WrittenPost';
-//import supabase from '../supabase';
+import supabase from '../supabase';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -11,40 +11,25 @@ const MyPage = () => {
   const [profileUrl, setProfileUrl] = useState(''); //프로필 이미지
 
   async function getUser() {
-    const { data: member, error } = await supabase.from('member').select('id, user_name').eq('user_id', user.id);
+    const textEmail = 'ly0608@naver.com';
+    // const { data, error } = await supabase.auth.getSession();
+    // if (error) {
+    //   return false;
+    // }
+    // console.log('data', data);
+    // return data;
+
+    //select('*') 모든 컬럼을 가져온다.
+    const { data, error } = await supabase.from('member').select('*').eq('user_id', textEmail);
     if (error) {
       console.error('Error fetching posts', error);
     } else {
-      setUser(member);
+      setUser(data);
     }
+    console.log('data', data);
   }
 
-  // async function getPosts() {
-  //   const { data: posts, error } = await supabase.from('posts').select('id, product_name').eq('user_id', user.id);
-  //   if (error) {
-  //     console.error('Error fetching posts', error);
-  //   } else {
-  //     setPosts(posts);
-  //   }
-  // }
-
   useEffect(() => {
-    // const fetchPosts = async () => {
-    //   const {
-    //     data: { user_info }
-    //   } = await supabase.auth.getUser();
-    //   if (user_info) {
-    //     setUser(user_info);
-    //     const { data: posts, error } = await supabase.from('posts').select('id, title').eq('user_id', user.id);
-    //     if (error) {
-    //       console.error('Error fetching posts', error);
-    //     } else {
-    //       setPosts(posts);
-    //     }
-    //   }
-    // };
-    // fetchPosts();
-
     getUser();
   }, []);
 
@@ -54,7 +39,7 @@ const MyPage = () => {
         <Title>마이페이지</Title>
         <StyleProfileWrap>
           <ProfileImg></ProfileImg>
-          <StyleProfileName>{`🎉 ${user.user_name}님 환영합니다.`}</StyleProfileName>
+          <StyleProfileName>{`🎉 ${user.length > 0 ? user[0].user_id : ''}님 환영합니다.`}</StyleProfileName>
           <StyleProfileBtn onClick={() => navigate(`profile-edit`)}>프로필 관리</StyleProfileBtn>
         </StyleProfileWrap>
 

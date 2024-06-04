@@ -50,7 +50,6 @@ const ShowPostList = () => {
   useEffect(() => {
     setShowList(postList.slice(0, 12));
   }, []);
-  console.log(showList);
 
   const moreShowList = () => {
     showList.length <= 12 ? setShowList(postList) : setShowList(postList.slice(0, 12));
