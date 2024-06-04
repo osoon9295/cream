@@ -7,10 +7,6 @@ const StContainer = styled.div`
   width: 100%;
   overflow: hidden;
   position: relative;
-
-  /* @media (max-width: 800px) {
-    width: 200%;
-  } */
 `;
 
 const StPcAllSlides = styled.div`
@@ -18,10 +14,6 @@ const StPcAllSlides = styled.div`
   display: flex;
   transform: translate(-0vw);
   transition: all 1s;
-
-  /* @media (max-width: 800px) {
-    width: 600vw;
-  } */
 
   @media (max-width: 800px) {
     display: none;
@@ -41,7 +33,6 @@ const StMobileAllSlides = styled.div`
 
 const StSlide = styled.div`
   width: 100vw;
-  /* height: 100vw; */
 `;
 
 const SlideImg = styled.img`
