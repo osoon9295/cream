@@ -1,5 +1,5 @@
 import React from 'react';
-import { CiBookmark } from 'react-icons/ci';
+import { IoBookmarkOutline } from 'react-icons/io5';
 import { IoHeartOutline } from 'react-icons/io5';
 import styled from 'styled-components';
 import { stringPostDate } from '../../store/slices/postSlice';
@@ -46,14 +46,6 @@ const StLikeAndBookmark = styled.span`
   color: #484848;
 `;
 
-const StLikeButtons = styled.div`
-  font-size: 130%;
-`;
-
-const StBookmarkButtons = styled.div`
-  font-size: 130%;
-`;
-
 const StPostContentWrapper = styled.div`
   /* background-color: green; */
   width: 100%;
@@ -87,13 +79,9 @@ const PostItem = ({ post }) => {
       <StIdAndLikeButtons>
         <StPostUserId>{userId}</StPostUserId>
         <StLikeAndBookmark>
-          <StLikeButtons>
-            <IoHeartOutline />
-          </StLikeButtons>
+          <IoHeartOutline size={27} onClick={() => {}} />
           {popularity}
-          <StBookmarkButtons>
-            <CiBookmark />
-          </StBookmarkButtons>
+          <IoBookmarkOutline size={27} onClick={() => {}} />
         </StLikeAndBookmark>
       </StIdAndLikeButtons>
       <StPostContentWrapper>
