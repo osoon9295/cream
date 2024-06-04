@@ -1,6 +1,5 @@
-import React, { useId, useState } from 'react';
-import { FaCamera } from 'react-icons/fa';
-import { FaIceCream } from 'react-icons/fa6';
+import { useId, useState } from 'react';
+import { FaIceCream } from 'react-icons/fa';
 import { GoPlus } from 'react-icons/go';
 import styled from 'styled-components';
 
@@ -70,7 +69,7 @@ export default function InputImage({ name = 'image' }) {
 
   return (
     <InputFileWrap>
-      <input type="file" onChange={handleChange} accept="image/*" maxLength={1} name="" id={inputId} hidden />
+      <input type="file" onChange={handleChange} accept="image/*" maxLength={1} name={name} id={inputId} hidden />
       <StlyeImageShow>
         {imageSrc ? (
           <img src={imageSrc} />
