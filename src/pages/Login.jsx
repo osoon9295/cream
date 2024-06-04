@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { getUser, signIn } from '../api/api.auth';
 import * as S from '../styles/Auth.styled';
@@ -23,7 +23,8 @@ const StyleSubmit = styled.input`
   background-color: #000000;
   cursor: pointer;
 `;
-const StyleLink = styled.button`
+const StyleLink = styled(Link)`
+  text-decoration: none;
   border: 0;
   width: 100%;
   border-radius: 0.375rem;
@@ -52,7 +53,7 @@ export default function Login() {
       <Input isRequired={true} name="pw" type="password" placeholder="비밀번호" />
       <StyleBtns>
         <StyleSubmit type="submit" value="로그인" />
-        <StyleLink>회원가입</StyleLink>
+        <StyleLink to="/join">회원가입</StyleLink>
       </StyleBtns>
     </S.AuthForm>
   );

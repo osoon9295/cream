@@ -19,8 +19,14 @@
     "react-redux": "^9.1.2",
     "react-router-dom": "^6.23.1",
     "react-uuid": "^2.0.0",
+<<<<<<< HEAD
     "redux": "^5.0.1",
     "styled-components": "^6.1.11"
+=======
+    "styled-components": "^6.1.11",
+    "uuid": "^9.0.1",
+    "uuidv4": "^6.2.13"
+>>>>>>> 0671580ae7ab3ac21df0afe5e9ba9c699ec650ec
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

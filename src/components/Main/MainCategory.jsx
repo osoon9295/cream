@@ -1,14 +1,14 @@
 import React from 'react';
-// import MobileCategory from './MobileCategory.jsx';
-// import MobileMenu from './MobileMenu.jsx';
+import MobileCategory from './MobileCategory.jsx';
+import MobileMenu from './MobileMenu.jsx';
 import PcCategory from './PcCategory';
 
 const MainCategory = () => {
   return (
     <>
-      {/* <MobileCategory /> */}
+      <MobileCategory />
       <PcCategory />
-      {/* <MobileMenu /> */}
+      <MobileMenu />
     </>
   );
 };
