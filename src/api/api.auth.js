@@ -4,7 +4,12 @@ import supabase from './api.supabase';
 
 export const signUp = async (email, password, nickname, img) => {
   try {
-    const imageSrc = await apiImg(img);
+    let imageSrc = '';
+    if (undefined == img) {
+      imageSrc = 'https://ifzzsqrbvtphsikwxkms.supabase.co/storage/v1/object/public/avatars/default-img.png';
+    } else {
+      imageSrc = await apiImg(img);
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
