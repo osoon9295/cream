@@ -18,7 +18,7 @@ const StToPostPageButton = styled.button`
   justify-content: center;
   position: fixed;
   right: 5%;
-  bottom: 12%;
+  bottom: 13%;
 
   cursor: pointer;
 
@@ -26,6 +26,12 @@ const StToPostPageButton = styled.button`
     background-color: black;
     color: #ededed;
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 800px) {
+    width: 20px;
+    height: 20px;
+    bottom: 100px;
   }
 `;
 

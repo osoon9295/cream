@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { IoIosArrowDropright } from 'react-icons/io';
-import { IoIosArrowDropleft } from 'react-icons/io';
 import { SlArrowLeft } from 'react-icons/sl';
 import { SlArrowRight } from 'react-icons/sl';
 
@@ -9,13 +7,36 @@ const StContainer = styled.div`
   width: 100%;
   overflow: hidden;
   position: relative;
+
+  /* @media (max-width: 800px) {
+    width: 200%;
+  } */
 `;
 
-const StAllSlides = styled.div`
+const StPcAllSlides = styled.div`
   width: 300vw;
   display: flex;
   transform: translate(-0vw);
   transition: all 1s;
+
+  /* @media (max-width: 800px) {
+    width: 600vw;
+  } */
+
+  @media (max-width: 800px) {
+    display: none;
+  }
+`;
+
+const StMobileAllSlides = styled.div`
+  width: 300vw;
+  display: flex;
+  transform: translate(-0vw);
+  transition: all 1s;
+
+  @media (min-width: 800px) {
+    display: none;
+  }
 `;
 
 const StSlide = styled.div`
@@ -64,6 +85,7 @@ const StNextBtn = styled.button`
 
 const Carousel = () => {
   const banners = ['img/banner1.png', 'img/banner2.png', 'img/banner3.png'];
+  const mbanners = ['img/m-banner1.png', 'img/m-banner2.png', 'img/m-banner3.png'];
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const toPrevBanner = () => setCurrentSlide(currentSlide >= 0 ? currentSlide - 1 : currentSlide);
@@ -75,7 +97,7 @@ const Carousel = () => {
 
   return (
     <StContainer>
-      <StAllSlides style={containerStyle}>
+      <StPcAllSlides style={containerStyle}>
         {banners.map((banner) => {
           return (
             <StSlide key={banner}>
@@ -83,7 +105,16 @@ const Carousel = () => {
             </StSlide>
           );
         })}
-      </StAllSlides>
+      </StPcAllSlides>
+      <StMobileAllSlides style={containerStyle}>
+        {mbanners.map((mbanner) => {
+          return (
+            <StSlide key={mbanner}>
+              <SlideImg src={mbanner} />
+            </StSlide>
+          );
+        })}
+      </StMobileAllSlides>
 
       <StPrevBtn onClick={toPrevBanner}>
         <SlArrowLeft />
