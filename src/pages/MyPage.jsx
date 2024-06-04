@@ -19,15 +19,20 @@ const MyPage = () => {
     // console.log('data', data);
     // return data;
 
-    //select('*') 모든 컬럼을 가져온다.
     const { data, error } = await supabase.from('member').select('*').eq('user_id', textEmail);
     if (error) {
-      console.error('Error fetching posts', error);
+      console.error('Error fetching member', error);
     } else {
       setUser(data);
     }
-    console.log('data', data);
   }
+
+  async function getProfileImg() {
+    const { data } = supabase.storage.from('avatars').getPublicUrl('default-profile.png');
+    setProfileUrl(data);
+  }
+
+  //function handleFileInputChange(files) {}
 
   useEffect(() => {
     getUser();
@@ -38,8 +43,11 @@ const MyPage = () => {
       <StyleWrap>
         <Title>마이페이지</Title>
         <StyleProfileWrap>
-          <ProfileImg></ProfileImg>
-          <StyleProfileName>{`🎉 ${user.length > 0 ? user[0].user_id : ''}님 환영합니다.`}</StyleProfileName>
+          <ProfileImg>{user.length > 0 ? user[0].user_imageSrc : ''}</ProfileImg>
+          <StyleProfileName>
+            {`🎉 ${user.length > 0 ? user[0].user_name : ''}님 환영합니다.`}{' '}
+            <ProfileEmail>{user.length > 0 ? user[0].user_id : ''}</ProfileEmail>
+          </StyleProfileName>
           <StyleProfileBtn onClick={() => navigate(`profile-edit`)}>프로필 관리</StyleProfileBtn>
         </StyleProfileWrap>
 
@@ -84,6 +92,7 @@ const StyleWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
+  padding: 0 20px;
 
   @media screen and (max-width: 500px) {
     padding: 0 20px;
@@ -94,7 +103,7 @@ const StyleWrap = styled.div`
 const Title = styled.h1`
   text-align: center;
   font-size: 28px;
-  margin: 5rem 0;
+  margin: 3rem 0;
 
   @media screen and (max-width: 500px) {
     margin: 2rem 0 1rem;
@@ -117,12 +126,15 @@ const StyleProfileWrap = styled.div`
   }
 `;
 
-const ProfileImg = styled.img`
+const ProfileImg = styled.div`
   width: 4rem;
   height: 4rem;
   border-radius: 100%;
   background: #ddd;
   margin-right: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   @media screen and (max-width: 500px) {
     margin: 0;
   }
@@ -199,5 +211,16 @@ const StylePostTitle = styled.h1`
 
   @media screen and (max-width: 500px) {
     font-size: 16px;
+  }
+`;
+
+const ProfileEmail = styled.span`
+  display: block;
+  font-size: 14px;
+  margin-top: 10px;
+  color: var(--font);
+
+  @media screen and (max-width: 500px) {
+    text-align: center;
   }
 `;
