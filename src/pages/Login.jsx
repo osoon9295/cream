@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { getUser, signIn } from '../api/api.auth';
+import { checkSignIn, getUser, signIn } from '../api/api.auth';
 import * as S from '../styles/Auth.styled';
 import Input from './../components/Input';
 
@@ -43,6 +43,7 @@ const handleSubmit = async (e) => {
   await signIn(email, pw);
   await getUser();
   console.log('wad');
+  console.log(getUser(), checkSignIn());
 };
 
 export default function Login() {
