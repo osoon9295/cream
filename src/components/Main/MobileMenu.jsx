@@ -14,6 +14,10 @@ const StMobileNav = styled.ul`
   box-sizing: border-box;
   background-color: #fff;
 
+  @media (min-width: 1120px) {
+    display: none;
+  }
+
   li {
     text-align: center;
     font-size: 12px;
