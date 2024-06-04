@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import WrittenPost from './../components/WrittenPost';
-import supabase from '../supabase';
+//import supabase from '../supabase';
 
 const MyPage = () => {
   const navigate = useNavigate();
