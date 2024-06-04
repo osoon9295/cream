@@ -8,12 +8,12 @@ import PostImage from '../components/post/ProductImage';
 import PostReview from '../components/post/ProductReview';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPost } from '../store/slices/postSlice';
+import supabase from '../supabase';
 
 const PostInner = styled.div`
   max-width: 1240px;
   width: 70vw;
   height: 100%;
-  /* border: 2px solid black; */
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -81,41 +81,40 @@ const PostContainer = () => {
   const [flavor, setFlavor] = useState('딸기');
   const [type, setType] = useState('콘');
 
-  // 예시
-  // const [values, setValues] = useState({
-  //   name: '',
-  //   content: '',
-  //   image: '',
-  //   brand: '오리온',
-  //   flavor: '딸기',
-  //   type: '콘'
-  // });
+  // const posts = useSelector((state) => state.postList);
+  // const dispatch = useDispatch();
+  // dispatch(
+  //   addPost({
+  //     id: uuid(),
+  //     productName: name,
+  //     productBrand: brand,
+  //     userId: '지영',
+  //     productContent: content,
+  //     productImageSrc: image,
+  //     createdAt: Date.now(),
+  //     popularity: 0
+  //   })
+  // );
 
-  // const onChangeHandler = (e) => {
-  //   const { name, value } = e.target;
-  //   setValues({
-  //     ...values,
-  //     [name]: value
-  //   });
-  // };
+  // console.log(posts);
 
-  const posts = useSelector((state) => state.postList);
-  const dispatch = useDispatch();
-  const DataHandler = () => {
-    dispatch(
-      addPost({
-        id: uuid(),
-        productName: name,
-        productBrand: brand,
-        userId: '지영',
-        productContent: content,
-        productImageSrc: image,
-        createdAt: Date.now(),
-        popularity: 0
-      })
-    );
-
-    console.log(posts);
+  const DataHandler = async () => {
+    const { data, error } = await supabase.from('posts').insert({
+      id: uuid(),
+      user_id: '지영',
+      product_name: name,
+      product_brand: brand,
+      product_imageSrc: image,
+      post_content: content,
+      popularity: 0,
+      created_at: '2024-06-04T07:37:44.326279+00:00'
+    });
+    if (error) {
+      console.log(error);
+    } else {
+      alert('성공!');
+      console.log('Data', data);
+    }
   };
 
   return (
@@ -125,7 +124,6 @@ const PostContainer = () => {
         <PostBox>
           <PostTitle>제품명</PostTitle>
           <PostName name={name} setName={setName} />
-          {/* <input type="text" value={values.name} name="name" onChange={onChangeHandler} /> */}
         </PostBox>
         <PostBox>
           <PostTitle>이미지</PostTitle>
@@ -134,7 +132,6 @@ const PostContainer = () => {
         <PostBox>
           <PostTitle>내용</PostTitle>
           <PostReview content={content} setContent={setContent} />
-          {/* <textarea name="content" value={values.content} onChange={onChangeHandler} /> */}
         </PostBox>
         <PostBox>
           <PostTitle>브랜드</PostTitle>
