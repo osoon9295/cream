@@ -2,59 +2,60 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import WrittenPost from './../components/WrittenPost';
-//import supabase from '../supabase';
+import supabase from '../api/api.supabase';
+import { getUser } from '../api/api.auth';
+import { apiImg } from '../api/api.img';
 
 const MyPage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [profileUrl, setProfileUrl] = useState(''); //프로필 이미지
-
-  async function getUser() {
-    const { data: member, error } = await supabase.from('member').select('id, user_name').eq('user_id', user.id);
-    if (error) {
-      console.error('Error fetching posts', error);
-    } else {
-      setUser(member);
-    }
-  }
-
-  // async function getPosts() {
-  //   const { data: posts, error } = await supabase.from('posts').select('id, product_name').eq('user_id', user.id);
-  //   if (error) {
-  //     console.error('Error fetching posts', error);
-  //   } else {
-  //     setPosts(posts);
-  //   }
-  // }
+  const [profileUrl, setProfileUrl] = useState('');
+  const defaultImg = 'https://ifzzsqrbvtphsikwxkms.supabase.co/storage/v1/object/public/avatars/default-img.png';
 
   useEffect(() => {
-    // const fetchPosts = async () => {
-    //   const {
-    //     data: { user_info }
-    //   } = await supabase.auth.getUser();
-    //   if (user_info) {
-    //     setUser(user_info);
-    //     const { data: posts, error } = await supabase.from('posts').select('id, title').eq('user_id', user.id);
-    //     if (error) {
-    //       console.error('Error fetching posts', error);
-    //     } else {
-    //       setPosts(posts);
-    //     }
-    //   }
-    // };
-    // fetchPosts();
+    const fetchData = async () => {
+      const userData = await getUser();
+      if (userData) {
+        setUser(userData);
+        console.log('user', userData);
+      } else {
+        console.log('Error user');
+      }
+    };
 
-    getUser();
+    const fetchImage = async () => {
+      const imgData = await apiImg();
+      if (imgData) {
+        setProfileUrl(imgData);
+        console.log('img', imgData);
+      } else {
+        console.log('Error image');
+      }
+    };
+
+    fetchImage();
+    fetchData();
   }, []);
+
+  console.log(user);
 
   return (
     <>
       <StyleWrap>
         <Title>마이페이지</Title>
         <StyleProfileWrap>
-          <ProfileImg></ProfileImg>
-          <StyleProfileName>{`🎉 ${user.user_name}님 환영합니다.`}</StyleProfileName>
+          <ProfileImg
+            src={profileUrl || defaultImg}
+            alt="프로필 이미지"
+            onError={(e) => {
+              e.target.src = defaultImg;
+            }}
+          />
+
+          <StyleProfileName>
+            {`🎉 ${user.user_metadata.nickname}님 환영합니다.`} <ProfileEmail>{user.email}</ProfileEmail>
+          </StyleProfileName>
           <StyleProfileBtn onClick={() => navigate(`profile-edit`)}>프로필 관리</StyleProfileBtn>
         </StyleProfileWrap>
 
@@ -99,6 +100,7 @@ const StyleWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
+  padding: 0 20px;
 
   @media screen and (max-width: 500px) {
     padding: 0 20px;
@@ -109,7 +111,7 @@ const StyleWrap = styled.div`
 const Title = styled.h1`
   text-align: center;
   font-size: 28px;
-  margin: 5rem 0;
+  margin: 3rem 0;
 
   @media screen and (max-width: 500px) {
     margin: 2rem 0 1rem;
@@ -136,8 +138,11 @@ const ProfileImg = styled.img`
   width: 4rem;
   height: 4rem;
   border-radius: 100%;
-  background: #ddd;
-  margin-right: 30px;
+  border: 1px solid var(--border-color);
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   @media screen and (max-width: 500px) {
     margin: 0;
   }
@@ -214,5 +219,16 @@ const StylePostTitle = styled.h1`
 
   @media screen and (max-width: 500px) {
     font-size: 16px;
+  }
+`;
+
+const ProfileEmail = styled.span`
+  display: block;
+  font-size: 14px;
+  margin-top: 10px;
+  color: var(--font);
+
+  @media screen and (max-width: 500px) {
+    text-align: center;
   }
 `;

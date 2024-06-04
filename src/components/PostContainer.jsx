@@ -94,8 +94,6 @@ const PostContainer = () => {
         popularity: 0
       }
     ]);
-
-    console.log(list);
   };
 
   return (
