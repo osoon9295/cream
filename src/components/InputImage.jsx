@@ -1,11 +1,12 @@
 import React, { useId, useState } from 'react';
 import { FaCamera } from 'react-icons/fa';
+import { FaIceCream } from 'react-icons/fa6';
 import { GoPlus } from 'react-icons/go';
 import styled from 'styled-components';
 
 const InputFileWrap = styled.div`
-  width: 14.25rem;
-  height: 14.25rem;
+  width: 10.25rem;
+  height: 10.25rem;
   margin: 1.5rem auto;
   position: relative;
 `;
@@ -45,8 +46,8 @@ const StlyeLabel = styled.label`
   bottom: 0;
   color: #ffffff;
   background-color: #000000;
-  width: 4rem;
-  height: 4rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 100%;
   font-size: 3rem;
   display: flex;
@@ -75,13 +76,13 @@ export default function InputImage({ name = 'image' }) {
           <img src={imageSrc} />
         ) : (
           <div>
-            <FaCamera />
+            <FaIceCream />
             <p>이미지등록</p>
           </div>
         )}
       </StlyeImageShow>
       <StlyeLabel htmlFor={inputId}>
-        <GoPlus />
+        <GoPlus style={{ fontSize: '20px' }} />
       </StlyeLabel>
     </InputFileWrap>
   );
