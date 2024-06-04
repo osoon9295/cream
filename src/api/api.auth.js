@@ -1,15 +1,19 @@
 import bcrypt from 'bcryptjs';
+import { apiImg } from './api.img';
 import supabase from './api.supabase';
 
-export const signUp = async (email, password, nickname) => {
+export const signUp = async (email, password, nickname, img) => {
   try {
+    const imageSrc = await apiImg(img);
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
       email: email,
       password: hashedPassword,
       options: {
         data: {
-          nickname: nickname
+          nickname: nickname,
+          imageSrc: imageSrc
         }
       }
     });
@@ -18,6 +22,7 @@ export const signUp = async (email, password, nickname) => {
       console.log('Error:', signUpError);
       return;
     }
+
     console.log(signUpData);
 
     // const { user } = signUpData;
@@ -26,7 +31,7 @@ export const signUp = async (email, password, nickname) => {
         user_id: email,
         user_pw: hashedPassword,
         user_name: nickname,
-        user_imageSrc: ''
+        user_imageSrc: imageSrc
       }
     ]);
 
@@ -92,6 +97,28 @@ export const getUser = async () => {
     console.log('Error:', error);
     return null;
   }
+};
+
+export const checkEmailDuplicate = async (email) => {
+  const { data, error } = await supabase.from('member').select('id').eq('user_id', email).single();
+
+  if (error && error.code !== 'PGRST116') {
+    console.error('Error checking email:', error);
+    throw error;
+  }
+
+  return !!data; // 중복이 있으면 true, 없으면 false 반환
+};
+
+export const checkNicknameDuplicate = async (nickname) => {
+  const { data, error } = await supabase.from('member').select('id').eq('user_name', nickname).single();
+
+  if (error && error.code !== 'PGRST116') {
+    console.error('Error checking nickname:', error);
+    throw error;
+  }
+
+  return !!data; // 중복이 있으면 true, 없으면 false 반환
 };
 
 // async function checkSignIn() {

@@ -2,51 +2,59 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import WrittenPost from './../components/WrittenPost';
-import supabase from '../supabase';
+import supabase from '../api/api.supabase';
+import { getUser } from '../api/api.auth';
+import { apiImg } from '../api/api.img';
 
 const MyPage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [profileUrl, setProfileUrl] = useState(''); //프로필 이미지
-
-  async function getUser() {
-    const textEmail = 'ly0608@naver.com';
-    // const { data, error } = await supabase.auth.getSession();
-    // if (error) {
-    //   return false;
-    // }
-    // console.log('data', data);
-    // return data;
-
-    const { data, error } = await supabase.from('member').select('*').eq('user_id', textEmail);
-    if (error) {
-      console.error('Error fetching member', error);
-    } else {
-      setUser(data);
-    }
-  }
-
-  async function getProfileImg() {
-    const { data } = supabase.storage.from('avatars').getPublicUrl('default-profile.png');
-    setProfileUrl(data);
-  }
-
-  //function handleFileInputChange(files) {}
+  const [profileUrl, setProfileUrl] = useState('');
+  const defaultImg = 'https://ifzzsqrbvtphsikwxkms.supabase.co/storage/v1/object/public/avatars/default-img.png';
 
   useEffect(() => {
-    getUser();
+    const fetchData = async () => {
+      const userData = await getUser();
+      if (userData) {
+        setUser(userData);
+        console.log('user', userData);
+      } else {
+        console.log('Error user');
+      }
+    };
+
+    const fetchImage = async () => {
+      const imgData = await apiImg();
+      if (imgData) {
+        setProfileUrl(imgData);
+        console.log('img', imgData);
+      } else {
+        console.log('Error image');
+      }
+    };
+
+    fetchImage();
+    fetchData();
   }, []);
+
+  console.log(user);
 
   return (
     <>
       <StyleWrap>
         <Title>마이페이지</Title>
         <StyleProfileWrap>
-          <ProfileImg>{user.length > 0 ? user[0].user_imageSrc : ''}</ProfileImg>
+          <ProfileImg
+            src={profileUrl || defaultImg}
+            alt="프로필 이미지"
+            onError={(e) => {
+              e.target.src = defaultImg;
+            }}
+          />
+
           <StyleProfileName>
-            {`🎉 ${user.length > 0 ? user[0].user_name : ''}님 환영합니다.`}{' '}
-            <ProfileEmail>{user.length > 0 ? user[0].user_id : ''}</ProfileEmail>
+            {`🎉 ${user.user_metadata.nickname}님 환영합니다.`} <ProfileEmail>{user.email}</ProfileEmail>
           </StyleProfileName>
           <StyleProfileBtn onClick={() => navigate(`profile-edit`)}>프로필 관리</StyleProfileBtn>
         </StyleProfileWrap>
@@ -126,12 +134,12 @@ const StyleProfileWrap = styled.div`
   }
 `;
 
-const ProfileImg = styled.div`
+const ProfileImg = styled.img`
   width: 4rem;
   height: 4rem;
   border-radius: 100%;
-  background: #ddd;
-  margin-right: 30px;
+  border: 1px solid var(--border-color);
+  margin-right: 20px;
   display: flex;
   align-items: center;
   justify-content: center;

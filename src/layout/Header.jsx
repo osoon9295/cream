@@ -29,7 +29,7 @@ export default function Header() {
         <LogoWrap>
           <Logo>
             <a href="/">
-              <Img src="public/img/logo.png" alt="크림로고" />
+              <Img src="/public/img/logo.png" alt="크림로고" />
             </a>
           </Logo>
 

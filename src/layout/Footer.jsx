@@ -9,11 +9,11 @@ export default function Footer() {
         <InnerWrap>
           <Logo>
             <a href="/">
-              <Img src="public/img/default-logo.png" alt="크림로고" />
+              <Img src="/public/img/default-logo.png" alt="크림로고" />
             </a>
           </Logo>
           <a href="https://github.com/osoon9295/cream" style={{ color: '#BDBDBD' }}>
-            <IoLogoGithub style={{ verticalAlign: 'middle' }} /> github.com/osoon9295/cream
+            <IoLogoGithub style={{ verticalAlign: 'middle' }} /> github.com
           </a>
         </InnerWrap>
       </FooterWrap>

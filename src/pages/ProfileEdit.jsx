@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import supabase from '../supabase';
 import InputImage from '../components/InputImage';
 import Input from '../components/Input';
+import { getUser } from '../api/api.auth';
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -11,24 +11,33 @@ const ProfileEdit = () => {
   const nicknameRef = useRef(null);
   const pwdRef = useRef(null);
 
-  async function getUser() {
-    const testEmail = 'ly0608@naver.com';
+  const handleUpdateNickname = async () => {
+    const newNickname = nicknameRef.current.value;
+    const updateNickname = {
+      nickname: newNickname
+    };
 
-    const { data, error } = await supabase.from('member').select('*').eq('user_id', testEmail);
-    if (error) {
-      console.error('Error fetching posts', error);
+    if (updateNickname) {
+      setUser(updateNickname);
     } else {
-      setUser(data);
-      nicknameRef.current ? (nicknameRef.current.value = data[0].user_name) : '';
-      pwdRef.current ? (pwdRef.current.value = data[0].user_pwd) : '';
+      console.log('Error nickname update');
     }
-    console.log('data', data);
-  }
 
-  console.log('user', user);
+    console.log('user', user);
+  };
 
   useEffect(() => {
-    getUser();
+    const fetchData = async () => {
+      const userData = await getUser();
+      if (userData) {
+        setUser(userData);
+        nicknameRef.current ? (nicknameRef.current.value = userData.user_metadata.nickname) : '';
+        pwdRef.current ? (pwdRef.current.value = userData.user_pwd) : '';
+      } else {
+        console.log('Error');
+      }
+    };
+    fetchData();
   }, []);
 
   return (
@@ -39,7 +48,7 @@ const ProfileEdit = () => {
           <InputImage />
           <EditList>
             <Label htmlFor="profileid">아이디</Label>
-            <Id>{user.length > 0 ? user[0].user_id : ''}</Id>
+            <Id>{user.email}</Id>
           </EditList>
 
           <EditList>
@@ -53,7 +62,7 @@ const ProfileEdit = () => {
           </EditList>
 
           <StyleBtns>
-            <StyleEdit>변경</StyleEdit>
+            <StyleEdit onClick={handleUpdateNickname}>변경</StyleEdit>
             <StyleCancle onClick={() => navigate(-1)}>취소</StyleCancle>
           </StyleBtns>
         </ProfileEditWrap>
