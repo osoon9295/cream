@@ -17,21 +17,19 @@ const StToPostPageButton = styled.button`
   align-items: center;
   justify-content: center;
   position: fixed;
-  right: 5%;
-  bottom: 13%;
+  right: 75px;
+  bottom: 100px;
 
   cursor: pointer;
+
+  @media (max-width: 1120px) {
+    display: none;
+  }
 
   &:active {
     background-color: black;
     color: #ededed;
     cursor: pointer;
-  }
-
-  @media screen and (max-width: 800px) {
-    width: 20px;
-    height: 20px;
-    bottom: 100px;
   }
 `;
 
