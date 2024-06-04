@@ -48,10 +48,6 @@ const SortButtons = ({ showList, setShowList }) => {
     setActiveButton((prev) => (prev === type ? null : type));
   };
 
-  //   useEffect(() => {
-  //     setShowList(postList.slice(0, 12));
-  //   }, [dfssdfsddf]);
-
   return (
     <StSortButtonsWrapper>
       <StSortButtons>
