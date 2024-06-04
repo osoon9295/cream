@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { getUser, signIn } from '../api/api.auth';
-import * as S from '../styles/auth.styled';
+import * as S from '../styles/Auth.styled';
 import Input from './../components/Input';
 
 const StyleBtns = styled.div`

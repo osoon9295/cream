@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { signUp } from '../api/api.auth';
 import Input from '../components/Input';
 import InputImage from '../components/InputImage';
-import * as S from '../styles/auth.styled';
+import * as S from '../styles/Auth.styled';
 
 const StyleSubmit = styled.input`
   border: 0;
