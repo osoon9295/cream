@@ -3,6 +3,9 @@ import ShowPostList from '../components/main/ShowPostList';
 import { useNavigate } from 'react-router-dom';
 import Carousel from '../components/main/Carousel';
 import MainCategory from '../components/main/MainCategory';
+import ToTopButton from '../components/main/ToTopButton';
+import ToPostPage from '../components/main/ToPostPage';
+
 const MainPage = () => {
   const navigate = useNavigate();
   return (
@@ -13,6 +16,8 @@ const MainPage = () => {
       <MainCategory />
       <Carousel />
       <ShowPostList />
+      <ToPostPage />
+      <ToTopButton />
     </div>
   );
 };

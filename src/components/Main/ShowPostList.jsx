@@ -6,7 +6,8 @@ import SortButtons from './SortButtons';
 
 const StWrapper = styled.main`
   /* background-color: blue; */
-  width: 100%;
+  /* width: 100%; */
+
   margin: 4% auto;
   display: flex;
   flex-direction: column;
@@ -16,7 +17,6 @@ const StWrapper = styled.main`
 const StContainer = styled.section`
   max-width: 1240px;
   width: 100%;
-  /* min-height: 1320px; */
   display: grid;
   padding: 0 0 5% 0;
 
