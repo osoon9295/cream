@@ -5,6 +5,8 @@ import { FaCrown, FaIceCream } from 'react-icons/fa';
 import { GiSpoon } from 'react-icons/gi';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6';
 import { PiEqualsBold } from 'react-icons/pi';
+import { useDispatch } from 'react-redux';
+import { setCategory } from '../../store/slices/categorySlice';
 
 const StPcCategory = styled.div`
   display: flex;
@@ -19,8 +21,12 @@ const StPcCategory = styled.div`
   background-color: #d5e0fc;
   box-sizing: border-box;
   z-index: 1;
-  transform: ${(props) => (props.isOn ? 'translateX(0%)' : 'translateX(-100%)')};
+  transform: ${(props) => (props.$isOn ? 'translateX(0%)' : 'translateX(-100%)')};
   transition: transform 0.5s ease-in;
+
+  @media (max-width: 1120px) {
+    display: none;
+  }
 
   /* @media (max-height: 1024px) {
     
@@ -115,44 +121,64 @@ const StPcCategoryToggle = styled.button`
 `;
 
 const PcCategory = () => {
+  const dispatch = useDispatch();
   const [isOn, setIsOn] = useState(false);
   const [activeState, setActiveState] = useState([false, false, false]);
   const iconBtn = [
     {
       icon: <FaCrown size="56" />,
+      category: 'brand',
       text: '브랜드별'
     },
     {
       icon: <GiSpoon size="56" />,
+      category: 'flavor',
       text: '맛별'
     },
     {
       icon: <FaIceCream size="56" />,
+      category: 'type',
       text: '콘/바/컵'
     }
   ];
   const pcToggleHandler = () => {
     setIsOn(!isOn);
   };
+
+  /* 문제점
+     - activeState와 categorySlice가 따로 관리된다.
+  */
+  const onClickHandler = (index, category) => {
+    const newState = activeState.map((state, stateIndex) => {
+      if (index === stateIndex) {
+        return !state;
+      }
+      return false;
+    });
+    setActiveState(newState);
+    // [false, false, false]
+    // { category: '', subCategory: '' };
+    const FalseState = newState.every((currentState) => {
+      return currentState === false;
+    });
+    if (FalseState) {
+      dispatch(setCategory(''));
+    } else {
+      dispatch(setCategory(category));
+    }
+  };
   // console.log(iconElement);
   return (
-    <StPcCategory isOn={isOn}>
-      {/* active 아이콘 컬러 변경 넣어야함 */}
+    <StPcCategory $isOn={isOn}>
       <PiEqualsBold size="56" color="#fff" />
       <StPcCategoryUl>
         {iconBtn.map((item, index) => {
           return (
-            <li key={index}>
+            <li key={item.category}>
               <button
                 className={activeState[index] ? 'active' : ''}
                 onClick={() => {
-                  const newState = activeState.map((state, stateIndex) => {
-                    if (index === stateIndex) {
-                      return !state;
-                    }
-                    return false;
-                  });
-                  setActiveState(newState);
+                  onClickHandler(index, item.category);
                 }}
               >
                 {item.icon}

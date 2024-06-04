@@ -1,10 +1,9 @@
-import React from 'react';
-import ShowPostList from '../components/main/ShowPostList';
 import { useNavigate } from 'react-router-dom';
 import Carousel from '../components/main/Carousel';
 import MainCategory from '../components/main/MainCategory';
-import ToTopButton from '../components/main/ToTopButton';
+import ShowPostList from '../components/main/ShowPostList';
 import ToPostPage from '../components/main/ToPostPage';
+import ToTopButton from '../components/main/ToTopButton';
 
 const MainPage = () => {
   const navigate = useNavigate();

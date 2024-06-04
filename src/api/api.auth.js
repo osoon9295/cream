@@ -4,12 +4,17 @@ import supabase from './api.supabase';
 
 export const signUp = async (email, password, nickname, img) => {
   try {
-    const imageSrc = await apiImg(img);
+    let imageSrc = '';
+    if (undefined == img) {
+      imageSrc = 'https://ifzzsqrbvtphsikwxkms.supabase.co/storage/v1/object/public/avatars/default-img.png';
+    } else {
+      imageSrc = await apiImg(img);
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
       email: email,
-      password: hashedPassword,
+      password: password,
       options: {
         data: {
           nickname: nickname,
@@ -25,7 +30,6 @@ export const signUp = async (email, password, nickname, img) => {
 
     console.log(signUpData);
 
-    // const { user } = signUpData;
     const { data: memberData, error: memberError } = await supabase.from('member').insert([
       {
         user_id: email,
@@ -121,9 +125,9 @@ export const checkNicknameDuplicate = async (nickname) => {
   return !!data; // 중복이 있으면 true, 없으면 false 반환
 };
 
-// async function checkSignIn() {
-//   const session = await supabase.auth.getSession();
-//   const isSignIn = !!session.data.session;
-
-//   setSignIn(isSignIn);
-// }
+export const checkSignIn = async () => {
+  const session = await supabase.auth.getSession();
+  const isSignIn = !!session.data.session;
+  console.log(session.data, isSignIn);
+  return isSignIn;
+};

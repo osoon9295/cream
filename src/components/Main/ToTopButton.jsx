@@ -17,8 +17,12 @@ const StTopButton = styled.button`
   align-items: center;
   justify-content: center;
   position: fixed;
-  right: 5%;
-  bottom: 5%;
+  right: 75px;
+  bottom: 40px;
+
+  @media (max-width: 1120px) {
+    display: none;
+  }
 
   cursor: pointer;
 

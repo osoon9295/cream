@@ -9,6 +9,10 @@ const StMobileCategory = styled.ul`
   padding: 18px 0;
   background-color: #d5e0fc;
 
+  @media (min-width: 1120px) {
+    display: none;
+  }
+
   button {
     font-size: 20px;
     border: transparent;
