@@ -4,27 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import InputImage from '../components/InputImage';
 import Input from '../components/Input';
 import { getUser } from '../api/api.auth';
+import supabase from '../api/api.supabase';
 
-const ProfileEdit = () => {
+const ProfileEdit = ({ user, setUser }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
   const nicknameRef = useRef(null);
-  const pwdRef = useRef(null);
-
-  const handleUpdateNickname = async () => {
-    const newNickname = nicknameRef.current.value;
-    const updateNickname = {
-      nickname: newNickname
-    };
-
-    if (updateNickname) {
-      setUser(updateNickname);
-    } else {
-      console.log('Error nickname update');
-    }
-
-    console.log('user', user);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,13 +16,36 @@ const ProfileEdit = () => {
       if (userData) {
         setUser(userData);
         nicknameRef.current ? (nicknameRef.current.value = userData.user_metadata.nickname) : '';
-        pwdRef.current ? (pwdRef.current.value = userData.user_pwd) : '';
       } else {
         console.log('Error');
       }
     };
     fetchData();
   }, []);
+
+  const handleUpdateNickname = async () => {
+    try {
+      const newNickname = nicknameRef.current.value;
+      const updatedUserData = {
+        ...user,
+        user_metadata: { ...user.user_metadata, nickname: newNickname }
+      };
+      setUser(updatedUserData);
+      console.log('수정후', updatedUserData);
+
+      const { data, error } = await supabase
+        .from('member')
+        .update({ user_metadata: updatedUserData.user_metadata })
+        .eq('id', user.id);
+      if (error) {
+        console.error('supabase 업데이트 실패', error.message);
+        return;
+      }
+      navigate(-1);
+    } catch (error) {
+      console.error('닉네임 업데이트 실패', error);
+    }
+  };
 
   return (
     <>
@@ -54,11 +61,6 @@ const ProfileEdit = () => {
           <EditList>
             <Label htmlFor="nickname">닉네임</Label>
             <Input inputRef={nicknameRef} isRequired={true} name="name" id="nickname" />
-          </EditList>
-
-          <EditList>
-            <Label htmlFor="pwd">비밀번호</Label>
-            <Input inputRef={pwdRef} isRequired={true} type="password" name="pwChk" id="pwd" />
           </EditList>
 
           <StyleBtns>

@@ -1,7 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getUser } from '../../api/api.auth';
 
-const initialState = {};
+const fetchInitialUserData = async () => {
+  try {
+    const userData = await getUser();
+    return userData;
+  } catch (error) {
+    console.error('Error fetching initial user data:', error);
+    return null;
+  }
+};
+
+const setInitialState = async () => {
+  const userData = await fetchInitialUserData();
+  return userData ? { ...userData } : {};
+};
+
+const initialState = setInitialState();
 
 export const userSlice = createSlice({
   name: 'user',
@@ -9,5 +24,4 @@ export const userSlice = createSlice({
   reducers: {}
 });
 
-export const {} = userSlice.actions;
 export default userSlice.reducer;
