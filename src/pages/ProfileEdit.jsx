@@ -1,11 +1,45 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import InputImage from '../components/InputImage';
-import Input from './../components/Input';
 import { useNavigate } from 'react-router-dom';
+import InputImage from '../components/InputImage';
+import Input from '../components/Input';
+import { getUser } from '../api/api.auth';
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState({});
+  const nicknameRef = useRef(null);
+  const pwdRef = useRef(null);
+
+  const handleUpdateNickname = async () => {
+    const newNickname = nicknameRef.current.value;
+    const updateNickname = {
+      nickname: newNickname
+    };
+
+    if (updateNickname) {
+      setUser(updateNickname);
+    } else {
+      console.log('Error nickname update');
+    }
+
+    console.log('user', user);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userData = await getUser();
+      if (userData) {
+        setUser(userData);
+        nicknameRef.current ? (nicknameRef.current.value = userData.user_metadata.nickname) : '';
+        pwdRef.current ? (pwdRef.current.value = userData.user_pwd) : '';
+      } else {
+        console.log('Error');
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
       <StyleWrap>
@@ -14,21 +48,21 @@ const ProfileEdit = () => {
           <InputImage />
           <EditList>
             <Label htmlFor="profileid">아이디</Label>
-            wnswns722
+            <Id>{user.email}</Id>
           </EditList>
 
           <EditList>
             <Label htmlFor="nickname">닉네임</Label>
-            <Input isRequired={true} name="name" id="nickname" placeholder="닉네임" />
+            <Input inputRef={nicknameRef} isRequired={true} name="name" id="nickname" />
           </EditList>
 
           <EditList>
-            <Label htmlFor="password">비밀번호</Label>
-            <Input isRequired={true} name="pwChk" id="password" placeholder="비밀번호 확인" />
+            <Label htmlFor="pwd">비밀번호</Label>
+            <Input inputRef={pwdRef} isRequired={true} type="password" name="pwChk" id="pwd" />
           </EditList>
 
           <StyleBtns>
-            <StyleEdit>변경</StyleEdit>
+            <StyleEdit onClick={handleUpdateNickname}>변경</StyleEdit>
             <StyleCancle onClick={() => navigate(-1)}>취소</StyleCancle>
           </StyleBtns>
         </ProfileEditWrap>
@@ -100,4 +134,8 @@ const ProfileEditWrap = styled.div`
   flex-direction: column;
   width: 50%;
   margin: 0 auto;
+`;
+
+const Id = styled.p`
+  width: 100%;
 `;
