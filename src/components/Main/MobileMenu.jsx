@@ -1,11 +1,10 @@
-import { GoHome, GoSearch, GoBookmark, GoPerson } from 'react-icons/go';
+import { GoHome, GoSearch, GoBookmark, GoPerson, GoPencil } from 'react-icons/go';
 import React from 'react';
 import styled from 'styled-components';
 
 const StMobileNav = styled.ul`
   display: flex;
-  justify-content: center;
-  gap: 134px;
+  justify-content: space-between;
   position: fixed;
   bottom: 0;
   width: 100vw;
@@ -21,22 +20,30 @@ const StMobileNav = styled.ul`
   li {
     text-align: center;
     font-size: 12px;
+
+    @media (max-width: 800px) {
+      font-size: 9px;
+    }
   }
 
   span {
     display: block;
     color: #9a9a9a;
     margin-top: 3px;
+    @media (max-width: 800px) {
+      margin: 0;
+    }
   }
 
-  @media (max-width: 768px) {
-    gap: calc(134px * 0.5);
-    padding: calc(16px * 0.5) calc(66px * 0.5);
+  svg {
+    @media (max-width: 800px) {
+      width: 25px;
+      height: 25px;
+    }
   }
-
-  @media (max-width: 480px) {
-    gap: calc(134px * 0.3);
-    padding: calc(16px * 0.3) calc(66px * 0.3);
+  @media (max-width: 800px) {
+    gap: 30px;
+    padding: 2px 30px;
   }
 `;
 
@@ -58,6 +65,10 @@ const MobileMenu = () => {
       <li>
         <GoPerson size="40" />
         <span>MY</span>
+      </li>
+      <li>
+        <GoPencil size="40" />
+        <span>WRITE</span>
       </li>
     </StMobileNav>
   );

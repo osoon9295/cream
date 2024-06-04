@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import DefaultLayout from '../layout/DefaultLayout';
 import Join from '../pages/Join';
@@ -11,6 +11,8 @@ import ModifyPost from '../pages/ModifyPost';
 import DetailedPost from '../pages/DetailedPost';
 
 export default function Router() {
+  const [user, setUser] = useState([]);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -22,7 +24,7 @@ export default function Router() {
           <Route path="/modifyPost" element={<ModifyPost />} />
           <Route path="/detailed" element={<DetailedPost />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/mypage/profile-edit" element={<ProfileEdit />} />
+          <Route path="/mypage/profile-edit" element={<ProfileEdit user={user} setUser={setUser} />} />
         </Route>
       </Routes>
     </BrowserRouter>
