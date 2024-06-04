@@ -12,6 +12,6 @@ export const AuthForm = styled.form`
 
   > h1 {
     line-height: 3rem;
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 `;

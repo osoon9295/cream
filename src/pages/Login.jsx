@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import * as S from '../styles/Auth.styled';
+import { getUser, signIn } from '../api/api.auth';
+import * as S from '../styles/auth.styled';
 import Input from './../components/Input';
 
 const StyleBtns = styled.div`
@@ -33,12 +34,22 @@ const StyleLink = styled.button`
   cursor: pointer;
 `;
 
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const email = e.target.email.value;
+  const pw = e.target.pw.value;
+
+  await signIn(email, pw);
+  await getUser();
+  console.log('wad');
+};
+
 export default function Login() {
   return (
-    <S.AuthForm>
+    <S.AuthForm onSubmit={handleSubmit} method="post">
       <h1>로그인</h1>
-      <Input isRequired={true} name="id" placeholder="아이디" />
-      <Input isRequired={true} name="pw" placeholder="비밀번호" />
+      <Input isRequired={true} name="email" type="email" placeholder="아이디" />
+      <Input isRequired={true} name="pw" type="password" placeholder="비밀번호" />
       <StyleBtns>
         <StyleSubmit type="submit" value="로그인" />
         <StyleLink>회원가입</StyleLink>
