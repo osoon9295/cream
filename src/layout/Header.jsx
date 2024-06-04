@@ -40,7 +40,7 @@ export default function Header() {
         </LogoWrap>
       </InnerWrap>
 
-      <MobileMenuWrap>
+      {/* <MobileMenuWrap>
         <MobileMenu>
           <li>
             <a href="/">
@@ -67,7 +67,7 @@ export default function Header() {
             </a>
           </li>
         </MobileMenu>
-      </MobileMenuWrap>
+      </MobileMenuWrap> */}
     </HeaderWrap>
   );
 }
@@ -144,31 +144,31 @@ const SearchInput = styled.input`
   width: 14rem;
 `;
 
-const MobileMenuWrap = styled.div`
-  display: none;
+// const MobileMenuWrap = styled.div`
+//   display: none;
 
-  @media screen and (max-width: 500px) {
-    display: block;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 15px;
-    background: #fff;
-    z-index: 9;
-    border-top: 1px solid var(--border-color);
-  }
-`;
+//   @media screen and (max-width: 500px) {
+//     display: block;
+//     position: fixed;
+//     bottom: 0;
+//     left: 0;
+//     right: 0;
+//     padding: 15px;
+//     background: #fff;
+//     z-index: 9;
+//     border-top: 1px solid var(--border-color);
+//   }
+// `;
 
-const MobileMenu = styled.div`
-  @media screen and (max-width: 500px) {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    text-align: center;
-  }
-`;
+// const MobileMenu = styled.div`
+//   @media screen and (max-width: 500px) {
+//     display: flex;
+//     justify-content: space-around;
+//     align-items: center;
+//     text-align: center;
+//   }
+// `;
 
-const MobileTxt = styled.p`
-  font-size: 0.7rem;
-`;
+// const MobileTxt = styled.p`
+//   font-size: 0.7rem;
+// `;
