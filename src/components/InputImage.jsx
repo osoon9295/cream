@@ -55,8 +55,11 @@ const StlyeLabel = styled.label`
   cursor: pointer;
 `;
 
-export default function InputImage({ name = 'image' }) {
-  const [imageSrc, setImageSrc] = useState();
+export default function InputImage({
+  name = 'image',
+  image = 'https://ifzzsqrbvtphsikwxkms.supabase.co/storage/v1/object/public/avatars/default-img.png'
+}) {
+  const [imageSrc, setImageSrc] = useState(image);
   const inputId = useId();
 
   const handleChange = (e) => {
