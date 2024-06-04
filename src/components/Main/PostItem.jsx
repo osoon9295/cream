@@ -34,7 +34,7 @@ const StIdAndLikeButtons = styled.div`
 
 const StPostUserId = styled.span`
   font-size: 150%;
-  font-weight: 700;
+  color: #484848;
 `;
 
 const StLikeAndBookmark = styled.span`
@@ -43,6 +43,7 @@ const StLikeAndBookmark = styled.span`
   align-items: center;
   gap: 5px;
   font-size: 120%;
+  color: #484848;
 `;
 
 const StLikeButtons = styled.div`
@@ -67,6 +68,7 @@ const StPostContent = styled.p`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   text-align: justify;
+  color: #7e7e7e;
 `;
 
 const StPostDate = styled.div`
@@ -74,6 +76,7 @@ const StPostDate = styled.div`
   width: 100%;
   display: flex;
   justify-content: left;
+  color: #d0d0d0;
 `;
 const PostItem = ({ post }) => {
   const { image, userId, productName, postContent, popularity } = post;
