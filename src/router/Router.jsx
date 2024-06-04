@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import DefaultLayout from '../layout/DefaultLayout';
 import Join from '../pages/Join';
@@ -9,6 +9,8 @@ import ProfileEdit from '../pages/ProfileEdit';
 import CreatePost from '../pages/CreatePost';
 
 export default function Router() {
+  const [user, setUser] = useState([]);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -17,8 +19,8 @@ export default function Router() {
           <Route path="/login" element={<Login />} />
           <Route path="/join" element={<Join />} />
           <Route path="/createPost" element={<CreatePost />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/mypage/profile-edit" element={<ProfileEdit />} />
+          <Route path="/mypage" element={<MyPage user={user} setUser={setUser} />} />
+          <Route path="/mypage/profile-edit" element={<ProfileEdit user={user} setUser={setUser} />} />
         </Route>
       </Routes>
     </BrowserRouter>

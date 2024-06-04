@@ -2,59 +2,51 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import WrittenPost from './../components/WrittenPost';
-import supabase from '../api/api.supabase';
 import { getUser } from '../api/api.auth';
 import { apiImg } from '../api/api.img';
 
-const MyPage = () => {
+const MyPage = ({ user, setUser }) => {
+  //const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [user, setUser] = useState([]);
+  const [nickname, setNickname] = useState('');
   const [posts, setPosts] = useState([]);
   const [profileUrl, setProfileUrl] = useState('');
-  const defaultImg = 'https://ifzzsqrbvtphsikwxkms.supabase.co/storage/v1/object/public/avatars/default-img.png';
 
   useEffect(() => {
     const fetchData = async () => {
       const userData = await getUser();
+
       if (userData) {
         setUser(userData);
+        setNickname(userData.user_metadata.nickname);
         console.log('user', userData);
       } else {
-        console.log('Error user');
+        console.error('회원정보를 가져오지 못했습니다.', error);
       }
     };
 
     const fetchImage = async () => {
       const imgData = await apiImg();
+      console.log('imgData', imgData);
       if (imgData) {
         setProfileUrl(imgData);
-        console.log('img', imgData);
       } else {
-        console.log('Error image');
+        console.error('이미지를 불러오지 못했습니다.', error);
       }
     };
-
     fetchImage();
     fetchData();
   }, []);
-
-  console.log(user);
 
   return (
     <>
       <StyleWrap>
         <Title>마이페이지</Title>
         <StyleProfileWrap>
-          <ProfileImg
-            src={profileUrl || defaultImg}
-            alt="프로필 이미지"
-            onError={(e) => {
-              e.target.src = defaultImg;
-            }}
-          />
+          <ProfileImg src={profileUrl} alt="프로필 이미지" />
 
           <StyleProfileName>
-            {`🎉 ${user.user_metadata.nickname}님 환영합니다.`} <ProfileEmail>{user.email}</ProfileEmail>
+            {`🎉 ${nickname}님 환영합니다.`} <ProfileEmail>{user.email}</ProfileEmail>
           </StyleProfileName>
           <StyleProfileBtn onClick={() => navigate(`profile-edit`)}>프로필 관리</StyleProfileBtn>
         </StyleProfileWrap>
@@ -74,6 +66,7 @@ const MyPage = () => {
         <StylePostWrap>
           <div>
             <StylePostTitle>✏️ 내가 쓴 게시글</StylePostTitle>
+            <WrittenPost />
           </div>
 
           <div>
@@ -151,6 +144,7 @@ const ProfileImg = styled.img`
 const StyleProfileName = styled.p`
   flex: auto;
   font-size: 18px;
+  font-weight: 600;
 
   @media screen and (max-width: 500px) {
     font-size: 16px;
@@ -227,8 +221,10 @@ const ProfileEmail = styled.span`
   font-size: 14px;
   margin-top: 10px;
   color: var(--font);
+  margin-left: 1.55rem;
 
   @media screen and (max-width: 500px) {
     text-align: center;
+    margin: 0;
   }
 `;
