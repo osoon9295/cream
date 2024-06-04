@@ -7,6 +7,8 @@ import MainPage from '../pages/MainPage';
 import MyPage from '../pages/MyPage';
 import ProfileEdit from '../pages/ProfileEdit';
 import CreatePost from '../pages/CreatePost';
+import ModifyPost from '../pages/ModifyPost';
+import DetailedPost from '../pages/DetailedPost';
 
 export default function Router() {
   return (
@@ -17,6 +19,8 @@ export default function Router() {
           <Route path="/login" element={<Login />} />
           <Route path="/join" element={<Join />} />
           <Route path="/createPost" element={<CreatePost />} />
+          <Route path="/modifyPost" element={<ModifyPost />} />
+          <Route path="/detailed" element={<DetailedPost />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/profile-edit" element={<ProfileEdit />} />
         </Route>

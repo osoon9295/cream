@@ -1,21 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PostContainer from '../components/PostContainer';
-import supabase from '../supabase';
-const CreatePost = () => {
-  // const [list, setList] = useState([]);
+import { useDispatch, useSelector } from 'react-redux';
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const { data, error } = await supabase.from('posts').select('*');
-  //     if (error) {
-  //       console.log('error =>', error);
-  //     } else {
-  //       console.log('data =>', data);
-  //       setList(data);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+const CreatePost = () => {
+  const posts = useSelector((state) => state.postList);
+  console.log(posts);
   return (
     <>
       <PostContainer />

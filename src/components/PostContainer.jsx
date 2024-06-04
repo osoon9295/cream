@@ -6,8 +6,6 @@ import { BrandTag, FlavorTag, TypeTag } from './post/Tag';
 import PostName from '../components/post/ProductName';
 import PostImage from '../components/post/ProductImage';
 import PostReview from '../components/post/ProductReview';
-import { useDispatch, useSelector } from 'react-redux';
-import { addPost } from '../store/slices/postSlice';
 import supabase from '../supabase';
 
 const PostInner = styled.div`
@@ -81,24 +79,7 @@ const PostContainer = () => {
   const [flavor, setFlavor] = useState('딸기');
   const [type, setType] = useState('콘');
 
-  // const posts = useSelector((state) => state.postList);
-  // const dispatch = useDispatch();
-  // dispatch(
-  //   addPost({
-  //     id: uuid(),
-  //     productName: name,
-  //     productBrand: brand,
-  //     userId: '지영',
-  //     productContent: content,
-  //     productImageSrc: image,
-  //     createdAt: Date.now(),
-  //     popularity: 0
-  //   })
-  // );
-
-  // console.log(posts);
-
-  const DataHandler = async () => {
+  const AddHandler = async () => {
     const { data, error } = await supabase.from('posts').insert({
       id: uuid(),
       user_id: '지영',
@@ -106,15 +87,22 @@ const PostContainer = () => {
       product_brand: brand,
       product_imageSrc: image,
       post_content: content,
-      popularity: 0,
-      created_at: '2024-06-04T07:37:44.326279+00:00'
+      popularity: 0
     });
     if (error) {
       console.log(error);
     } else {
-      alert('성공!');
+      alert('게시글이 등록되었습니다.');
       console.log('Data', data);
     }
+  };
+
+  const ModifyHandler = async () => {
+    const { data, error } = await supabase.from('posts').update({}).eq();
+  };
+
+  const DeleteHandler = () => {
+    const { data, error } = supabase.from('posts').delete().eq();
   };
 
   return (
@@ -171,7 +159,7 @@ const PostContainer = () => {
         </PostBox>
       </PostInner>
       <SubmitBox>
-        <SubmitButton onClick={DataHandler}>등록</SubmitButton>
+        <SubmitButton onClick={AddHandler}>등록</SubmitButton>
       </SubmitBox>
     </>
   );

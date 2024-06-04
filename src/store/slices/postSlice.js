@@ -172,7 +172,7 @@ const postSlice = createSlice({
   initialState: initialState,
   reducers: {
     addPost: (state, action) => {
-      return [...state, action.payload];
+      return [...initialState, ...action.payload];
     }
   }
 });
