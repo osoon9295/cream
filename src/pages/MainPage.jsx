@@ -11,7 +11,6 @@ const MainPage = () => {
       <button onClick={() => navigate(`/mypage`)}>마이페이지</button>
       <button onClick={() => navigate(`/login`)}>로그인</button>
       <button onClick={() => navigate(`/join`)}>회원가입</button>
-
       <MainCategory />
       <Carousel />
       <ShowPostList />
