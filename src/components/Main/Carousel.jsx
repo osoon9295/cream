@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { IoIosArrowDropright } from 'react-icons/io';
+import { IoIosArrowDropleft } from 'react-icons/io';
 
 const StContainer = styled.div`
   width: 100%;
@@ -25,16 +27,34 @@ const SlideImg = styled.img`
 `;
 
 const StPrevBtn = styled.button`
+  background-color: transparent;
+  border: none;
+  font-size: 30px;
+  width: fit-content;
   cursor: pointer;
   position: absolute;
   top: 50%;
+
+  &:active {
+    color: #ededed;
+    cursor: pointer;
+  }
 `;
 
 const StNextBtn = styled.button`
+  background-color: transparent;
+  font-size: 30px;
+  border: none;
+  width: fit-content;
   cursor: pointer;
   position: absolute;
-  top: 40px;
+  top: 50%;
   right: 0px;
+
+  &:active {
+    color: #ededed;
+    cursor: pointer;
+  }
 `;
 
 const Carousel = () => {
@@ -60,8 +80,12 @@ const Carousel = () => {
         })}
       </StAllSlides>
 
-      <StPrevBtn onClick={toPrevBanner}> prev </StPrevBtn>
-      <StNextBtn onClick={toNextBanner}> next </StNextBtn>
+      <StPrevBtn onClick={toPrevBanner}>
+        <IoIosArrowDropleft />
+      </StPrevBtn>
+      <StNextBtn>
+        <IoIosArrowDropright onClick={toNextBanner} />
+      </StNextBtn>
     </StContainer>
   );
 };
