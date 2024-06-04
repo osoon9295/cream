@@ -7,7 +7,8 @@ const StTopButton = styled.button`
   border: none;
   border-radius: 50%;
   background-color: #ededed;
-  height: 5%;
+  width: 50px;
+  height: 50px;
 
   font-size: 30px;
   color: black;

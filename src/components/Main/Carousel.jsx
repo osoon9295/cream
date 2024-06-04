@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IoIosArrowDropright } from 'react-icons/io';
 import { IoIosArrowDropleft } from 'react-icons/io';
+import { SlArrowLeft } from 'react-icons/sl';
+import { SlArrowRight } from 'react-icons/sl';
 
 const StContainer = styled.div`
   width: 100%;
@@ -29,30 +31,33 @@ const SlideImg = styled.img`
 const StPrevBtn = styled.button`
   background-color: transparent;
   border: none;
-  font-size: 30px;
+  font-size: 50px;
   width: fit-content;
   cursor: pointer;
   position: absolute;
-  top: 50%;
+  top: 45%;
+  left: 5%;
+  color: #ededed;
 
-  &:active {
-    color: #ededed;
+  &:hover {
+    color: black;
     cursor: pointer;
   }
 `;
 
 const StNextBtn = styled.button`
   background-color: transparent;
-  font-size: 30px;
+  font-size: 50px;
   border: none;
   width: fit-content;
   cursor: pointer;
   position: absolute;
-  top: 50%;
-  right: 0px;
+  top: 45%;
+  right: 5%;
+  color: #ededed;
 
-  &:active {
-    color: #ededed;
+  &:hover {
+    color: black;
     cursor: pointer;
   }
 `;
@@ -81,10 +86,10 @@ const Carousel = () => {
       </StAllSlides>
 
       <StPrevBtn onClick={toPrevBanner}>
-        <IoIosArrowDropleft />
+        <SlArrowLeft />
       </StPrevBtn>
-      <StNextBtn>
-        <IoIosArrowDropright onClick={toNextBanner} />
+      <StNextBtn onClick={toNextBanner}>
+        <SlArrowRight />
       </StNextBtn>
     </StContainer>
   );

@@ -1,29 +1,37 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+const StSortButtonsWrapper = styled.div`
+  width: 100%;
+  padding: 3% 0 0 0;
+  border-bottom: 1.5px solid #bdbdbd;
+
+  display: flex;
+  justify-content: center;
+`;
+
 const StSortButtons = styled.div`
   /* background-color: blue; */
   max-width: 1240px;
   width: 100%;
-  border-bottom: 1px solid black;
   display: flex;
-  gap: 60px;
+  gap: 30px;
 `;
 
 const StPopularPost = styled.button`
   background-color: transparent;
   color: #bdbdbd;
   border: none;
-  font-size: 250%;
-  padding: 0 0 5% 0;
+  font-size: 150%;
+  padding: 0 0 1% 0;
 `;
 
 const StlatestPost = styled.button`
   background-color: transparent;
   color: #bdbdbd;
   border: none;
-  font-size: 250%;
-  padding: 0 0 5% 0;
+  font-size: 150%;
+  padding: 0 0 1% 0;
 `;
 
 const SortButtons = ({ showList, setShowList }) => {
@@ -45,20 +53,22 @@ const SortButtons = ({ showList, setShowList }) => {
   //   }, [dfssdfsddf]);
 
   return (
-    <StSortButtons>
-      <StPopularPost
-        onClick={() => handleButtonClick('popular')}
-        style={{ color: activeButton === 'popular' ? 'black' : '#bdbdbd' }}
-      >
-        {activeButton === 'popular' ? '✨인기게시물' : '인기게시물'}
-      </StPopularPost>
-      <StlatestPost
-        onClick={() => handleButtonClick('latest')}
-        style={{ color: activeButton === 'latest' ? 'black' : '#bdbdbd' }}
-      >
-        {activeButton === 'latest' ? '✨최신게시물' : '최신게시물'}
-      </StlatestPost>
-    </StSortButtons>
+    <StSortButtonsWrapper>
+      <StSortButtons>
+        <StPopularPost
+          onClick={() => handleButtonClick('popular')}
+          style={{ color: activeButton === 'popular' ? 'black' : '#bdbdbd' }}
+        >
+          {activeButton === 'popular' ? '✨인기게시물' : '인기게시물'}
+        </StPopularPost>
+        <StlatestPost
+          onClick={() => handleButtonClick('latest')}
+          style={{ color: activeButton === 'latest' ? 'black' : '#bdbdbd' }}
+        >
+          {activeButton === 'latest' ? '✨최신게시물' : '최신게시물'}
+        </StlatestPost>
+      </StSortButtons>
+    </StSortButtonsWrapper>
   );
 };
 
