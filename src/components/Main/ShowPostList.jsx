@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import PostItem from './PostItem';
 import SortButtons from './SortButtons';
+import CategoryTabs from './CategoryTabs';
 
 const StWrapper = styled.main`
   /* background-color: blue; */
@@ -42,7 +43,6 @@ const StMoreButton = styled.button`
     padding: 6px 12px;
   }
 `;
-
 const ShowPostList = () => {
   const postList = useSelector((state) => state.postList);
   const [showList, setShowList] = useState([]);
@@ -50,14 +50,16 @@ const ShowPostList = () => {
   useEffect(() => {
     setShowList(postList.slice(0, 12));
   }, []);
-  console.log(showList);
+  // console.log(showList);
 
   const moreShowList = () => {
     showList.length <= 12 ? setShowList(postList) : setShowList(postList.slice(0, 12));
   };
+
   return (
     <StWrapper>
       <SortButtons showList={showList} setShowList={setShowList} />
+      <CategoryTabs />
       <StContainer>
         {showList.map((post) => {
           return <PostItem key={post.id} post={post} />;
