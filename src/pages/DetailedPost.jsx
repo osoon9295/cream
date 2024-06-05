@@ -1,49 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import supabase from '../supabase';
+import { deletePost } from '../store/slices/postSlice';
+import { useNavigate } from 'react-router-dom';
+import usePosts from '../customHook/usePosts';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPost } from '../store/slices/postSlice';
 
 const DetailedPost = () => {
-  const [list, setList] = useState([]);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await supabase.from('posts').select('*');
-      if (error) {
-        console.log('error =>', error);
-      } else {
-        // console.log('data =>', data);
-        setList(data);
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    dispatch(addPost(list));
-  }, [list]);
 
   const posts = useSelector((state) => state.postList);
   console.log(posts);
 
+  const onDeletePost = async (id) => {
+    const response = await supabase.from('posts').delete().eq('id', id);
+    dispatch(deletePost(id));
+    console.log(response);
+  };
+
   return (
     <div>
-      {posts.map((li) => {
-        return (
-          <div key={li.id} style={{ margin: '20px' }}>
-            {li.product_name}
-            <br />
-            {li.user_id}
-            <br />
-            {li.product_brand}
-            <br />
-            {li.post_content}
-            <br />
-            {li.created_at}
-          </div>
-        );
-      })}
+      <button
+        onClick={() => {
+          navigate('/createPost');
+        }}
+      >
+        작성페이지
+      </button>
     </div>
   );
 };
