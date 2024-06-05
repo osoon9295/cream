@@ -35,12 +35,12 @@ export default function Header() {
 
           <Form>
             <SearchInput type="text" placeholder="제품명을 입력해주세요." />
-            <CiSearch style={{ position: 'absolute', right: '15px', cursor: 'pointer' }} />
+            <CiSearch style={{ position: 'absolute', right: '2rem', cursor: 'pointer' }} />
           </Form>
         </LogoWrap>
       </InnerWrap>
 
-      <MobileMenuWrap>
+      {/* <MobileMenuWrap>
         <MobileMenu>
           <li>
             <a href="/">
@@ -67,7 +67,7 @@ export default function Header() {
             </a>
           </li>
         </MobileMenu>
-      </MobileMenuWrap>
+      </MobileMenuWrap> */}
     </HeaderWrap>
   );
 }
@@ -104,12 +104,13 @@ const AuthInner = styled.ul`
   color: var(--font);
   font-size: 0.7rem;
   gap: 15px;
+  padding: 0 20px;
 `;
 
 const LogoWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 20px 0;
+  padding: 20px;
   align-items: center;
   position: relative;
 
@@ -144,31 +145,31 @@ const SearchInput = styled.input`
   width: 14rem;
 `;
 
-const MobileMenuWrap = styled.div`
-  display: none;
+// const MobileMenuWrap = styled.div`
+//   display: none;
 
-  @media screen and (max-width: 500px) {
-    display: block;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 15px;
-    background: #fff;
-    z-index: 9;
-    border-top: 1px solid var(--border-color);
-  }
-`;
+//   @media screen and (max-width: 500px) {
+//     display: block;
+//     position: fixed;
+//     bottom: 0;
+//     left: 0;
+//     right: 0;
+//     padding: 15px;
+//     background: #fff;
+//     z-index: 9;
+//     border-top: 1px solid var(--border-color);
+//   }
+// `;
 
-const MobileMenu = styled.div`
-  @media screen and (max-width: 500px) {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    text-align: center;
-  }
-`;
+// const MobileMenu = styled.div`
+//   @media screen and (max-width: 500px) {
+//     display: flex;
+//     justify-content: space-around;
+//     align-items: center;
+//     text-align: center;
+//   }
+// `;
 
-const MobileTxt = styled.p`
-  font-size: 0.7rem;
-`;
+// const MobileTxt = styled.p`
+//   font-size: 0.7rem;
+// `;

@@ -4,46 +4,49 @@ import { useNavigate } from 'react-router-dom';
 import InputImage from '../components/InputImage';
 import Input from '../components/Input';
 import { getUser } from '../api/api.auth';
+import { apiImg } from '../api/api.img';
 import supabase from '../api/api.supabase';
+import * as S from '../styles/Auth.styled';
 
 const ProfileEdit = ({ user, setUser }) => {
   const navigate = useNavigate();
   const nicknameRef = useRef(null);
+  const [profileImg, setProfileImg] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       const userData = await getUser();
       if (userData) {
         setUser(userData);
+        setProfileImg(userData.user_metadata.imageSrc);
         nicknameRef.current ? (nicknameRef.current.value = userData.user_metadata.nickname) : '';
       } else {
-        console.log('Error');
+        console.error('회원정보를 불러오지 못했습니다.', error);
       }
     };
     fetchData();
   }, []);
 
-  const handleUpdateNickname = async () => {
-    try {
-      const newNickname = nicknameRef.current.value;
-      const updatedUserData = {
-        ...user,
-        user_metadata: { ...user.user_metadata, nickname: newNickname }
-      };
-      setUser(updatedUserData);
-      console.log('수정후', updatedUserData);
+  console.log('profileImg', profileImg);
 
-      const { data, error } = await supabase
-        .from('member')
-        .update({ user_metadata: updatedUserData.user_metadata })
-        .eq('id', user.id);
+  const handleUpdateData = async (e) => {
+    e.preventDefault();
+    const image = e.target.image.files[0];
+    try {
+      const ImageData = await apiImg(image);
+      console.log('ImageData', ImageData);
+      const newNickname = nicknameRef.current.value;
+
+      const { data, error } = await supabase.auth.updateUser({
+        data: { nickname: newNickname, imageSrc: ImageData }
+      });
       if (error) {
         console.error('supabase 업데이트 실패', error.message);
         return;
       }
       navigate(-1);
     } catch (error) {
-      console.error('닉네임 업데이트 실패', error);
+      console.error('업데이트 실패', error);
     }
   };
 
@@ -51,8 +54,8 @@ const ProfileEdit = ({ user, setUser }) => {
     <>
       <StyleWrap>
         <Title>프로필 관리</Title>
-        <ProfileEditWrap>
-          <InputImage />
+        <S.AuthForm onSubmit={handleUpdateData} style={{ rowGap: '0', width: '100%', padding: '0' }}>
+          <InputImage image={profileImg} name="image" />
           <EditList>
             <Label htmlFor="profileid">아이디</Label>
             <Id>{user.email}</Id>
@@ -64,10 +67,10 @@ const ProfileEdit = ({ user, setUser }) => {
           </EditList>
 
           <StyleBtns>
-            <StyleEdit onClick={handleUpdateNickname}>변경</StyleEdit>
-            <StyleCancle onClick={() => navigate(-1)}>취소</StyleCancle>
+            <StyleEdit type="submit">변경</StyleEdit>
+            <StyleCancle onClick={() => navigate('/mypage')}>취소</StyleCancle>
           </StyleBtns>
-        </ProfileEditWrap>
+        </S.AuthForm>
       </StyleWrap>
     </>
   );
@@ -78,7 +81,7 @@ export default ProfileEdit;
 const StyleWrap = styled.div`
   max-width: 1240px;
   height: auto;
-  margin: 0 auto;
+  margin: 5rem auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -87,8 +90,7 @@ const StyleWrap = styled.div`
 
 const Title = styled.h1`
   text-align: center;
-  font-size: 28px;
-  margin-top: 5rem;
+  font-size: 1.5rem;
 `;
 
 const EditList = styled.div`
@@ -96,6 +98,7 @@ const EditList = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 30px 0;
+  width: 100%;
   border-top: 1px solid var(--default-color);
 `;
 
@@ -108,7 +111,7 @@ const StyleBtns = styled.div`
   flex-direction: row;
   gap: 20px;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 15px;
 `;
 
 const StyleEdit = styled.button`

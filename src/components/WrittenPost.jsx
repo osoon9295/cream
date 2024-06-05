@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const WrittenPost = () => {
-  return <div>WrittenPost</div>;
+  const [showPost, setShowPost] = useState([]);
+
+  return <></>;
 };
 
 export default WrittenPost;

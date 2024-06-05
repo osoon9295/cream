@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import WrittenPost from './../components/WrittenPost';
 import { getUser } from '../api/api.auth';
-import { apiImg } from '../api/api.img';
+import { useDispatch, useSelector } from 'react-redux';
 
 const MyPage = ({ user, setUser }) => {
-  //const dispatch = useDispatch();
+  //const user = useSelector((state) => state);
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [posts, setPosts] = useState([]);
@@ -15,26 +15,15 @@ const MyPage = ({ user, setUser }) => {
   useEffect(() => {
     const fetchData = async () => {
       const userData = await getUser();
-
       if (userData) {
+        setProfileUrl(userData.user_metadata.imageSrc);
         setUser(userData);
         setNickname(userData.user_metadata.nickname);
-        console.log('user', userData);
+        //console.log('user', userData);
       } else {
         console.error('회원정보를 가져오지 못했습니다.', error);
       }
     };
-
-    const fetchImage = async () => {
-      const imgData = await apiImg();
-      console.log('imgData', imgData);
-      if (imgData) {
-        setProfileUrl(imgData);
-      } else {
-        console.error('이미지를 불러오지 못했습니다.', error);
-      }
-    };
-    fetchImage();
     fetchData();
   }, []);
 
@@ -71,12 +60,10 @@ const MyPage = ({ user, setUser }) => {
 
           <div>
             <StylePostTitle>💜 좋아요</StylePostTitle>
-            <WrittenPost />
           </div>
 
           <div>
             <StylePostTitle>📌 북마크</StylePostTitle>
-            <WrittenPost />
           </div>
         </StylePostWrap>
       </StyleWrap>
@@ -88,7 +75,7 @@ export default MyPage;
 
 const StyleWrap = styled.div`
   max-width: 1240px;
-  margin: 0 auto;
+  margin: 5rem auto;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -103,8 +90,8 @@ const StyleWrap = styled.div`
 
 const Title = styled.h1`
   text-align: center;
-  font-size: 28px;
-  margin: 3rem 0;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 
   @media screen and (max-width: 500px) {
     margin: 2rem 0 1rem;
@@ -218,13 +205,14 @@ const StylePostTitle = styled.h1`
 
 const ProfileEmail = styled.span`
   display: block;
-  font-size: 14px;
+  font-size: 0.75rem;
   margin-top: 10px;
   color: var(--font);
   margin-left: 1.55rem;
 
   @media screen and (max-width: 500px) {
     text-align: center;
-    margin: 0;
+    margin-top: 10px;
+    margin-left: 0;
   }
 `;

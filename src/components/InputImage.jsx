@@ -1,4 +1,4 @@
-import { useId, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { FaIceCream } from 'react-icons/fa';
 import { GoPlus } from 'react-icons/go';
 import styled from 'styled-components';
@@ -69,6 +69,10 @@ export default function InputImage({
       setImageSrc(reader.result);
     };
   };
+
+  useEffect(() => {
+    setImageSrc(image);
+  }, [image]);
 
   return (
     <InputFileWrap>

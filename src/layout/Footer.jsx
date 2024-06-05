@@ -24,7 +24,7 @@ export default function Footer() {
 const FooterWrap = styled.div`
   width: 100%;
   border-top: 1px solid var(--border-color);
-  padding: 3rem 0;
+  padding: 3rem 20px;
 
   @media screen and (max-width: 500px) {
     display: none;
