@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { changeType } from '../../store/slices/sortTypeSlice';
 
 const StSortButtonsWrapper = styled.div`
   width: 100%;
@@ -34,31 +36,40 @@ const StlatestPost = styled.button`
   padding: 0 0 1% 0;
 `;
 
-const SortButtons = ({ showList, setShowList }) => {
+const SortButtons = ({ setShowList, postList }) => {
   const [activeButton, setActiveButton] = useState(null);
+  const dispatch = useDispatch();
+  const sortType = useSelector((state) => state.sortType);
 
-  const handleButtonClick = (type) => {
-    if (type === 'popular') {
-      const popularityRank = [...showList].sort((a, b) => b.popularity - a.popularity);
-      setShowList(popularityRank);
-    } else if (type === 'latest') {
-      const latestRank = [...showList].sort((a, b) => b.created_at - a.created_at);
-      setShowList(latestRank);
-    }
-    setActiveButton((prev) => (prev === type ? null : type));
-  };
+  // console.log(postList);
+
+  // const handleButtonClick = (type) => {
+  //   // if (type === 'popular') {
+  //   //   const popularityRank = [...postList].sort((a, b) => b.popularity - a.popularity);
+  //   //   // popularityRank.length <= 12 ? setShowList(popularityRank) : setShowList(popularityRank.slice(0, 12));
+  //   //   setShowList(popularityRank.slice(0, 12));
+  //   // } else if (type === 'latest') {
+  //   //   const latestRank = [...postList].sort((a, b) => b.postDate - a.postDate);
+  //   //   // latestRank.length <= 12 ? setShowList(latestRank) : setShowList(latestRank.slice(0, 12));
+  //   //   setShowList(latestRank.slice(0, 12));
+  //   // }
+
+  // };
+  useEffect(() => {
+    setActiveButton(sortType.type);
+  }, [sortType]);
 
   return (
     <StSortButtonsWrapper>
       <StSortButtons>
         <StPopularPost
-          onClick={() => handleButtonClick('popular')}
+          onClick={() => dispatch(changeType('popular'))}
           style={{ color: activeButton === 'popular' ? 'black' : '#bdbdbd' }}
         >
           {activeButton === 'popular' ? '✨인기게시물' : '인기게시물'}
         </StPopularPost>
         <StlatestPost
-          onClick={() => handleButtonClick('latest')}
+          onClick={() => dispatch(changeType('latest'))}
           style={{ color: activeButton === 'latest' ? 'black' : '#bdbdbd' }}
         >
           {activeButton === 'latest' ? '✨최신게시물' : '최신게시물'}
