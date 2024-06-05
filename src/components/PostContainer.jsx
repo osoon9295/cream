@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import uuid from 'react-uuid';
 import Tag from './post/Tag';
@@ -9,7 +9,9 @@ import PostReview from '../components/post/ProductReview';
 import supabase from '../supabase';
 import { getUser } from '../api/api.auth';
 import usePosts from '../customHook/usePosts';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { changePost } from '../store/slices/postSlice';
+import { useNavigate } from 'react-router-dom';
 
 const PostInner = styled.div`
   max-width: 1240px;
@@ -97,11 +99,28 @@ const PostContainer = ({ postId }) => {
   const [flavor, setFlavor] = useState('딸기');
   const [type, setType] = useState('콘');
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   usePosts();
-  if (postId) {
-    const posts = useSelector((state) => state.postList);
-    console.log(posts);
-  }
+  const posts = useSelector((state) => state.postList);
+  console.log(posts);
+
+  useEffect(() => {
+    if (!postId) {
+      return;
+    }
+    if (postId) {
+      const modify = posts.filter((post) => post.id === postId)[0];
+      console.log(modify);
+      setName(modify.product_name);
+      setContent(modify.post_content);
+      setImage(modify.product_imageSrc);
+      setBrand(modify.product_brand);
+      setFlavor(modify.product_flavor);
+      setType(modify.product_type);
+    }
+  }, []);
 
   const AddHandler = async () => {
     const users = await getUser();
@@ -112,7 +131,9 @@ const PostContainer = ({ postId }) => {
       product_brand: brand,
       product_imageSrc: image,
       post_content: content,
-      popularity: 0
+      popularity: 0,
+      product_type: type,
+      product_taste: flavor
     });
     if (error) {
       console.log(error);
@@ -122,8 +143,34 @@ const PostContainer = ({ postId }) => {
     }
   };
 
-  const ModifyHandler = async (postId) => {
-    const { data, error } = await supabase.from('posts').update({}).eq(id, postId);
+  const ModifyHandler = async () => {
+    const users = await getUser();
+    const { data, error } = await supabase
+      .from('posts')
+      .update({
+        id: postId,
+        user_id: users.email,
+        product_name: name,
+        product_brand: brand,
+        product_imageSrc: image,
+        post_content: content,
+        popularity: 0,
+        product_type: type,
+        product_taste: flavor
+      })
+      .eq('id', postId);
+    if (error) {
+      console.log(error);
+    } else {
+      alert('게시글이 수정되었습니다.');
+      console.log('Data', data);
+    }
+    dispatch(changePost);
+    navigate('/detailed');
+  };
+
+  const CancelHandler = () => {
+    navigate(-1);
   };
 
   return (
@@ -181,7 +228,9 @@ const PostContainer = ({ postId }) => {
       </PostInner>
       <SubmitBox>
         <SubmitButton onClick={postId ? ModifyHandler : AddHandler}>{postId ? '수정' : '등록'}</SubmitButton>
-        <CancelButton display={postId ? 'flex' : 'none'}>취소</CancelButton>
+        <CancelButton onClick={CancelHandler} display={postId ? 'flex' : 'none'}>
+          취소
+        </CancelButton>
       </SubmitBox>
     </>
   );
