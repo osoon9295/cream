@@ -7,6 +7,7 @@ import PostName from '../components/post/ProductName';
 import PostImage from '../components/post/ProductImage';
 import PostReview from '../components/post/ProductReview';
 import supabase from '../supabase';
+import { getUser } from '../api/api.auth';
 
 const PostInner = styled.div`
   max-width: 1240px;
@@ -100,11 +101,11 @@ const PostContainer = () => {
   const ModifyHandler = async () => {
     const { data, error } = await supabase.from('posts').update({}).eq();
   };
-
-  const DeleteHandler = () => {
-    const { data, error } = supabase.from('posts').delete().eq();
+  const user = async () => {
+    const users = await getUser();
+    console.log(users);
   };
-
+  user();
   return (
     <>
       <StTitle>게시글</StTitle>
