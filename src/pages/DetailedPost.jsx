@@ -21,11 +21,26 @@ const PostInner = styled.div`
 const PostTitle = styled.div`
   width: 100%;
   margin-top: 8%;
-  padding-left: 20%;
+  padding-left: 15%;
   padding-bottom: 10px;
   border-bottom: 1px solid #efefef;
   font-size: 2rem;
   color: #484848;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
+
+const StButton = styled.button`
+  width: 42px;
+  height: 18px;
+  background-color: transparent;
+  border-color: transparent;
+  border-right: 1px solid #c0c0c0;
+  border: ${(props) => props.border};
+  color: #c0c0c0;
+  padding: 0 2px;
+  cursor: pointer;
 `;
 
 const PostInfo = styled.div`
@@ -36,12 +51,13 @@ const PostInfo = styled.div`
   color: #484848;
   display: flex;
   align-items: center;
-  margin-top: 13%;
+  margin-top: 7%;
+  padding-bottom: 10px;
 `;
 
 const ProfileImg = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   background-color: #efefef;
   margin-right: 10px;
@@ -60,7 +76,7 @@ const PostBox = styled.div`
   gap: 5%;
   flex-wrap: wrap;
   justify-content: center;
-  margin: auto;
+  margin-top: 5%;
 `;
 
 const PostImg = styled.div`
@@ -73,8 +89,6 @@ const PostImg = styled.div`
 `;
 
 const TagContainer = styled.div`
-  /* width: 40%; */
-  /* height: 10%; */
   border-bottom: 1px solid #efefef;
   padding: 10% 0;
   display: flex;
@@ -84,6 +98,7 @@ const TagContainer = styled.div`
 `;
 
 const PostContent = styled.div`
+  width: 80%;
   font-size: 1rem;
   color: #484848;
   padding: 10%;
@@ -105,19 +120,30 @@ const DetailedPost = () => {
   };
 
   const postId = '65b8bc67-7e8d-4a93-28a0-029fc3ac4049';
+
   let detail = null;
   let date = '';
-  let user = null;
-  const [userInfo, setUserInfo] = useState();
+  let user = '';
+  let name = '';
 
-  // const users = async () => {
-  //   return await getUser();
-  // };
+  const fetchMembers = async () => {
+    const userData = await getUser();
+    console.log(userData);
+    const { data, error } = await supabase.from('member').select('*').eq('user_id', userData.email);
+    console.log(data);
+    if (error) {
+      console.log('error =>', error);
+    } else {
+      console.log('data =>', data);
+      console.log(user);
+    }
+  };
 
-  // users();
   if (isSuccess) {
     detail = posts.filter((post) => post.id === postId)[0];
     date = detail.created_at.split('T')[0];
+    user = detail.user_id;
+    fetchMembers();
   }
 
   return (
@@ -126,14 +152,16 @@ const DetailedPost = () => {
         <>
           <PostTitle>
             {detail.product_name}
-            <button
-              onClick={() => {
-                navigate('/modifyPost');
-              }}
-            >
-              수정
-            </button>
-            <button>삭제</button>
+            <div style={{ marginLeft: '20%' }}>
+              <StButton
+                onClick={() => {
+                  navigate('/modifyPost');
+                }}
+              >
+                수정
+              </StButton>
+              <StButton border="none">삭제</StButton>
+            </div>
           </PostTitle>
           <PostInner>
             <PostInfo>
