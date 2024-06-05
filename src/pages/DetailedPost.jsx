@@ -23,10 +23,10 @@ const DetailedPost = () => {
     <div>
       <button
         onClick={() => {
-          navigate('/createPost');
+          navigate('/modifyPost');
         }}
       >
-        작성페이지
+        수정페이지
       </button>
     </div>
   );

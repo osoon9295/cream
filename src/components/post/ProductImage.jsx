@@ -24,7 +24,7 @@ const ProductImage = ({ image, setImage }) => {
     <>
       <div>
         <Label htmlFor="photo">
-          <img style={{ width: '100%', objectFit: 'cover' }} src={image ? image : '../img/Upload.png'} alt="" />
+          <img style={{ height: '100%', objectFit: 'cover' }} src={image ? image : '../img/Upload.png'} alt="" />
         </Label>
         <span style={{ fontSize: '0.7rem', color: '#c0c0c0' }}>상품 이미지는 2:1 비율로 보여져요.</span>
       </div>

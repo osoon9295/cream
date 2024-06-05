@@ -15,7 +15,6 @@ const WrittenPost = ({ posts }) => {
             </ImgWrap>
             <ContentWrap>
               <PostTitleWrap>
-                {/* <PostBrand>{post.product_brand}</PostBrand> */}
                 <PostTitle>{post.product_name}</PostTitle>
               </PostTitleWrap>
               <PostComment>{post.post_content}</PostComment>
@@ -85,16 +84,6 @@ const PostTitleWrap = styled.div`
 const PostTitle = styled.h2`
   font-weight: 600;
   font-size: 1.1rem;
-`;
-
-const PostBrand = styled.h2`
-  font-size: 0.8rem;
-  border-radius: 30px;
-  background: var(--default-color);
-  padding: 5px;
-  width: 3.5rem;
-  text-align: center;
-  margin-bottom: 10px;
 `;
 
 const PostComment = styled.p`
