@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const TagBox = styled.div`
+const TagBox = styled.button`
   width: 5.5rem;
   height: 2rem;
   border-radius: 2rem;
+  border-color: transparent;
   background-color: ${(props) => props.backgroundcolor};
   display: flex;
   justify-content: center;
@@ -61,4 +62,4 @@ const Tag = ({ tagArr, brand, flavor, type, setBrand, setFlavor, setType }) => {
 };
 
 export default Tag;
-export { BrandTag, FlavorTag, TypeTag };
+export { BrandTag, FlavorTag, TypeTag, TagBox };
