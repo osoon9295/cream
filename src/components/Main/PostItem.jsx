@@ -3,6 +3,7 @@ import { IoBookmarkOutline } from 'react-icons/io5';
 import { IoHeartOutline } from 'react-icons/io5';
 import styled from 'styled-components';
 import { stringPostDate } from '../../store/slices/postSlice';
+import { useNavigate } from 'react-router-dom';
 
 const StPostItem = styled.button`
   background-color: transparent;
@@ -73,8 +74,10 @@ const StPostDate = styled.div`
 const PostItem = ({ post }) => {
   const { image, userId, productName, postContent, popularity } = post;
 
+  const navigate = useNavigate();
+
   return (
-    <StPostItem>
+    <StPostItem onClick={() => navigate(`/detailed`)}>
       <StImage src={image} alt={productName} />
       <StIdAndLikeButtons>
         <StPostUserId>{userId}</StPostUserId>
