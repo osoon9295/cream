@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { IoBookmarkOutline } from 'react-icons/io5';
-import { IoHeartOutline } from 'react-icons/io5';
+import React from 'react';
+import { IoBookmarkOutline, IoHeartOutline } from 'react-icons/io5';
 import styled from 'styled-components';
 // import { stringPostDate } from '../../store/slices/postSlice';
 import { Link } from 'react-router-dom';
+import { checkSignIn, getUser } from '../../api/api.auth';
+import supabase from '../../supabase';
 
 const StPostItem = styled.div`
   /* background-color: rebeccapurple; */
@@ -35,7 +36,7 @@ const StIdAndLikeButtons = styled.div`
   padding: 5% 0 0 0;
 `;
 
-const StPostUserId = styled.span`
+const StPostUserId = styled(Link)`
   font-size: 130%;
   color: #484848;
 
@@ -98,11 +99,34 @@ const StPostDate = styled.div`
   }
 `;
 const PostItem = ({ post }) => {
-  const { product_imageSrc, product_name, post_content, popularity, created_at } = post;
+  const { id, product_imageSrc, product_name, post_content, popularity, created_at } = post;
 
   const createdAt = created_at;
 
   const createDate = `${createdAt.slice(0, 10)} ${createdAt.slice(11, 19)}`;
+
+  const hendleHeartUp = async () => {
+    let loginChk = await checkSignIn();
+    let user = await getUser();
+    console.log(loginChk, user);
+    if (!loginChk) return alert('로그인 후에 이용 가능합니다.');
+
+    const { data: userInfo, error } = await supabase.from('user_info').select('*').eq('user_id', user.id);
+
+    console.log(userInfo);
+
+    // const { data, error } = await supabase
+    // .from('posts')
+    // .update({
+    //   popularity: popularity+1,
+    // })
+    // .eq('id', id);
+  };
+
+  const hendleSaveUp = async () => {
+    let loginChk = await checkSignIn();
+    if (!loginChk) return alert('로그인 후에 이용 가능합니다.');
+  };
 
   // const [activeButton, setActivButton] = useState(null);
 
@@ -112,13 +136,13 @@ const PostItem = ({ post }) => {
         <StImage src={product_imageSrc} alt={product_name} />
       </Link>
       <StIdAndLikeButtons>
-        <StPostUserId>닉네임</StPostUserId>
+        <StPostUserId to="/detailed">닉네임</StPostUserId>
         <StPopularity>
-          <StLikeButton>
-            <IoHeartOutline onClick={() => {}} />
+          <StLikeButton onClick={hendleHeartUp}>
+            <IoHeartOutline />
           </StLikeButton>
           {popularity}
-          <IoBookmarkOutline size={27} onClick={() => {}} />
+          <IoBookmarkOutline color="red" size={27} onClick={() => {}} />
         </StPopularity>
       </StIdAndLikeButtons>
       <StPostContentWrapper>
