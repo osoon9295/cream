@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import ModifyPost from '../../pages/ModifyPost';
 
 // let postDate = new Date();
 // let year = postDate.getFullYear();
