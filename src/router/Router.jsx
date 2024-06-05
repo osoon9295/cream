@@ -9,6 +9,7 @@ import ProfileEdit from '../pages/ProfileEdit';
 import CreatePost from '../pages/CreatePost';
 import ModifyPost from '../pages/ModifyPost';
 import DetailedPost from '../pages/DetailedPost';
+import SearchPost from './../pages/SearchPost';
 
 export default function Router() {
   const [user, setUser] = useState([]);
@@ -25,6 +26,7 @@ export default function Router() {
           <Route path="/detailed" element={<DetailedPost />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/profile-edit" element={<ProfileEdit user={user} setUser={setUser} />} />
+          <Route path="/search" element={<SearchPost />} />
         </Route>
       </Routes>
     </BrowserRouter>

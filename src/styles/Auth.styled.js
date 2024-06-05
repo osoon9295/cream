@@ -7,7 +7,7 @@ export const AuthForm = styled.form`
   justify-content: center;
   flex-direction: column;
   row-gap: 1.5rem;
-  margin: 0 auto;
+  margin: 100px auto;
   padding: 0 0.7rem;
 
   > h1 {
