@@ -33,19 +33,33 @@ const StMobileCategory = styled.ul`
 
 const MobileCategory = () => {
   const dispatch = useDispatch();
-  const handleCategoryClick = (category) => {
-    dispatch(setCategory(category));
+  const category = useSelector((state) => state.category.category);
+  const getClassName = (className) => {
+    return category === className ? 'active' : '';
+  };
+  const onClickHandler = (newCategory) => {
+    if (category === newCategory) {
+      dispatch(setCategory(''));
+    } else {
+      dispatch(setCategory(newCategory));
+    }
   };
   return (
     <StMobileCategory>
       <li>
-        <button onClick={() => handleCategoryClick('brand')}>브랜드별</button>
+        <button className={getClassName('brand')} onClick={() => onClickHandler('brand')}>
+          브랜드별
+        </button>
       </li>
       <li>
-        <button onClick={() => handleCategoryClick('flavor')}>맛별</button>
+        <button className={getClassName('flavor')} onClick={() => onClickHandler('flavor')}>
+          맛별
+        </button>
       </li>
       <li>
-        <button onClick={() => handleCategoryClick('type')}>콘/바/컵</button>
+        <button className={getClassName('type')} onClick={() => onClickHandler('type')}>
+          콘/바/컵
+        </button>
       </li>
     </StMobileCategory>
   );

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import PostItem from './PostItem';
 import SortButtons from './SortButtons';
 import usePosts from '../../customHook/usePosts';
+import CategoryTabs from './CategoryTabs';
 
 const StWrapper = styled.main`
   /* background-color: blue; */
@@ -81,6 +82,7 @@ const ShowPostList = () => {
   return (
     <StWrapper>
       <SortButtons showList={showList} setShowList={setShowList} />
+      <CategoryTabs />
       <StContainer>
         {showList.map((post) => {
           return <PostItem key={post.id} post={post} />;
