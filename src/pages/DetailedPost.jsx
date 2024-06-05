@@ -6,12 +6,13 @@ import usePosts from '../customHook/usePosts';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { TagBox } from '../components/post/Tag';
-import { getUser } from '../api/api.auth';
+import { checkSignIn } from '../api/api.auth';
+import { IoBookmarkOutline, IoHeartOutline } from 'react-icons/io5';
 
 const PostInner = styled.div`
   max-width: 1240px;
   width: 70vw;
-  height: 80vh;
+  height: 100vh;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -21,7 +22,7 @@ const PostInner = styled.div`
 const PostTitle = styled.div`
   width: 100%;
   margin-top: 8%;
-  padding-left: 15%;
+  padding-left: 18.5%;
   padding-bottom: 10px;
   border-bottom: 1px solid #efefef;
   font-size: 2rem;
@@ -37,10 +38,13 @@ const StButton = styled.button`
   background-color: transparent;
   border-color: transparent;
   border-right: 1px solid #c0c0c0;
-  border: ${(props) => props.border};
+  box-sizing: border-box;
   color: #c0c0c0;
   padding: 0 2px;
   cursor: pointer;
+  &:hover {
+    color: black;
+  }
 `;
 
 const PostInfo = styled.div`
@@ -52,6 +56,7 @@ const PostInfo = styled.div`
   display: flex;
   align-items: center;
   margin-top: 7%;
+  padding-left: 10%;
   padding-bottom: 10px;
 `;
 
@@ -61,6 +66,7 @@ const ProfileImg = styled.div`
   border-radius: 50%;
   background-color: #efefef;
   margin-right: 10px;
+  overflow: hidden;
 `;
 
 const PostDate = styled.div`
@@ -73,23 +79,25 @@ const PostBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 5%;
+  gap: 11%;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 5%;
+  margin: 5% 0;
 `;
 
 const PostImg = styled.div`
-  width: 15rem;
-  height: 20rem;
+  width: 17rem;
+  aspect-ratio: 1.5 / 2;
   border-radius: 10%;
   background-color: #efefef;
-  overflow: auto;
+  overflow: hidden;
   margin-top: 12px;
 `;
 
 const TagContainer = styled.div`
+  width: 20rem;
   border-bottom: 1px solid #efefef;
+  box-sizing: border-box;
   padding: 10% 0;
   display: flex;
   flex-direction: row;
@@ -109,33 +117,36 @@ const DetailedPost = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isSuccess } = usePosts();
+  const [userInfo, setUserInfo] = useState('');
+  const [isSignIn, setIsSignIn] = useState(false);
 
   const posts = useSelector((state) => state.postList);
-  console.log(posts);
 
   const onDeletePost = async (id) => {
-    const response = await supabase.from('posts').delete().eq('id', id);
-    dispatch(deletePost(id));
-    console.log(response);
+    const { data, error } = await supabase.from('posts').delete().eq('id', id);
+    if (error) {
+      console.log('error =>', error);
+    } else {
+      console.log('data =>', data);
+      dispatch(deletePost(id));
+    }
   };
 
-  const postId = '65b8bc67-7e8d-4a93-28a0-029fc3ac4049';
+  const postId = '7c75a64d-8238-277e-b7a7-ac6d50c20bcd';
 
   let detail = null;
   let date = '';
   let user = '';
-  let name = '';
 
-  const fetchMembers = async () => {
-    const userData = await getUser();
-    console.log(userData);
-    const { data, error } = await supabase.from('member').select('*').eq('user_id', userData.email);
+  const fetchMembers = async (user) => {
+    const { data, error } = await supabase.from('member').select('*').eq('user_id', user);
     console.log(data);
     if (error) {
       console.log('error =>', error);
     } else {
       console.log('data =>', data);
       console.log(user);
+      setUserInfo(data[0]);
     }
   };
 
@@ -143,32 +154,59 @@ const DetailedPost = () => {
     detail = posts.filter((post) => post.id === postId)[0];
     date = detail.created_at.split('T')[0];
     user = detail.user_id;
-    fetchMembers();
   }
+
+  useEffect(() => {
+    (async () => {
+      const sign = await checkSignIn();
+      setIsSignIn(sign);
+    })();
+  }, []);
+
+  useEffect(() => {
+    fetchMembers(user);
+  }, [user]);
 
   return (
     <>
-      {isSuccess && (
+      {isSuccess && userInfo && (
         <>
           <PostTitle>
             {detail.product_name}
-            <div style={{ marginLeft: '20%' }}>
+            <div style={{ display: 'flex', marginLeft: '45%' }}>
               <StButton
+                style={{ display: isSignIn ? 'block' : 'none' }}
                 onClick={() => {
                   navigate('/modifyPost');
                 }}
               >
                 수정
               </StButton>
-              <StButton border="none">삭제</StButton>
+              <StButton
+                style={{ borderColor: 'transparent', display: isSignIn ? 'block' : 'none' }}
+                onClick={() => {
+                  onDeletePost(detail.id);
+                }}
+              >
+                삭제
+              </StButton>
             </div>
           </PostTitle>
           <PostInner>
             <PostInfo>
-              <ProfileImg></ProfileImg>
+              <ProfileImg>
+                <img
+                  src={userInfo.user_imageSrc ? userInfo.user_imageSrc : '/public/img/default-img.png'}
+                  style={{ height: '100%', objectFit: 'cover' }}
+                />
+              </ProfileImg>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                지영
+                {userInfo.user_name}
                 <PostDate>{date}</PostDate>
+              </div>
+              <div style={{ display: 'flex', gap: '8px', marginLeft: '63%' }}>
+                <IoHeartOutline style={{ fontSize: '23px' }} />
+                <IoBookmarkOutline style={{ fontSize: '22px' }} />
               </div>
             </PostInfo>
             <PostBox>
