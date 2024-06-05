@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import ModifyPost from '../../pages/ModifyPost';
 
 let postDate = new Date();
 let year = postDate.getFullYear();
@@ -25,9 +26,15 @@ const postSlice = createSlice({
       return state.filter((post) => {
         return action.payload !== post.id;
       });
+    },
+    changePost: (state, action) => {
+      const modify = state.filter((post) => {
+        return action.payload !== post.id;
+      });
+      return [...modify, ...action.payload];
     }
   }
 });
 
-export const { addPost, deletePost } = postSlice.actions;
+export const { addPost, deletePost, changePost } = postSlice.actions;
 export default postSlice.reducer;
