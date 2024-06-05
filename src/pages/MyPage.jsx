@@ -11,17 +11,19 @@ const MyPage = ({ user, setUser }) => {
   const [posts, setPosts] = useState([]);
   const [profileUrl, setProfileUrl] = useState('');
 
+  console.log(user);
+  console.log('nickname', nickname);
+
   useEffect(() => {
     const fetchData = async () => {
       const userData = await getUser();
-      const { data, error } = await supabase.from('posts').select('*').eq('user_id', userData.email);
-      if (userData) {
-        console.log(data);
-        setPosts(data);
+      const { data, error } = await supabase.from('member').select('*').eq('user_id', userData.email);
+      const { data: postData } = await supabase.from('posts').select('*').eq('user_id', userData.email);
+      if (data) {
+        setPosts(postData);
         setProfileUrl(userData.user_metadata.imageSrc);
         setUser(userData);
         setNickname(userData.user_metadata.nickname);
-        //console.log('user', userData);
       } else {
         console.error('회원정보를 가져오지 못했습니다.', error);
       }
@@ -32,20 +34,17 @@ const MyPage = ({ user, setUser }) => {
   const handleDeleteData = async (id) => {
     if (confirm('게시글을 삭제하시겠습니까?')) {
       const { data, error } = await supabase.from('posts').delete().eq('id', id).select('*');
-      console.log(data);
-      if (data) {
-        setPosts(data);
-      } else {
+      const userData = await getUser();
+      const { data: setPost } = await supabase.from('posts').select('*').eq('user_id', userData.email);
+      setPosts(setPost);
+
+      if (error) {
         console.error('삭제 실패', error);
       }
     } else {
       return false;
     }
   };
-  //삭제 함수만들기
-  //사용자가 삭제를 눌렀을때 실행
-  //onclick에 데이터 삭제하고 다시 가져오도록한다.
-  //setPost 업데이트
 
   return (
     <>
@@ -95,7 +94,7 @@ export default MyPage;
 
 const StyleWrap = styled.div`
   max-width: 1240px;
-  margin: 5rem auto;
+  margin: 8rem auto;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -111,7 +110,7 @@ const StyleWrap = styled.div`
 const Title = styled.h1`
   text-align: center;
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
 
   @media screen and (max-width: 500px) {
     margin: 2rem 0 1rem;
@@ -225,7 +224,7 @@ const StylePostTitle = styled.h1`
 
 const ProfileEmail = styled.span`
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   margin-top: 10px;
   color: var(--font);
   margin-left: 1.55rem;

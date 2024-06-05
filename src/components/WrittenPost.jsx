@@ -3,11 +3,10 @@ import usePosts from '../customHook/usePosts';
 import styled from 'styled-components';
 import { IoHeart } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { deletePost } from '../store/slices/postSlice';
 
 const WrittenPost = ({ posts, handleDeleteData }) => {
   usePosts();
+
   const navigate = useNavigate();
 
   return (

@@ -11,7 +11,7 @@ import ModifyPost from '../pages/ModifyPost';
 import DetailedPost from '../pages/DetailedPost';
 
 export default function Router() {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
 
   return (
     <BrowserRouter>

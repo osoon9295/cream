@@ -5,6 +5,7 @@ import PostItem from './PostItem';
 import SortButtons from './SortButtons';
 import usePosts from '../../customHook/usePosts';
 import CategoryTabs from './CategoryTabs';
+import supabase from '../../api/api.supabase';
 
 const StWrapper = styled.main`
   /* background-color: blue; */
@@ -54,6 +55,9 @@ const ShowPostList = () => {
   usePosts();
   const postList = useSelector((state) => state.postList);
   const [showList, setShowList] = useState([]);
+  const [postUser, setPostUser] = useState([]);
+
+  console.log('postList', postList);
 
   // const createAt = postList.map((post) => {
   //   const date = post.created_at;
@@ -71,22 +75,41 @@ const ShowPostList = () => {
   // console.log(postList);
   // console.log(createdAt);
 
-  postList,
-    // let postDate = new Date();
-    // let year = postDate.getFullYear();
-    // let month = ('0' + (postDate.getMonth() + 1)).slice(-2);
-    // let day = ('0' + postDate.getDate()).slice(-2);
-    // let hour = ('0' + postDate.getHours()).slice(-2);
-    // let min = ('0' + postDate.getMinutes()).slice(-2);
-    // let sec = ('0' + postDate.getSeconds()).slice(-2);
+  //postList,
+  // let postDate = new Date();
+  // let year = postDate.getFullYear();
+  // let month = ('0' + (postDate.getMonth() + 1)).slice(-2);
+  // let day = ('0' + postDate.getDate()).slice(-2);
+  // let hour = ('0' + postDate.getHours()).slice(-2);
+  // let min = ('0' + postDate.getMinutes()).slice(-2);
+  // let sec = ('0' + postDate.getSeconds()).slice(-2);
 
-    // postDate = Number(`${year}${month}${day}${hour}${min}${sec}`);
+  // postDate = Number(`${year}${month}${day}${hour}${min}${sec}`);
 
-    // export const stringPostDate = `${year}.${month}.${day} ${hour}:${min}:${sec}`;
+  // export const stringPostDate = `${year}.${month}.${day} ${hour}:${min}:${sec}`;
 
-    useEffect(() => {
-      setShowList(postList.slice(0, 12));
-    }, [postList]);
+  useEffect(() => {
+    // let detail = postList.filter((post)=>post.id === )
+    const fetchMembers = async () => {
+      //console.log(user);
+      const { data, error } = await supabase.from('member').select('user_id, user_name, user_imageSrc');
+      setPostUser(data);
+      if (error) {
+        console.log('error =>', error);
+      } else {
+        console.log('data =>', data);
+        //console.log(user);
+      }
+    };
+    fetchMembers();
+  }, []);
+
+  // const users = { ...postUser[0] };
+  console.log(postUser);
+
+  useEffect(() => {
+    setShowList(postList.slice(0, 12));
+  }, [postList]);
 
   const moreShowList = () => {
     showList.length <= 12 ? setShowList(postList) : setShowList(postList.slice(0, 12));
@@ -97,7 +120,8 @@ const ShowPostList = () => {
       <CategoryTabs />
       <StContainer>
         {showList.map((post) => {
-          return <PostItem key={post.id} post={post} />;
+          postUser.find((el) => el.user_id === post.user_id);
+          return <PostItem key={post.id} post={post} postUser={postUser} />;
         })}
       </StContainer>
       <StMoreButton onClick={moreShowList}>{showList.length <= 12 ? '더보기' : '줄이기'}</StMoreButton>

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { IoBookmarkOutline } from 'react-icons/io5';
 import { IoHeartOutline } from 'react-icons/io5';
 import styled from 'styled-components';
 // import { stringPostDate } from '../../store/slices/postSlice';
 import { Link } from 'react-router-dom';
+import supabase from '../../api/api.supabase';
 
 const StPostItem = styled.div`
   /* background-color: rebeccapurple; */
@@ -97,14 +98,22 @@ const StPostDate = styled.div`
     font-size: 50%;
   }
 `;
-const PostItem = ({ post }) => {
+
+const MainProfileImg = styled.img`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50px;
+  border: 1px solid var(--border-color);
+`;
+const PostItem = ({ post, postUser }) => {
   const { product_imageSrc, product_name, post_content, popularity, created_at } = post;
-
   const createdAt = created_at;
-
   const createDate = `${createdAt.slice(0, 10)} ${createdAt.slice(11, 19)}`;
 
+  //const users = { ...postUser };
+  //console.log(postUser);
   // const [activeButton, setActivButton] = useState(null);
+  //console.log(post);
 
   return (
     <StPostItem>
@@ -112,7 +121,9 @@ const PostItem = ({ post }) => {
         <StImage src={product_imageSrc} alt={product_name} />
       </Link>
       <StIdAndLikeButtons>
-        <StPostUserId>닉네임</StPostUserId>
+        <StPostUserId>
+          <MainProfileImg />
+        </StPostUserId>
         <StPopularity>
           <StLikeButton>
             <IoHeartOutline onClick={() => {}} />
