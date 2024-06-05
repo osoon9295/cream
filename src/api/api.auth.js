@@ -34,12 +34,25 @@ export const signUp = async (email, password, nickname, img) => {
       }
     ]);
 
+    const { data: userInfoData, error } = await supabase.from('user_info').insert([
+      {
+        user_id: email,
+        post_save: [],
+        post_heart: []
+      }
+    ]);
+
     if (memberError) {
       console.log('Error:', memberError);
       return;
     }
+    if (error) {
+      console.log('Error:', error);
+      return;
+    }
 
     console.log('signed up:', memberData);
+    console.log('userInfoData up:', userInfoData);
   } catch (error) {
     console.log('error:', error);
   }
