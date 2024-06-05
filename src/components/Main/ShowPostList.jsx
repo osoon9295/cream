@@ -64,29 +64,28 @@ const ShowPostList = () => {
 
     return setShowList((prev) => [...prev, { created_at: postDate }]);
   });
-
   console.log(createAt);
 
   // const createdAt = postList[1].created_at;
   // console.log(postList);
   // console.log(createdAt);
 
-  postList,
-    // let postDate = new Date();
-    // let year = postDate.getFullYear();
-    // let month = ('0' + (postDate.getMonth() + 1)).slice(-2);
-    // let day = ('0' + postDate.getDate()).slice(-2);
-    // let hour = ('0' + postDate.getHours()).slice(-2);
-    // let min = ('0' + postDate.getMinutes()).slice(-2);
-    // let sec = ('0' + postDate.getSeconds()).slice(-2);
+  // postList,
+  // let postDate = new Date();
+  // let year = postDate.getFullYear();
+  // let month = ('0' + (postDate.getMonth() + 1)).slice(-2);
+  // let day = ('0' + postDate.getDate()).slice(-2);
+  // let hour = ('0' + postDate.getHours()).slice(-2);
+  // let min = ('0' + postDate.getMinutes()).slice(-2);
+  // let sec = ('0' + postDate.getSeconds()).slice(-2);
 
-    // postDate = Number(`${year}${month}${day}${hour}${min}${sec}`);
+  // postDate = Number(`${year}${month}${day}${hour}${min}${sec}`);
 
-    // export const stringPostDate = `${year}.${month}.${day} ${hour}:${min}:${sec}`;
+  // export const stringPostDate = `${year}.${month}.${day} ${hour}:${min}:${sec}`;
 
-    useEffect(() => {
-      setShowList(postList.slice(0, 12));
-    }, [postList]);
+  useEffect(() => {
+    setShowList(postList.slice(0, 12));
+  }, [postList]);
 
   const moreShowList = () => {
     showList.length <= 12 ? setShowList(postList) : setShowList(postList.slice(0, 12));
