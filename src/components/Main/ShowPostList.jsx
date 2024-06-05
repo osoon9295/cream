@@ -55,8 +55,8 @@ const ShowPostList = () => {
   const initialPostList = useSelector((state) => state.postList);
   const sortType = useSelector((state) => state.sortType);
   const [showList, setShowList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 12;
+  // const [currentItems, setCurrentItems] = useState(1);
+  // const postsPerItem = 12;
 
   // console.log(sortType);
 
@@ -65,9 +65,11 @@ const ShowPostList = () => {
     return { ...post, postDate };
   });
 
-  // useEffect(() => {
-  //   setShowList(postList.slice(0, 12));
-  // }, [initialPostList]);
+  useEffect(() => {
+    setShowList(postList.slice(0, 12));
+  }, [initialPostList]);
+
+  console.log(sortType.type);
 
   useEffect(() => {
     if (sortType.type === 'popular') {
@@ -79,9 +81,7 @@ const ShowPostList = () => {
     } else {
       setShowList(postList);
     }
-
-    // const moreShowList = currentPage
-  }, []);
+  }, [sortType]);
 
   const moreShowList = () => {
     showList.length <= 12 ? setShowList(postList) : setShowList(postList.slice(0, 12));
