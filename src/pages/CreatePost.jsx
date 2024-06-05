@@ -4,9 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../api/api.auth';
 
 const CreatePost = () => {
-  const posts = useSelector((state) => state.postList);
-  console.log(posts);
-
   return (
     <>
       <PostContainer />

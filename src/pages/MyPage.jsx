@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import WrittenPost from './../components/WrittenPost';
 import { getUser } from '../api/api.auth';
+import supabase from '../api/api.supabase';
 
 const MyPage = ({ user, setUser }) => {
   const navigate = useNavigate();
@@ -13,7 +14,10 @@ const MyPage = ({ user, setUser }) => {
   useEffect(() => {
     const fetchData = async () => {
       const userData = await getUser();
+      const { data, error } = await supabase.from('posts').select('*').eq('user_id', userData.email);
       if (userData) {
+        setPosts(data);
+        console.log(data);
         setProfileUrl(userData.user_metadata.imageSrc);
         setUser(userData);
         setNickname(userData.user_metadata.nickname);
@@ -22,6 +26,7 @@ const MyPage = ({ user, setUser }) => {
         console.error('회원정보를 가져오지 못했습니다.', error);
       }
     };
+
     fetchData();
   }, []);
 
@@ -40,10 +45,10 @@ const MyPage = ({ user, setUser }) => {
 
         <StyleTotalWrap>
           <div>
-            게시글<Count>{`3`}</Count>
+            게시글<Count>{posts.length}</Count>
           </div>
           <div>
-            좋아요<Count>{`2`}</Count>
+            좋아요<Count>{`0`}</Count>
           </div>
           <div>
             북마크<Count>{`0`}</Count>
@@ -53,7 +58,7 @@ const MyPage = ({ user, setUser }) => {
         <StylePostWrap>
           <div>
             <StylePostTitle>✏️ 내가 쓴 게시글</StylePostTitle>
-            <WrittenPost />
+            <WrittenPost posts={posts} profileUrl={profileUrl} />
           </div>
 
           <div>
@@ -193,7 +198,7 @@ const StylePostTitle = styled.h1`
     height: 1px;
     background-color: var(--default-color);
     display: block;
-    margin: 15px 0;
+    margin: 15px 0 30px;
   }
 
   @media screen and (max-width: 500px) {

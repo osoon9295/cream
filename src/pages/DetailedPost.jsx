@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const DetailedPost = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  usePosts();
 
   const posts = useSelector((state) => state.postList);
   console.log(posts);
