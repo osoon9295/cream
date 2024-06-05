@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import supabase from '../supabase';
 import { deletePost } from '../store/slices/postSlice';
 import { useNavigate } from 'react-router-dom';
-import usePosts from '../components/FetchPosts';
+import usePosts from '../customHook/usePosts';
 import { useDispatch, useSelector } from 'react-redux';
 
 const DetailedPost = () => {
