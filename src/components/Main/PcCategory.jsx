@@ -28,11 +28,7 @@ const StPcCategory = styled.div`
     display: none;
   }
 
-  /* @media (max-height: 1024px) {
-    
-  } */
-
-  @media (max-height: 1024px) and (max-width: 1440px) {
+  @media (max-width: 1440px) {
     width: 100px;
     padding: 20px 11px;
     gap: 15px;
@@ -41,7 +37,7 @@ const StPcCategory = styled.div`
   }
 
   svg {
-    @media (max-height: 1024px) and (max-width: 1440px) {
+    @media (max-width: 1440px) {
       width: 45px;
     }
   }
@@ -53,7 +49,7 @@ const StPcCategoryUl = styled.ul`
   gap: 70px;
   padding-bottom: 40px;
 
-  @media (max-height: 1024px) and (max-width: 1440px) {
+  @media (max-width: 1440px) {
     gap: 21px;
   }
 
@@ -68,7 +64,7 @@ const StPcCategoryUl = styled.ul`
       color: #a0abc9;
 
       svg {
-        @media (max-height: 1024px) and (max-width: 1440px) {
+        @media (max-width: 1440px) {
           width: 35px;
         }
       }
@@ -82,7 +78,7 @@ const StPcCategoryUl = styled.ul`
       display: block;
       margin-top: 12px;
       font-size: 15px;
-      @media (max-height: 1024px) and (max-width: 1440px) {
+      @media (max-width: 1440px) {
         margin-top: 0px;
         font-size: 13px;
       }
@@ -106,13 +102,13 @@ const StPcCategoryToggle = styled.button`
 
   svg {
     padding-left: 40px;
-    @media (max-height: 1024px) and (max-width: 1440px) {
+    @media (max-width: 1440px) {
       width: 20px;
       padding-left: 30px;
     }
   }
 
-  @media (max-height: 1024px) and (max-width: 1440px) {
+  @media (max-width: 1440px) {
     width: 80px;
     height: 80px;
     left: 60px;
@@ -145,9 +141,6 @@ const PcCategory = () => {
     setIsOn(!isOn);
   };
 
-  /* 문제점
-     - activeState와 categorySlice가 따로 관리된다.
-  */
   const onClickHandler = (index, category) => {
     const newState = activeState.map((state, stateIndex) => {
       if (index === stateIndex) {

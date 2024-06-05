@@ -1,5 +1,7 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { setCategory } from '../../store/slices/categorySlice';
 
 const StMobileCategory = styled.ul`
   display: flex;
@@ -19,21 +21,31 @@ const StMobileCategory = styled.ul`
     background-color: transparent;
     cursor: pointer;
     color: #969696;
+    @media (max-width: 800px) {
+      font-size: 15px;
+    }
+  }
+
+  @media (max-width: 800px) {
+    padding: 10px 0px;
   }
 `;
 
 const MobileCategory = () => {
+  const dispatch = useDispatch();
+  const handleCategoryClick = (category) => {
+    dispatch(setCategory(category));
+  };
   return (
     <StMobileCategory>
-      {/* active 글자색 변경 넣어야함 */}
       <li>
-        <button>브랜드별</button>
+        <button onClick={() => handleCategoryClick('brand')}>브랜드별</button>
       </li>
       <li>
-        <button>맛별</button>
+        <button onClick={() => handleCategoryClick('flavor')}>맛별</button>
       </li>
       <li>
-        <button>콘/바/컵</button>
+        <button onClick={() => handleCategoryClick('type')}>콘/바/컵</button>
       </li>
     </StMobileCategory>
   );

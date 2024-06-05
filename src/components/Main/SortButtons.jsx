@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const StSortButtonsWrapper = styled.div`
   width: 100%;
   padding: 3% 0 0 0;
-  border-bottom: 1.5px solid #bdbdbd;
+  border-bottom: 1px solid #bdbdbd;
 
   display: flex;
   justify-content: center;
@@ -47,10 +47,6 @@ const SortButtons = ({ showList, setShowList }) => {
     }
     setActiveButton((prev) => (prev === type ? null : type));
   };
-
-  //   useEffect(() => {
-  //     setShowList(postList.slice(0, 12));
-  //   }, [dfssdfsddf]);
 
   return (
     <StSortButtonsWrapper>

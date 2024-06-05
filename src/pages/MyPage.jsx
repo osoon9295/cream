@@ -3,10 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import WrittenPost from './../components/WrittenPost';
 import { getUser } from '../api/api.auth';
-import { useDispatch, useSelector } from 'react-redux';
 
 const MyPage = ({ user, setUser }) => {
-  //const user = useSelector((state) => state);
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [posts, setPosts] = useState([]);

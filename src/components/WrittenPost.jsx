@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const WrittenPost = () => {
-  const [showPost, setShowPost] = useState([]);
+  const posts = useSelector((state) => state.postList);
 
-  return <></>;
+  return (
+    <>
+      <p></p>
+    </>
+  );
 };
 
 export default WrittenPost;

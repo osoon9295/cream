@@ -6,12 +6,13 @@ import { BrandTag, FlavorTag, TypeTag } from './post/Tag';
 import PostName from '../components/post/ProductName';
 import PostImage from '../components/post/ProductImage';
 import PostReview from '../components/post/ProductReview';
+import supabase from '../supabase';
+import { getUser } from '../api/api.auth';
 
 const PostInner = styled.div`
   max-width: 1240px;
   width: 70vw;
   height: 100%;
-  /* border: 2px solid black; */
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -78,24 +79,33 @@ const PostContainer = () => {
   const [brand, setBrand] = useState('오리온');
   const [flavor, setFlavor] = useState('딸기');
   const [type, setType] = useState('콘');
-  const [list, setList] = useState([]);
 
-  const DataHandler = () => {
-    setList((prev) => [
-      ...prev,
-      {
-        id: uuid(),
-        productName: name,
-        productBrand: brand,
-        userId: '지영',
-        productContent: content,
-        productImageSrc: image,
-        createdAt: Date.now(),
-        popularity: 0
-      }
-    ]);
+  const AddHandler = async () => {
+    const { data, error } = await supabase.from('posts').insert({
+      id: uuid(),
+      user_id: '지영',
+      product_name: name,
+      product_brand: brand,
+      product_imageSrc: image,
+      post_content: content,
+      popularity: 0
+    });
+    if (error) {
+      console.log(error);
+    } else {
+      alert('게시글이 등록되었습니다.');
+      console.log('Data', data);
+    }
   };
 
+  const ModifyHandler = async () => {
+    const { data, error } = await supabase.from('posts').update({}).eq();
+  };
+  const user = async () => {
+    const users = await getUser();
+    console.log(users);
+  };
+  user();
   return (
     <>
       <StTitle>게시글</StTitle>
@@ -150,7 +160,7 @@ const PostContainer = () => {
         </PostBox>
       </PostInner>
       <SubmitBox>
-        <SubmitButton onClick={DataHandler}>등록</SubmitButton>
+        <SubmitButton onClick={AddHandler}>등록</SubmitButton>
       </SubmitBox>
     </>
   );
