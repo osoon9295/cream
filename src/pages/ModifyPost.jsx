@@ -1,11 +1,13 @@
 import React from 'react';
 import PostContainer from '../components/PostContainer';
+import { useParams } from 'react-router-dom';
 
 const ModifyPost = () => {
-  const postId = '65b8bc67-7e8d-4a93-28a0-029fc3ac4049';
+  const param = useParams();
+
   return (
     <>
-      <PostContainer postId={postId} />
+      <PostContainer postId={param.id} />
     </>
   );
 };
