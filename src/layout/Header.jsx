@@ -35,7 +35,7 @@ export default function Header() {
 
           <Form>
             <SearchInput type="text" placeholder="제품명을 입력해주세요." />
-            <CiSearch style={{ position: 'absolute', right: '15px', cursor: 'pointer' }} />
+            <CiSearch style={{ position: 'absolute', right: '2rem', cursor: 'pointer' }} />
           </Form>
         </LogoWrap>
       </InnerWrap>
@@ -104,12 +104,13 @@ const AuthInner = styled.ul`
   color: var(--font);
   font-size: 0.7rem;
   gap: 15px;
+  padding: 0 20px;
 `;
 
 const LogoWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 20px 0;
+  padding: 20px;
   align-items: center;
   position: relative;
 

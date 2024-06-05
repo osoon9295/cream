@@ -1,27 +1,41 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getUser } from '../../api/api.auth';
 
-const fetchInitialUserData = async () => {
-  try {
-    const userData = await getUser();
-    return userData;
-  } catch (error) {
-    console.error('Error fetching initial user data:', error);
-    return null;
-  }
-};
+//let test;
 
-const setInitialState = async () => {
-  const userData = await fetchInitialUserData();
-  return userData ? { ...userData } : {};
-};
+// const fetchInitialUserData = () => {
+//   try {
+//     const userData = getUser();
+//     return userData;
+//   } catch (error) {
+//     console.error('초기 회원정보를 가지고올 수 없습니다.', error);
+//     return null;
+//   }
+// };
 
-const initialState = setInitialState();
+// fetchInitialUserData().then((data) => {
+//   test = data;
+//   console.log(test);
+// });
+// const getTest = () => {
+//   getUser().then((data) => {
+//     console.log(data);
+//   });
+// };
 
-export const userSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {}
-});
+//getTest();
 
-export default userSlice.reducer;
+//console.log(setInitialState());
+
+//const initialState = fetchInitialUserData();
+
+// export const userSlice = createSlice({
+//   name: 'user',
+//   initialState,
+//   reducers: {
+//     updateUser: (state, action) => {}
+//   }
+// });
+
+// export const { updateUser } = userSlice.actions;
+// export default userSlice.reducer;
