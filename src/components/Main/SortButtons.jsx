@@ -42,7 +42,7 @@ const SortButtons = ({ showList, setShowList }) => {
       const popularityRank = [...showList].sort((a, b) => b.popularity - a.popularity);
       setShowList(popularityRank);
     } else if (type === 'latest') {
-      const latestRank = [...showList].sort((a, b) => b.postDate - a.postDate);
+      const latestRank = [...showList].sort((a, b) => b.created_at - a.created_at);
       setShowList(latestRank);
     }
     setActiveButton((prev) => (prev === type ? null : type));

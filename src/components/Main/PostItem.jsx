@@ -47,7 +47,7 @@ const StPostUserId = styled.span`
 const StLikeButton = styled.button``;
 
 const StPopularity = styled.span`
-  background-color: aqua;
+  /* background-color: aqua; */
   /* background-color: red; */
   display: flex;
   align-items: center;
@@ -100,6 +100,10 @@ const StPostDate = styled.div`
 const PostItem = ({ post }) => {
   const { product_imageSrc, product_name, post_content, popularity, created_at } = post;
 
+  const createdAt = created_at;
+
+  const createDate = `${createdAt.slice(0, 10)} ${createdAt.slice(11, 19)}`;
+
   // const [activeButton, setActivButton] = useState(null);
 
   return (
@@ -120,7 +124,7 @@ const PostItem = ({ post }) => {
       <StPostContentWrapper>
         <StPostContent>{post_content}</StPostContent>
       </StPostContentWrapper>
-      <StPostDate>{created_at}</StPostDate>
+      <StPostDate>{createDate}</StPostDate>
     </StPostItem>
   );
 };

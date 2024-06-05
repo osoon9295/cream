@@ -16,7 +16,7 @@ const StWrapper = styled.main`
 `;
 
 const StContainer = styled.ul`
-  background-color: beige;
+  /* background-color: beige; */
   max-width: 1240px;
   width: 70%;
   /* height: 120%; */
@@ -54,6 +54,18 @@ const ShowPostList = () => {
   usePosts();
   const postList = useSelector((state) => state.postList);
   const [showList, setShowList] = useState([]);
+
+  const createAt = postList.map((post) => {
+    const date = post.created_at;
+    const postDate = `${date.slice(0, 4)}${date.slice(5, 7)}${date.slice(8, 10)}${date.slice(11, 13)}${date.slice(
+      14,
+      16
+    )}${date.slice(17, 19)}`;
+
+    return setShowList((prev) => [...prev, { created_at: postDate }]);
+  });
+
+  console.log(createAt);
 
   // const createdAt = postList[1].created_at;
   // console.log(postList);
