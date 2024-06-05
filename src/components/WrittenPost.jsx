@@ -2,35 +2,43 @@ import React from 'react';
 import usePosts from '../customHook/usePosts';
 import styled from 'styled-components';
 import { IoHeart } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { deletePost } from '../store/slices/postSlice';
 
-const WrittenPost = ({ posts }) => {
+const WrittenPost = ({ posts, handleDeleteData }) => {
   usePosts();
+  const navigate = useNavigate();
+
   return (
     <>
       <PostWrap>
-        {posts.map((post) => (
-          <PostList key={post.id}>
-            <ImgWrap>
-              <PostImg src={post.product_imageSrc} />
-            </ImgWrap>
-            <ContentWrap>
-              <PostTitleWrap>
-                <PostTitle>{post.product_name}</PostTitle>
-              </PostTitleWrap>
-              <PostComment>{post.post_content}</PostComment>
-              <PostHeart>
-                <IoHeart style={{ verticalAlign: 'middle', marginRight: '5px' }} />
-                {post.popularity}
-              </PostHeart>
-            </ContentWrap>
+        {posts.map((post) => {
+          return (
+            <PostList key={post.id}>
+              <ImgWrap>
+                <PostImg src={post.product_imageSrc} />
+              </ImgWrap>
+              <ContentWrap>
+                <PostTitleWrap>
+                  <PostTitle>{post.product_name}</PostTitle>
+                </PostTitleWrap>
+                <PostComment>{post.post_content}</PostComment>
+                <PostHeart>
+                  <IoHeart style={{ verticalAlign: 'middle', marginRight: '5px' }} />
+                  {post.popularity}
+                </PostHeart>
+              </ContentWrap>
 
-            <PostDate>{post.created_at.slice(0, 10)}</PostDate>
+              <PostDate>{post.created_at.slice(0, 10)}</PostDate>
 
-            <EditBtns>
-              <Button>수정</Button>|<Button>삭제</Button>
-            </EditBtns>
-          </PostList>
-        ))}
+              <EditBtns>
+                <Button onClick={() => navigate(`/modifyPost/${post.id}`)}>수정</Button>|
+                <Button onClick={() => handleDeleteData(post.id)}>삭제</Button>
+              </EditBtns>
+            </PostList>
+          );
+        })}
       </PostWrap>
     </>
   );

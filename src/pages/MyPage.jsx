@@ -16,8 +16,8 @@ const MyPage = ({ user, setUser }) => {
       const userData = await getUser();
       const { data, error } = await supabase.from('posts').select('*').eq('user_id', userData.email);
       if (userData) {
-        setPosts(data);
         console.log(data);
+        setPosts(data);
         setProfileUrl(userData.user_metadata.imageSrc);
         setUser(userData);
         setNickname(userData.user_metadata.nickname);
@@ -26,9 +26,26 @@ const MyPage = ({ user, setUser }) => {
         console.error('회원정보를 가져오지 못했습니다.', error);
       }
     };
-
     fetchData();
   }, []);
+
+  const handleDeleteData = async (id) => {
+    if (confirm('게시글을 삭제하시겠습니까?')) {
+      const { data, error } = await supabase.from('posts').delete().eq('id', id).select('*');
+      console.log(data);
+      if (data) {
+        setPosts(data);
+      } else {
+        console.error('삭제 실패', error);
+      }
+    } else {
+      return false;
+    }
+  };
+  //삭제 함수만들기
+  //사용자가 삭제를 눌렀을때 실행
+  //onclick에 데이터 삭제하고 다시 가져오도록한다.
+  //setPost 업데이트
 
   return (
     <>
@@ -58,7 +75,7 @@ const MyPage = ({ user, setUser }) => {
         <StylePostWrap>
           <div>
             <StylePostTitle>✏️ 내가 쓴 게시글</StylePostTitle>
-            <WrittenPost posts={posts} profileUrl={profileUrl} />
+            <WrittenPost posts={posts} handleDeleteData={handleDeleteData} />
           </div>
 
           <div>
