@@ -3,26 +3,33 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import PostItem from './PostItem';
 import SortButtons from './SortButtons';
+import usePosts from '../../customHook/usePosts';
 
 const StWrapper = styled.main`
   /* background-color: blue; */
-  /* width: 100%; */
+  width: 100%;
   margin: 4% auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const StContainer = styled.section`
+const StContainer = styled.ul`
+  background-color: beige;
   max-width: 1240px;
-  width: 100%;
+  width: 70%;
+  /* height: 120%; */
   display: grid;
-  padding: 3% 0 3% 0;
 
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  padding: 3%;
+  /* gap: 3%; */
+
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
 
   @media screen and (max-width: 600px) {
-    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+    width: 90%;
+    grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
+    /* gap: 1% 3%; */
   }
 `;
 
@@ -43,12 +50,30 @@ const StMoreButton = styled.button`
 `;
 
 const ShowPostList = () => {
+  usePosts();
   const postList = useSelector((state) => state.postList);
   const [showList, setShowList] = useState([]);
 
-  useEffect(() => {
-    setShowList(postList.slice(0, 12));
-  }, []);
+  // const createdAt = postList[1].created_at;
+  // console.log(postList);
+  // console.log(createdAt);
+
+  postList,
+    // let postDate = new Date();
+    // let year = postDate.getFullYear();
+    // let month = ('0' + (postDate.getMonth() + 1)).slice(-2);
+    // let day = ('0' + postDate.getDate()).slice(-2);
+    // let hour = ('0' + postDate.getHours()).slice(-2);
+    // let min = ('0' + postDate.getMinutes()).slice(-2);
+    // let sec = ('0' + postDate.getSeconds()).slice(-2);
+
+    // postDate = Number(`${year}${month}${day}${hour}${min}${sec}`);
+
+    // export const stringPostDate = `${year}.${month}.${day} ${hour}:${min}:${sec}`;
+
+    useEffect(() => {
+      setShowList(postList.slice(0, 12));
+    }, [postList]);
 
   const moreShowList = () => {
     showList.length <= 12 ? setShowList(postList) : setShowList(postList.slice(0, 12));

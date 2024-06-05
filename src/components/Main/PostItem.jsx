@@ -1,28 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IoBookmarkOutline } from 'react-icons/io5';
 import { IoHeartOutline } from 'react-icons/io5';
 import styled from 'styled-components';
-import { stringPostDate } from '../../store/slices/postSlice';
-import { useNavigate } from 'react-router-dom';
+// import { stringPostDate } from '../../store/slices/postSlice';
+import { Link } from 'react-router-dom';
 
-const StPostItem = styled.button`
-  background-color: transparent;
-  width: 100%;
-  height: auto;
+const StPostItem = styled.div`
+  /* background-color: rebeccapurple; */
+  width: 90%;
+  height: 90%;
   border-radius: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5%;
-  cursor: pointer;
   border: none;
+  margin: 0 0 20px 0;
+  @media screen and (max-width: 600px) {
+  }
 `;
 
 const StImage = styled.img`
-  width: 100%;
-  height: auto;
+  width: 230px;
+  height: 230px;
   border-radius: 5%;
+  cursor: pointer;
 `;
 
 const StIdAndLikeButtons = styled.div`
@@ -34,34 +36,53 @@ const StIdAndLikeButtons = styled.div`
 `;
 
 const StPostUserId = styled.span`
-  font-size: 150%;
+  font-size: 130%;
   color: #484848;
+
+  @media screen and (max-width: 600px) {
+    font-size: 90%;
+  }
 `;
 
-const StLikeAndBookmark = styled.span`
-  /* background-color: aqua; */
+const StLikeButton = styled.button``;
+
+const StPopularity = styled.span`
+  background-color: aqua;
+  /* background-color: red; */
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 120%;
+  font-size: 100%;
   color: #484848;
+
+  @media screen and (max-width: 600px) {
+    font-size: 100%;
+    gap: 1px;
+  }
 `;
 
 const StPostContentWrapper = styled.div`
   /* background-color: green; */
+  font-size: 80%;
   width: 100%;
   height: 200%;
   padding: 3% 0;
 `;
 
 const StPostContent = styled.p`
+  /* background-color: red; */
+  height: 25px;
   overflow: hidden;
   white-space: normal;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  text-align: justify;
+  /* text-align: justify; */
   color: #7e7e7e;
+
+  @media screen and (max-width: 600px) {
+    font-size: 50%;
+  }
 `;
 
 const StPostDate = styled.div`
@@ -70,27 +91,36 @@ const StPostDate = styled.div`
   display: flex;
   justify-content: left;
   color: #d0d0d0;
+  /* position: absolute;
+  bottom: 1%; */
+  @media screen and (max-width: 600px) {
+    font-size: 50%;
+  }
 `;
 const PostItem = ({ post }) => {
-  const { image, userId, productName, postContent, popularity } = post;
+  const { product_imageSrc, product_name, post_content, popularity, created_at } = post;
 
-  const navigate = useNavigate();
+  // const [activeButton, setActivButton] = useState(null);
 
   return (
-    <StPostItem onClick={() => navigate(`/detailed`)}>
-      <StImage src={image} alt={productName} />
+    <StPostItem>
+      <Link to="/detailed">
+        <StImage src={product_imageSrc} alt={product_name} />
+      </Link>
       <StIdAndLikeButtons>
-        <StPostUserId>{userId}</StPostUserId>
-        <StLikeAndBookmark>
-          <IoHeartOutline size={27} onClick={() => {}} />
+        <StPostUserId>닉네임</StPostUserId>
+        <StPopularity>
+          <StLikeButton>
+            <IoHeartOutline onClick={() => {}} />
+          </StLikeButton>
           {popularity}
           <IoBookmarkOutline size={27} onClick={() => {}} />
-        </StLikeAndBookmark>
+        </StPopularity>
       </StIdAndLikeButtons>
       <StPostContentWrapper>
-        <StPostContent>{postContent}</StPostContent>
+        <StPostContent>{post_content}</StPostContent>
       </StPostContentWrapper>
-      <StPostDate>{stringPostDate}</StPostDate>
+      <StPostDate>{created_at}</StPostDate>
     </StPostItem>
   );
 };
