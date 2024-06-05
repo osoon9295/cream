@@ -5,7 +5,7 @@ import { FaCrown, FaIceCream } from 'react-icons/fa';
 import { GiSpoon } from 'react-icons/gi';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6';
 import { PiEqualsBold } from 'react-icons/pi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCategory } from '../../store/slices/categorySlice';
 
 const StPcCategory = styled.div`
@@ -120,6 +120,7 @@ const PcCategory = () => {
   const dispatch = useDispatch();
   const [isOn, setIsOn] = useState(false);
   const [activeState, setActiveState] = useState([false, false, false]);
+  const category = useSelector((state) => state.category.category);
   const iconBtn = [
     {
       icon: <FaCrown size="56" />,
@@ -141,7 +142,8 @@ const PcCategory = () => {
     setIsOn(!isOn);
   };
 
-  const onClickHandler = (index, category) => {
+  const onClickHandler = (index, newCategory) => {
+    console.log(newCategory);
     const newState = activeState.map((state, stateIndex) => {
       if (index === stateIndex) {
         return !state;
@@ -151,13 +153,14 @@ const PcCategory = () => {
     setActiveState(newState);
     // [false, false, false]
     // { category: '', subCategory: '' };
-    const FalseState = newState.every((currentState) => {
-      return currentState === false;
-    });
-    if (FalseState) {
+    // const FalseState = newState.every((currentState) => {
+    //   return currentState === false;
+    // });
+
+    if (category === newCategory) {
       dispatch(setCategory(''));
     } else {
-      dispatch(setCategory(category));
+      dispatch(setCategory(newCategory));
     }
   };
   // console.log(iconElement);

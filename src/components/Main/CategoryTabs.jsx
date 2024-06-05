@@ -52,6 +52,7 @@ const StLi = styled.li`
 const CategoryTabs = () => {
   const dispatch = useDispatch();
   const category = useSelector((state) => state.category.category);
+  // console.log(category)
   const categories = {
     brand: ['오리온', '빙그레', '롯데제과', '해태제과', '매일유업'],
     flavor: ['바닐라', '딸기', '초코', '기타'],
@@ -59,22 +60,32 @@ const CategoryTabs = () => {
   };
   const [clickedItem, setClickedItem] = useState('');
   const currentCategoryTabs = categories[category] || [];
+  // console.log(currentCategoryTabs);
   const handleTabClick = (tab) => {
-    setClickedItem(tab);
-    dispatch(setSubCategory(tab));
+    if (clickedItem === tab) {
+      setClickedItem('');
+      dispatch(setSubCategory(''));
+    } else {
+      setClickedItem(tab);
+      dispatch(setSubCategory(tab));
+    }
+    // setClickedItem(tab);
+    // dispatch(setSubCategory(tab));
   };
   return (
-    <StList>
-      <ul>
-        {currentCategoryTabs.map((tab) => {
-          return (
-            <StLi key={tab} $active={clickedItem == tab}>
-              <button onClick={() => handleTabClick(tab)}>{tab}</button>
-            </StLi>
-          );
-        })}
-      </ul>
-    </StList>
+    <>
+      <StList>
+        <ul>
+          {currentCategoryTabs.map((tab) => {
+            return (
+              <StLi key={tab} $active={clickedItem == tab}>
+                <button onClick={() => handleTabClick(tab)}>{tab}</button>
+              </StLi>
+            );
+          })}
+        </ul>
+      </StList>
+    </>
   );
 };
 
