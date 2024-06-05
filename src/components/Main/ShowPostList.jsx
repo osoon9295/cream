@@ -52,47 +52,44 @@ const StMoreButton = styled.button`
 
 const ShowPostList = () => {
   usePosts();
-  const postList = useSelector((state) => state.postList);
+  const initialPostList = useSelector((state) => state.postList);
+  const sortType = useSelector((state) => state.sortType);
   const [showList, setShowList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 12;
 
-  const createAt = postList.map((post) => {
-    const date = post.created_at;
-    const postDate = `${date.slice(0, 4)}${date.slice(5, 7)}${date.slice(8, 10)}${date.slice(11, 13)}${date.slice(
-      14,
-      16
-    )}${date.slice(17, 19)}`;
+  // console.log(sortType);
 
-    return setShowList((prev) => [...prev, { created_at: postDate }]);
+  const postList = initialPostList.map((post) => {
+    const postDate = new Date(post.created_at).getTime();
+    return { ...post, postDate };
   });
-  console.log(createAt);
 
-  // const createdAt = postList[1].created_at;
-  // console.log(postList);
-  // console.log(createdAt);
-
-  // postList,
-  // let postDate = new Date();
-  // let year = postDate.getFullYear();
-  // let month = ('0' + (postDate.getMonth() + 1)).slice(-2);
-  // let day = ('0' + postDate.getDate()).slice(-2);
-  // let hour = ('0' + postDate.getHours()).slice(-2);
-  // let min = ('0' + postDate.getMinutes()).slice(-2);
-  // let sec = ('0' + postDate.getSeconds()).slice(-2);
-
-  // postDate = Number(`${year}${month}${day}${hour}${min}${sec}`);
-
-  // export const stringPostDate = `${year}.${month}.${day} ${hour}:${min}:${sec}`;
+  // useEffect(() => {
+  //   setShowList(postList.slice(0, 12));
+  // }, [initialPostList]);
 
   useEffect(() => {
-    setShowList(postList.slice(0, 12));
-  }, [postList]);
+    if (sortType.type === 'popular') {
+      const popularityRank = [...postList].sort((a, b) => b.popularity - a.popularity);
+      setShowList(popularityRank);
+    } else if (sortType.type === 'latest') {
+      const latestRank = [...postList].sort((a, b) => b.postDate - a.postDate);
+      setShowList(latestRank);
+    } else {
+      setShowList(postList);
+    }
+
+    // const moreShowList = currentPage
+  }, []);
 
   const moreShowList = () => {
     showList.length <= 12 ? setShowList(postList) : setShowList(postList.slice(0, 12));
   };
+
   return (
     <StWrapper>
-      <SortButtons showList={showList} setShowList={setShowList} />
+      <SortButtons showList={showList} postList={postList} />
       <CategoryTabs />
       <StContainer>
         {showList.map((post) => {
