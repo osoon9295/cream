@@ -8,6 +8,8 @@ import PostImage from '../components/post/ProductImage';
 import PostReview from '../components/post/ProductReview';
 import supabase from '../supabase';
 import { getUser } from '../api/api.auth';
+import usePosts from '../customHook/usePosts';
+import { useSelector } from 'react-redux';
 
 const PostInner = styled.div`
   max-width: 1240px;
@@ -55,10 +57,10 @@ const SubmitBox = styled.div`
   background-color: #efefef;
   display: flex;
   align-items: center;
-  flex-direction: row-reverse;
+  flex-direction: row;
 `;
 
-const SubmitButton = styled.div`
+const SubmitButton = styled.button`
   width: 6.2rem;
   height: 2.4rem;
   border-radius: 1.5rem;
@@ -67,12 +69,27 @@ const SubmitButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 17%;
+  margin-left: 67%;
   font-size: 0.8rem;
   cursor: pointer;
 `;
 
-const PostContainer = () => {
+const CancelButton = styled.button`
+  width: 6.2rem;
+  height: 2.4rem;
+  border-radius: 1.5rem;
+  border: 1px solid black;
+  background-color: #fff;
+  color: black;
+  display: ${(props) => props.display};
+  justify-content: center;
+  align-items: center;
+  margin-left: 15px;
+  font-size: 0.8rem;
+  cursor: pointer;
+`;
+
+const PostContainer = ({ postId }) => {
   const [name, setName] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState('');
@@ -80,10 +97,17 @@ const PostContainer = () => {
   const [flavor, setFlavor] = useState('딸기');
   const [type, setType] = useState('콘');
 
+  usePosts();
+  if (postId) {
+    const posts = useSelector((state) => state.postList);
+    console.log(posts);
+  }
+
   const AddHandler = async () => {
+    const users = await getUser();
     const { data, error } = await supabase.from('posts').insert({
       id: uuid(),
-      user_id: '지영',
+      user_id: users.email,
       product_name: name,
       product_brand: brand,
       product_imageSrc: image,
@@ -98,14 +122,10 @@ const PostContainer = () => {
     }
   };
 
-  const ModifyHandler = async () => {
-    const { data, error } = await supabase.from('posts').update({}).eq();
+  const ModifyHandler = async (postId) => {
+    const { data, error } = await supabase.from('posts').update({}).eq(id, postId);
   };
-  const user = async () => {
-    const users = await getUser();
-    console.log(users);
-  };
-  user();
+
   return (
     <>
       <StTitle>게시글</StTitle>
@@ -160,7 +180,8 @@ const PostContainer = () => {
         </PostBox>
       </PostInner>
       <SubmitBox>
-        <SubmitButton onClick={AddHandler}>등록</SubmitButton>
+        <SubmitButton onClick={postId ? ModifyHandler : AddHandler}>{postId ? '수정' : '등록'}</SubmitButton>
+        <CancelButton display={postId ? 'flex' : 'none'}>취소</CancelButton>
       </SubmitBox>
     </>
   );
