@@ -35,15 +35,24 @@ const ProfileEdit = ({ user, setUser }) => {
       const userData = await getUser();
       const ImageData = await apiImg(image);
 
+      if (!ImageData) {
+        throw new Error('이미지 업로드 실패');
+      }
+
+      // auth 업데이트
       const { data: authData, error: AuthError } = await supabase.auth.updateUser({
         data: { nickname: newNickname, imageSrc: ImageData }
       });
-      setUser(authData);
-      if (AuthError) {
-        console.error('Auth 업데이트 실패', error.message);
-      }
-      console.log('Auth 업데이트 성공', authData);
 
+      if (AuthError) {
+        console.error('Auth 업데이트 실패', AuthError.message);
+        return;
+      }
+
+      console.log('Auth 업데이트 성공', authData);
+      setUser(authData);
+
+      // member 테이블 업데이트
       const { data, error } = await supabase
         .from('member')
         .update({ user_name: newNickname, user_imageSrc: ImageData })
@@ -61,27 +70,6 @@ const ProfileEdit = ({ user, setUser }) => {
       console.error('업데이트 실패', error);
     }
   };
-
-  // const handleUpdateData = async (e) => {
-  //   e.preventDefault();
-  //   const image = e.target.image.files[0];
-  //   try {
-  //     const ImageData = await apiImg(image);
-  //     console.log('ImageData', ImageData);
-  //     const newNickname = nicknameRef.current.value;
-
-  //     const { data, error } = await supabase.auth.updateUser({
-  //       data: { nickname: newNickname, imageSrc: ImageData }
-  //     });
-  //     if (error) {
-  //       console.error('supabase 업데이트 실패', error.message);
-  //       return;
-  //     }
-  //     navigate(-1);
-  //   } catch (error) {
-  //     console.error('업데이트 실패', error);
-  //   }
-  // };
 
   return (
     <>

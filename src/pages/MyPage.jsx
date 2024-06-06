@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import WrittenPost from './../components/WrittenPost';
+import LikedPost from './../components/LikedPost';
 import { getUser } from '../api/api.auth';
 import supabase from '../api/api.supabase';
 
@@ -9,24 +10,68 @@ const MyPage = ({ user, setUser }) => {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [posts, setPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
   const [profileUrl, setProfileUrl] = useState('');
-
-  //console.log(user);
-  //console.log('nickname', nickname);
 
   useEffect(() => {
     const fetchData = async () => {
       const userData = await getUser();
-      const { data, error } = await supabase.from('member').select('*').eq('user_id', userData.email);
-      const { data: postData } = await supabase.from('posts').select('*').eq('user_id', userData.email);
-      if (data) {
-        setPosts(postData);
-        setProfileUrl(userData.user_metadata.imageSrc);
-        setUser(userData);
-        setNickname(userData.user_metadata.nickname);
-      } else {
-        console.error('회원정보를 가져오지 못했습니다.', error);
+      setProfileUrl(userData.user_metadata.imageSrc);
+      setUser(userData);
+      setNickname(userData.user_metadata.nickname);
+
+      if (!userData) {
+        console.error('유저 정보를 가져올 수 없습니다.');
+        return;
       }
+      const { data: memberData, error: memberError } = await supabase
+        .from('member')
+        .select('*')
+        .eq('user_id', userData.email);
+
+      if (memberError) {
+        console.error('회원정보를 가져오지 못했습니다.', memberError);
+        return;
+      }
+
+      const { data: postData, error: postError } = await supabase
+        .from('posts')
+        .select('*')
+        .eq('user_id', userData.email);
+      setPosts(postData);
+
+      if (postError) {
+        console.error('게시글 정보를 가져오지 못했습니다.', postError);
+        return;
+      }
+
+      const { data: likeData, error: likeError } = await supabase
+        .from('user_info')
+        .select('post_heart')
+        .eq('user_id', userData.email);
+
+      if (likeError) {
+        console.error('좋아요한 게시글 정보를 가져오지 못했습니다.', likeError);
+        return;
+      }
+
+      const likedPostIds = likeData[0]?.post_heart || [];
+      console.log('likedPostIds', likedPostIds);
+
+      const likedPostDetails = likedPostIds.map(async (postId) => {
+        const { data: likedPostData, error: likedPostError } = await supabase
+          .from('posts')
+          .select('*')
+          .eq('id', postId)
+          .single();
+        setLikedPosts(likedPostData);
+
+        if (likedPostError) {
+          console.error('좋아요한 게시글의 상세 정보를 가져오지 못했습니다.', likedPostError);
+          return null;
+        }
+        return likedPostData;
+      });
     };
     fetchData();
   }, []);
@@ -74,11 +119,12 @@ const MyPage = ({ user, setUser }) => {
         <StylePostWrap>
           <div>
             <StylePostTitle>✏️ 내가 쓴 게시글</StylePostTitle>
-            <WrittenPost posts={posts} handleDeleteData={handleDeleteData} />
+            <WrittenPost key={posts.id} posts={posts} handleDeleteData={handleDeleteData} />
           </div>
 
           <div>
             <StylePostTitle>💜 좋아요</StylePostTitle>
+            <LikedPost key={posts.id} posts={likedPosts} />
           </div>
 
           <div>

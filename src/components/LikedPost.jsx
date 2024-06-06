@@ -2,12 +2,9 @@ import React from 'react';
 import usePosts from '../customHook/usePosts';
 import styled from 'styled-components';
 import { IoHeart } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
 
-const WrittenPost = ({ posts, handleDeleteData }) => {
+const LikedPost = ({ posts }) => {
   usePosts();
-  const navigate = useNavigate();
-
   return (
     <>
       <PostWrap>
@@ -28,11 +25,10 @@ const WrittenPost = ({ posts, handleDeleteData }) => {
                 </PostHeart>
               </ContentWrap>
 
-              <PostDate>{post.created_at.slice(0, 10)}</PostDate>
+              <PostDate>{post.created_at}</PostDate>
 
               <EditBtns>
-                <Button onClick={() => navigate(`/modifyPost/${post.id}`)}>수정</Button>|
-                <Button onClick={() => handleDeleteData(post.id)}>삭제</Button>
+                <Button>수정</Button>|<Button>삭제</Button>
               </EditBtns>
             </PostList>
           );
@@ -42,7 +38,7 @@ const WrittenPost = ({ posts, handleDeleteData }) => {
   );
 };
 
-export default WrittenPost;
+export default LikedPost;
 
 const PostWrap = styled.ul`
   display: flex;
