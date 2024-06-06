@@ -22,6 +22,11 @@ const StImage = styled.img`
   height: 230px;
   border-radius: 5%;
   cursor: pointer;
+
+  /* @media screen and (max-width: 600px) {
+    width: 100%;
+    height: 100%;
+  } */
 `;
 
 const StIdAndLikeButtons = styled.div`
