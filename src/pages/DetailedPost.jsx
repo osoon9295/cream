@@ -67,6 +67,8 @@ const ProfileImg = styled.div`
   background-color: #efefef;
   margin-right: 10px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
 `;
 
 const PostDate = styled.div`
@@ -81,7 +83,6 @@ const PostBox = styled.div`
   flex-direction: row;
   gap: 11%;
   flex-wrap: wrap;
-  justify-content: center;
   margin: 5% 0;
 `;
 
@@ -92,6 +93,8 @@ const PostImg = styled.div`
   background-color: #efefef;
   overflow: hidden;
   margin-top: 12px;
+  display: flex;
+  justify-content: center;
 `;
 
 const TagContainer = styled.div`
@@ -133,6 +136,8 @@ const DetailedPost = () => {
   };
 
   const postId = '7c75a64d-8238-277e-b7a7-ac6d50c20bcd';
+
+  // const postId = '6a9f75d4-0586-6dcd-8f2f-c16c675f4499';
 
   let detail = null;
   let date = '';
@@ -211,7 +216,10 @@ const DetailedPost = () => {
             </PostInfo>
             <PostBox>
               <PostImg>
-                <img src={detail.product_imageSrc} style={{ height: '100%', objectFit: 'cover' }} />
+                <img
+                  src={detail.product_imageSrc ? detail.product_imageSrc : '/public/img/default-img.png'}
+                  style={{ height: '100%', objectFit: 'cover' }}
+                />
               </PostImg>
               <div>
                 <TagContainer>
