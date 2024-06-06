@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PostItem from './PostItem';
 import SortButtons from './SortButtons';
 import usePosts from '../../customHook/usePosts';
@@ -92,7 +92,7 @@ const ShowPostList = () => {
     });
 
     setShowList(filteredList.slice(0, 12));
-  }, [postList, category, subCategory]);
+  }, [initialPostList, category, subCategory]);
 
   const moreShowList = () => {
     const sortedPosts = getSortedPost();
