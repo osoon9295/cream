@@ -15,7 +15,7 @@ const StSortButtons = styled.div`
   width: 100%;
   display: flex;
   gap: 30px;
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 1240px) {
     width: 90%;
   }
 `;
@@ -27,8 +27,11 @@ const StSortButton = styled.button`
   font-size: 1.45rem;
   padding: 0 0 1% 0;
   cursor: pointer;
+  @media screen and (min-width: 600px) and (max-width: 1240px) {
+    font-size: 1.2rem;
+  }
   @media screen and (max-width: 600px) {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 `;
 

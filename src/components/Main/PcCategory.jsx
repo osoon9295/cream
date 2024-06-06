@@ -14,11 +14,10 @@ const StPcCategory = styled.div`
   align-items: center;
   position: fixed;
   top: calc((100vh - 640px) / 2);
-  width: 138px;
-  padding: 45px 37px;
+  padding: 45px 25px;
   gap: 50px;
   border-radius: 30px;
-  background-color: #d5e0fc;
+  background-color: var(--sub-color);
   box-sizing: border-box;
   z-index: 1;
   transform: ${(props) => (props.$isOn ? 'translateX(0%)' : 'translateX(-100%)')};
@@ -29,16 +28,22 @@ const StPcCategory = styled.div`
   }
 
   @media (max-width: 1440px) {
-    width: 100px;
-    padding: 20px 11px;
+    padding: 20px 15px;
     gap: 15px;
     border-radius: 25px;
     top: calc((100vh - 407px) / 2);
+  }
+  @media (max-width: 1240px) {
+    padding: 0 10px;
+    border-radius: 15px;
   }
 
   svg {
     @media (max-width: 1440px) {
       width: 45px;
+    }
+    @media (max-width: 1240px) {
+      width: 30px;
     }
   }
 `;
@@ -67,6 +72,9 @@ const StPcCategoryUl = styled.ul`
         @media (max-width: 1440px) {
           width: 35px;
         }
+        @media (max-width: 1240px) {
+          width: 25px;
+        }
       }
     }
 
@@ -82,6 +90,9 @@ const StPcCategoryUl = styled.ul`
         margin-top: 0px;
         font-size: 13px;
       }
+      @media (max-width: 1240px) {
+        font-size: 11px;
+      }
     }
   }
 `;
@@ -90,7 +101,7 @@ const StPcCategoryToggle = styled.button`
   align-items: center;
   justify-content: center;
   position: absolute;
-  left: 79px;
+  left: 20%;
   top: 246px;
   width: 118px;
   height: 118px;
@@ -98,12 +109,12 @@ const StPcCategoryToggle = styled.button`
   border-color: transparent;
   background-color: #d5e0fc;
   cursor: pointer;
-  z-index: 1;
+  z-index: -1;
 
   svg {
     padding-left: 40px;
     @media (max-width: 1440px) {
-      width: 20px;
+      width: 15px;
       padding-left: 30px;
     }
   }
@@ -111,8 +122,12 @@ const StPcCategoryToggle = styled.button`
   @media (max-width: 1440px) {
     width: 80px;
     height: 80px;
-    left: 60px;
+    left: 50%;
     top: 163px;
+  }
+  @media (max-width: 1240px) {
+    width: 3.5rem;
+    height: 3.5rem;
   }
 `;
 
@@ -123,17 +138,17 @@ const PcCategory = () => {
   const category = useSelector((state) => state.category.category);
   const iconBtn = [
     {
-      icon: <FaCrown size="56" />,
+      icon: <FaCrown size="50" />,
       category: 'brand',
       text: '브랜드별'
     },
     {
-      icon: <GiSpoon size="56" />,
+      icon: <GiSpoon size="50" />,
       category: 'flavor',
       text: '맛별'
     },
     {
-      icon: <FaIceCream size="56" />,
+      icon: <FaIceCream size="50" />,
       category: 'type',
       text: '콘/바/컵'
     }
@@ -185,7 +200,7 @@ const PcCategory = () => {
         })}
       </StPcCategoryUl>
       <StPcCategoryToggle onClick={pcToggleHandler}>
-        {isOn ? <FaAngleLeft size="36" color="#FFF" /> : <FaAngleRight size="36" color="#FFF" />}
+        {isOn ? <FaAngleLeft size="30" color="#FFF" /> : <FaAngleRight size="30" color="#FFF" />}
       </StPcCategoryToggle>
     </StPcCategory>
   );

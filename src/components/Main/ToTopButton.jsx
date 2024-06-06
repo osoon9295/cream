@@ -6,10 +6,10 @@ import styled from 'styled-components';
 const StTopButton = styled.button`
   border: none;
   border-radius: 50%;
-  background-color: #ededed;
+  background-color: #fff;
   width: 4.5rem;
   height: 4.5rem;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.1);
   font-size: 25px;
   color: var(--font);
 
@@ -19,6 +19,12 @@ const StTopButton = styled.button`
   position: fixed;
   right: 75px;
   bottom: 40px;
+
+  @media (max-width: 1240px) {
+    width: 3rem;
+    height: 3rem;
+    font-size: 18px;
+  }
 
   @media (max-width: 1120px) {
     display: none;
