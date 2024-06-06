@@ -4,6 +4,7 @@ import { checkEmailDuplicate, checkNicknameDuplicate, signUp } from '../api/api.
 import Input from '../components/Input';
 import InputImage from '../components/InputImage';
 import * as S from '../styles/Auth.styled';
+import MobileMenu from '../layout/MobileMenu';
 
 const StyleSubmit = styled.input`
   border: 0;
@@ -74,6 +75,7 @@ export default function Join() {
       <Input isRequired={true} name="name" placeholder="닉네임" />
       <StyleSubmit type="submit" value="회원가입" />
       <StyleLink to="/login">로그인</StyleLink>
+      <MobileMenu />
     </S.AuthForm>
   );
 }

@@ -8,6 +8,10 @@ const Label = styled.label`
   border-radius: 10px;
   cursor: pointer;
   margin: 5px 0;
+  @media screen and (max-width: 890px) {
+    width: 8rem;
+    height: 8rem;
+  }
 `;
 
 const ProductImage = ({ image, setImage }) => {

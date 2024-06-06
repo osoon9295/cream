@@ -7,6 +7,7 @@ import { getUser } from '../api/api.auth';
 import { apiImg } from '../api/api.img';
 import supabase from '../api/api.supabase';
 import * as S from '../styles/Auth.styled';
+import MobileMenu from '../layout/MobileMenu';
 
 const ProfileEdit = ({ user, setUser }) => {
   const navigate = useNavigate();
@@ -92,6 +93,7 @@ const ProfileEdit = ({ user, setUser }) => {
             <StyleCancle onClick={() => navigate('/mypage')}>취소</StyleCancle>
           </StyleBtns>
         </S.AuthForm>
+        <MobileMenu />
       </StyleWrap>
     </>
   );

@@ -6,6 +6,9 @@ const StInput = styled.input`
   height: 2rem;
   border: 1px solid #c0c0c0;
   border-radius: 10px;
+  @media screen and (max-width: 890px) {
+    width: 95%;
+  }
 `;
 
 const ProductName = ({ name, setName }) => {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const TagBox = styled.button`
-  width: 5.5rem;
+  width: 4rem;
   height: 2rem;
   border-radius: 2rem;
   border-color: transparent;
@@ -11,7 +11,6 @@ const TagBox = styled.button`
   justify-content: center;
   align-items: center;
   font-size: 0.8rem;
-  margin-right: 0.5rem;
   cursor: pointer;
 `;
 
@@ -33,7 +32,7 @@ const Tag = ({ tagArr, brand, flavor, type, setBrand, setFlavor, setType }) => {
   };
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
       {tagArr.map((tag, idx) => {
         if (
           (tagArr === BrandTag && tag === brand) ||

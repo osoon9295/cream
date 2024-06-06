@@ -55,6 +55,10 @@ const StPrevBtn = styled.button`
     color: black;
     cursor: pointer;
   }
+
+  @media screen and (max-width: 800px) {
+    font-size: 2rem;
+  }
 `;
 
 const StNextBtn = styled.button`
@@ -71,6 +75,9 @@ const StNextBtn = styled.button`
   &:hover {
     color: black;
     cursor: pointer;
+  }
+  @media screen and (max-width: 800px) {
+    font-size: 2rem;
   }
 `;
 

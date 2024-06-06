@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { checkSignIn, getUser, signIn } from '../api/api.auth';
 import * as S from '../styles/Auth.styled';
 import Input from './../components/Input';
+import MobileMenu from '../layout/MobileMenu';
 
 const StyleBtns = styled.div`
   max-width: 25rem;
@@ -56,6 +57,7 @@ export default function Login() {
         <StyleSubmit type="submit" value="로그인" />
         <StyleLink to="/join">회원가입</StyleLink>
       </StyleBtns>
+      <MobileMenu />
     </S.AuthForm>
   );
 }

@@ -6,7 +6,10 @@ const StTextarea = styled.textarea`
   height: 10rem;
   border: 1px solid #c0c0c0;
   border-radius: 10px;
-  padding: 10px;
+
+  @media screen and (max-width: 890px) {
+    width: 95%;
+  }
 `;
 
 const ProductReview = ({ content, setContent }) => {

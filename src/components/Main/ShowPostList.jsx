@@ -10,17 +10,20 @@ import supabase from '../../api/api.supabase';
 const StWrapper = styled.main`
   /* background-color: blue; */
   width: 100%;
-  margin: 5% auto;
+  margin: 3rem auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media screen and (min-width: 320px) and (max-width: 499px) {
+    margin: 2rem auto;
+  }
 `;
 
 const StContainer = styled.ul`
   max-width: 1240px;
   overflow: hidden;
   display: grid;
-  padding-bottom: 5rem;
+  padding-bottom: 2rem;
   grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
   gap: 30px;
 

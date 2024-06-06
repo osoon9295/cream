@@ -24,8 +24,8 @@ export default function Footer() {
 const FooterWrap = styled.div`
   width: 100%;
   border-top: 1px solid var(--border-color);
-  margin-top: 10rem;
-  @media screen and (max-width: 500px) {
+
+  @media screen and (max-width: 1120px) {
     display: none;
   }
 `;
@@ -36,6 +36,9 @@ const InnerWrap = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  @media screen and (min-width: 500px) and (max-width: 1240px) {
+    padding: 0 20px;
+  }
 `;
 
 const Logo = styled.h1`
