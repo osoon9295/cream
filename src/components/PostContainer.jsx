@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import uuid from 'react-uuid';
-import Tag from './post/Tag';
-import { BrandTag, FlavorTag, TypeTag } from './post/Tag';
-import PostName from '../components/post/ProductName';
-import PostImage from '../components/post/ProductImage';
-import PostReview from '../components/post/ProductReview';
-import supabase from '../supabase';
-import { getUser } from '../api/api.auth';
-import usePosts from '../customHook/usePosts';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePost } from '../store/slices/postSlice';
 import { useNavigate } from 'react-router-dom';
+import uuid from 'react-uuid';
+import styled from 'styled-components';
+import { getUser } from '../api/api.auth';
+import PostImage from '../components/post/ProductImage';
+import PostName from '../components/post/ProductName';
+import PostReview from '../components/post/ProductReview';
+import usePosts from '../customHook/usePosts';
+import { changePost } from '../store/slices/postSlice';
+import supabase from '../supabase';
+import Tag, { BrandTag, FlavorTag, TypeTag } from './post/Tag';
 
 const PostInner = styled.div`
   max-width: 1240px;
@@ -140,7 +139,7 @@ const PostContainer = ({ postId }) => {
       setContent(modify.post_content);
       setImage(modify.product_imageSrc);
       setBrand(modify.product_brand);
-      setFlavor(modify.product_flavor);
+      setFlavor(modify.product_taste);
       setType(modify.product_type);
     }
   }, []);
@@ -175,11 +174,11 @@ const PostContainer = ({ postId }) => {
   };
 
   const ModifyHandler = async () => {
-    if (name) {
+    if (!name) {
       alert('제품명을 입력해주세요 !');
       return;
     }
-    if (content) {
+    if (!content) {
       alert('아이스크림 리뷰를 남겨주세요 !');
       return;
     }
@@ -205,7 +204,7 @@ const PostContainer = ({ postId }) => {
       console.log('Data', data);
     }
     dispatch(changePost);
-    navigate('/detailed');
+    navigate(-1);
   };
 
   const CancelHandler = () => {

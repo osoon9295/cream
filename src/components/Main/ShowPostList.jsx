@@ -79,31 +79,17 @@ const ShowPostList = () => {
   const subCategory = useSelector((state) => state.category.subCategory);
   const [showList, setShowList] = useState([]);
   const [postUser, setPostUser] = useState([]);
+  const [isMore, setIsMore] = useState(false);
 
   const postList = initialPostList.map((post) => {
     const postDate = new Date(post.created_at).getTime();
     return { ...post, postDate };
   });
 
-  useEffect(() => {
-    const sortedPosts = getSortedPost();
-    setShowList(sortedPosts.slice(0, 12));
-  }, [initialPostList, sortType]);
-
-  const getSortedPost = () => {
-    let sortedPosts = [...postList];
-    if (sortType === 'popular') {
-      sortedPosts.sort((a, b) => b.popularity - a.popularity);
-    } else if (sortType === 'latest') {
-      sortedPosts.sort((a, b) => b.postDate - a.postDate);
-    }
-    return sortedPosts;
-  };
-
   //회원 정보 가져오기
   useEffect(() => {
     const fetchMembers = async () => {
-      const { data, error } = await supabase.from('member').select('user_id, user_name, user_imageSrc');
+      let { data, error } = await supabase.from('member').select('user_id, user_name, user_imageSrc');
       setPostUser(data);
       if (error) {
         console.log('error =>', error);
@@ -114,12 +100,8 @@ const ShowPostList = () => {
     fetchMembers();
   }, []);
 
-  // useEffect(() => {
-  //   setShowList(postList.slice(0, 12));
-  // }, [initialPostList]);
-
-  useEffect(() => {
-    const filteredList = postList.filter((post) => {
+  const nowTypeList = (list) => {
+    const filteredList = list.filter((post) => {
       if (!subCategory) return true;
       if (category === 'brand') return post.product_brand === subCategory;
       if (category === 'flavor') return post.product_taste === subCategory;
@@ -127,12 +109,25 @@ const ShowPostList = () => {
       return true;
     });
 
-    setShowList(filteredList.slice(0, 12));
-  }, [initialPostList, category, subCategory]);
+    if (sortType === 'popular') {
+      return filteredList.sort((a, b) => b.popularity - a.popularity);
+    } else if (sortType === 'latest') {
+      return filteredList.sort((a, b) => b.postDate - a.postDate);
+    }
+  };
 
-  const moreShowList = () => {
-    const sortedPosts = getSortedPost();
-    showList.length <= 12 ? setShowList(sortedPosts) : setShowList(sortedPosts.slice(0, 12));
+  useEffect(() => {
+    const filteredList = nowTypeList(postList);
+    setIsMore(false);
+    setShowList(filteredList.slice(0, 12));
+  }, [initialPostList, category, subCategory, sortType]);
+
+  const moreShowList = async () => {
+    console.log(isMore);
+    setIsMore((prevIsMore) => !prevIsMore);
+    const filteredList = nowTypeList(postList);
+    !isMore ? setShowList(filteredList) : setShowList(filteredList.slice(0, 12));
+    console.log(isMore);
   };
 
   return (
@@ -147,7 +142,7 @@ const ShowPostList = () => {
           })}
         </StContainer>
       </GridWrap>
-      <StMoreButton onClick={moreShowList}>{showList.length <= 12 ? '더보기' : '줄이기'}</StMoreButton>
+      <StMoreButton onClick={moreShowList}>{isMore ? '줄이기' : '더보기'}</StMoreButton>
     </StWrapper>
   );
 };

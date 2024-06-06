@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const TagBox = styled.button`
-  width: 4rem;
+  padding: 0 0.8rem;
+  min-width: 5rem;
   height: 2rem;
   border-radius: 2rem;
   border-color: transparent;
@@ -31,6 +32,7 @@ const Tag = ({ tagArr, brand, flavor, type, setBrand, setFlavor, setType }) => {
     setType(e.target.id);
   };
 
+  console.log(flavor, brand);
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
       {tagArr.map((tag, idx) => {
@@ -61,4 +63,4 @@ const Tag = ({ tagArr, brand, flavor, type, setBrand, setFlavor, setType }) => {
 };
 
 export default Tag;
-export { BrandTag, FlavorTag, TypeTag, TagBox };
+export { BrandTag, FlavorTag, TagBox, TypeTag };

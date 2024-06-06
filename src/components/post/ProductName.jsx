@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const StInput = styled.input`
@@ -14,6 +14,7 @@ const StInput = styled.input`
 const ProductName = ({ name, setName }) => {
   const NameHandler = (e) => {
     setName(e.target.value);
+    console.log(name);
   };
   return <StInput onChange={NameHandler} value={name} required />;
 };

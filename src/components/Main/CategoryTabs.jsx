@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { setSubCategory } from '../../store/slices/categorySlice';
-import { TaskAbortError } from '@reduxjs/toolkit';
 
 const StList = styled.div`
   ul {
     display: flex;
     flex-direction: row;
     gap: 20px;
-    margin-top: 29px;
+    margin: 29px 0;
 
     @media (max-width: 800px) {
       flex-wrap: wrap;

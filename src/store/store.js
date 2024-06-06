@@ -12,6 +12,8 @@ const store = configureStore({
     category: categorySlice,
     sortType: sortTypeSlice,
     auth: authReducer
+    // favorites: favoritesSlice,
+    // saves: savesSlice,
     //user: userSlice
 
     // user: userSlice
