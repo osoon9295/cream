@@ -88,11 +88,12 @@ const ShowPostList = () => {
       if (category === 'brand') return post.product_brand === subCategory;
       if (category === 'flavor') return post.product_taste === subCategory;
       if (category === 'type') return post.product_type === subCategory;
+      // console.log(category);
       return true;
     });
 
     setShowList(filteredList.slice(0, 12));
-  }, [postList, category, subCategory]);
+  }, [initialPostList, category, subCategory]);
 
   const moreShowList = () => {
     const sortedPosts = getSortedPost();
