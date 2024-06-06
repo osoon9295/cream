@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { TagBox } from '../components/post/Tag';
 import { checkSignIn } from '../api/api.auth';
-import { IoBookmarkOutline, IoHeartOutline } from 'react-icons/io5';
+import { IoBookmarkOutline, IoHeartOutline, IoHeart, IoBookmark } from 'react-icons/io5';
 
 const PostInner = styled.div`
   max-width: 1240px;
@@ -20,7 +20,9 @@ const PostInner = styled.div`
 `;
 
 const PostTitle = styled.div`
+  max-width: 1240px;
   width: 100%;
+  box-sizing: border-box;
   margin-top: 8%;
   padding-left: 18.5%;
   padding-bottom: 10px;
@@ -210,8 +212,10 @@ const DetailedPost = () => {
                 <PostDate>{date}</PostDate>
               </div>
               <div style={{ display: 'flex', gap: '8px', marginLeft: '63%' }}>
-                <IoHeartOutline style={{ fontSize: '23px' }} />
-                <IoBookmarkOutline style={{ fontSize: '22px' }} />
+                {/* <IoHeart style={{ fontSize: '23px', cursor: 'pointer', color: 'red' }} /> */}
+                <IoHeartOutline style={{ fontSize: '23px', cursor: 'pointer', color: 'red' }} />
+                <IoBookmark style={{ fontSize: '22px', cursor: 'pointer', color: 'grey' }} />
+                {/* <IoBookmarkOutline style={{ fontSize: '22px', cursor: 'pointer', color: 'grey' }} /> */}
               </div>
             </PostInfo>
             <PostBox>
