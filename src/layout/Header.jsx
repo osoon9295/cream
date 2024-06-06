@@ -1,30 +1,51 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CiSearch } from 'react-icons/ci';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { RiHome2Line } from 'react-icons/ri';
-import { RiHome2Fill } from 'react-icons/ri';
-import { GoBookmark } from 'react-icons/go';
-import { GoBookmarkFill } from 'react-icons/go';
-import { RiUser3Line } from 'react-icons/ri';
-import { RiUser3Fill } from 'react-icons/ri';
+import { fetchUser, logOut } from '../store/slices/authSlice';
 
 export default function Header() {
+  const dispatch = useDispatch();
+  const { user, isSignedIn } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
+
   return (
     <HeaderWrap>
       <TopAuth>
-        <AuthWrap>
+        {isSignedIn ? (
           <AuthInner>
             <li>
-              <a href="/login">로그인</a>
+              <p>{user ? user.email : ''}님 환영합니다.</p>
             </li>
             <li>
-              <a href="/join">회원가입</a>
+              <button
+                style={{ all: 'unset', cursor: 'pointer' }}
+                onClick={() => {
+                  alert('로그아웃 되었습니다.');
+                  dispatch(logOut());
+                }}
+              >
+                로그아웃
+              </button>
             </li>
             <li>
-              <a href="/mypage">마이페이지</a>
+              <Link to="/mypage">마이페이지</Link>
             </li>
           </AuthInner>
-        </AuthWrap>
+        ) : (
+          <AuthInner>
+            <li>
+              <Link to="/login">로그인</Link>
+            </li>
+            <li>
+              <Link to="/join">회원가입</Link>
+            </li>
+          </AuthInner>
+        )}
       </TopAuth>
 
       <InnerWrap>

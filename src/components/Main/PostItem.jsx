@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { checkSignIn, getUser } from '../../api/api.auth';
 import supabase from '../../supabase';
+import { GoHeart, GoHeartFill, GoBookmark, GoBookmarkFill } from 'react-icons/go';
 
 const StPostItem = styled.div`
   border-radius: 5%;
@@ -19,6 +20,7 @@ const StImage = styled.img`
   width: 100%;
   border-radius: 5%;
   cursor: pointer;
+
   height: 17.5rem;
   @media screen and (max-width: 1240px) {
     height: 15rem;
@@ -63,7 +65,11 @@ const StPostUserId = styled(Link)`
   }
 `;
 
-const StLikeButton = styled.button``;
+const StLikeButton = styled.button`
+  border: none;
+  background: none;
+  padding: 0;
+`;
 
 const StPopularity = styled.span`
   display: flex;
@@ -243,9 +249,13 @@ const PostItem = ({ post, userImg }) => {
       <StIdAndLikeButtons>
         <ProductName>{product_name}</ProductName>
         <StPopularity>
-          <StLikeButton onClick={handleHeartUp}>{heartChk ? <p>ㅁ</p> : <IoHeartOutline />}</StLikeButton>
+          <StLikeButton onClick={handleHeartUp}>
+            {heartChk ? <GoHeartFill size={22} color="var(--theme-color)" /> : <GoHeart size={22} />}
+          </StLikeButton>
           {popularityNum}
-          <IoBookmarkOutline color={saveChk ? 'red' : 'yellow'} size={27} onClick={handleSaveUp} />
+          <StLikeButton onClick={handleSaveUp}>
+            {saveChk ? <GoBookmarkFill size={22} /> : <GoBookmark size={22} />}{' '}
+          </StLikeButton>
         </StPopularity>
       </StIdAndLikeButtons>
       <StPostContentWrapper>

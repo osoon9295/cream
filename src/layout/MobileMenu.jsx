@@ -1,7 +1,7 @@
 import { GoHome, GoSearch, GoBookmark, GoPerson, GoPencil } from 'react-icons/go';
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 const StMobileNav = styled.ul`
   display: flex;

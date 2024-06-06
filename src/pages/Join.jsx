@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { checkEmailDuplicate, checkNicknameDuplicate, signUp } from '../api/api.auth';
 import Input from '../components/Input';
@@ -31,6 +31,8 @@ const StyleLink = styled(Link)`
 `;
 
 export default function Join() {
+  const navigat = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -63,6 +65,9 @@ export default function Join() {
     }
 
     signUp(email, pw, name, image);
+    alert('회원가입 되었습니다.');
+
+    navigat('/');
   };
 
   return (

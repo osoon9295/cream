@@ -140,15 +140,15 @@ const MyPage = ({ user, setUser }) => {
 
         <StyleTotalWrap>
           <div>
-            <GoPencil marginRight="5px" verticalAlign="middle" />
+            <GoPencil style={{ marginRight: '5px', verticalAlign: 'middle' }} />
             게시글<Count>{posts.length}</Count>
           </div>
           <div>
-            <GoHeart marginRight="5px" verticalAlign="middle" />
+            <GoHeart style={{ marginRight: '5px', verticalAlign: 'middle' }} />
             좋아요<Count>{likedPosts.length}</Count>
           </div>
           <div>
-            <GoBookmark marginRight="5px" verticalAlign="middle" />
+            <GoBookmark style={{ marginRight: '5px', verticalAlign: 'middle' }} />
             북마크<Count>{savePosts.length}</Count>
           </div>
         </StyleTotalWrap>
