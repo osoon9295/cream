@@ -12,7 +12,7 @@ import DetailedPost from '../pages/DetailedPost';
 import SearchPost from './../pages/SearchPost';
 
 export default function Router() {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
 
   return (
     <BrowserRouter>

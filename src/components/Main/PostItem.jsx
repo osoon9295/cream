@@ -35,6 +35,8 @@ const StIdAndLikeButtons = styled.div`
 const StPostUserId = styled(Link)`
   font-size: 130%;
   color: #484848;
+  display: flex;
+  align-items: center;
 
   @media screen and (max-width: 600px) {
     font-size: 90%;
@@ -77,6 +79,10 @@ const StPostContent = styled.p`
   }
 `;
 
+const StNickname = styled.p`
+  font-size: 1rem;
+`;
+
 const StPostDate = styled.div`
   width: 100%;
   display: flex;
@@ -86,8 +92,14 @@ const StPostDate = styled.div`
     font-size: 50%;
   }
 `;
-
-const PostItem = ({ post }) => {
+const MainProfileImg = styled.img`
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50px;
+  border: 1px solid var(--border-color);
+  margin-right: 10px;
+`;
+const PostItem = ({ post, userImg }) => {
   const { id, product_imageSrc, product_name, post_content, popularity, created_at } = post;
   const [popularityNum, setPopularityNum] = useState(popularity);
   const createdAt = created_at;
@@ -200,7 +212,12 @@ const PostItem = ({ post }) => {
         <StImage src={product_imageSrc} alt={product_name} />
       </Link>
       <StIdAndLikeButtons>
-        <StPostUserId to="/detailed">{product_name}</StPostUserId>
+        <StPostUserId to="/detailed">
+          {product_name}
+          <MainProfileImg src={userImg?.user_imageSrc} />
+          <StNickname>{userImg?.user_name}</StNickname>
+        </StPostUserId>
+
         <StPopularity>
           <StLikeButton onClick={handleHeartUp}>{heartChk ? <p>ㅁ</p> : <IoHeartOutline />}</StLikeButton>
           {popularityNum}
