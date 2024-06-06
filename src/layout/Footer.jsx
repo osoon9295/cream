@@ -24,7 +24,6 @@ export default function Footer() {
 const FooterWrap = styled.div`
   width: 100%;
   border-top: 1px solid var(--border-color);
-  padding: 3rem 20px;
 
   @media screen and (max-width: 500px) {
     display: none;
@@ -33,7 +32,7 @@ const FooterWrap = styled.div`
 
 const InnerWrap = styled.div`
   max-width: 1240px;
-  margin: 0 auto;
+  margin: 3rem auto;
   display: flex;
   justify-content: center;
   flex-direction: column;

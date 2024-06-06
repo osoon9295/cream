@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import WrittenPost from './../components/WrittenPost';
+import LikedPost from './../components/LikedPost';
+import SavedPost from './../components/SavedPost';
 import { getUser } from '../api/api.auth';
 import supabase from '../api/api.supabase';
 import MobileMenu from '../layout/MobileMenu';
@@ -10,43 +12,117 @@ const MyPage = ({ user, setUser }) => {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [posts, setPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
+  const [savePosts, setSavePosts] = useState([]);
   const [profileUrl, setProfileUrl] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       const userData = await getUser();
-      const { data, error } = await supabase.from('posts').select('*').eq('user_id', userData.email);
-      if (userData) {
-        console.log(data);
-        setPosts(data);
-        setProfileUrl(userData.user_metadata.imageSrc);
-        setUser(userData);
-        setNickname(userData.user_metadata.nickname);
-        //console.log('user', userData);
-      } else {
-        console.error('회원정보를 가져오지 못했습니다.', error);
+      setProfileUrl(userData.user_metadata.imageSrc);
+      setUser(userData);
+      setNickname(userData.user_metadata.nickname);
+
+      if (!userData) {
+        console.error('유저 정보를 가져올 수 없습니다.');
+        return;
+      }
+      const { data: memberData, error: memberError } = await supabase
+        .from('member')
+        .select('*')
+        .eq('user_id', userData.email);
+
+      if (memberError) {
+        console.error('회원정보를 가져오지 못했습니다.', memberError);
+        return;
+      }
+
+      const { data: postData, error: postError } = await supabase
+        .from('posts')
+        .select('*')
+        .eq('user_id', userData.email);
+      setPosts(postData);
+
+      if (postError) {
+        console.error('게시글 정보를 가져오지 못했습니다.', postError);
+        return;
+      }
+
+      const { data: likeData, error: likeError } = await supabase
+        .from('user_info')
+        .select('post_heart')
+        .eq('user_id', userData.email);
+
+      if (likeError) {
+        console.error('좋아요한 게시글 정보를 가져오지 못했습니다.', likeError);
+        return;
+      }
+
+      let likedPostIds = JSON.parse(likeData[0].post_heart);
+      try {
+        const likedPostDetails = await Promise.all(
+          likedPostIds.map(async (postId) => {
+            const { data: likedPostData, error } = await supabase.from('posts').select('*').eq('id', postId);
+
+            if (error) {
+              console.error('좋아요한 게시글의 상세 정보를 가져오지 못했습니다.', error);
+              return null;
+            }
+            return likedPostData;
+          })
+        );
+        setLikedPosts(likedPostDetails.filter((post) => post !== null));
+      } catch (error) {
+        console.error('오류', error);
+      }
+
+      const { data: saveData, error: saveError } = await supabase
+        .from('user_info')
+        .select('post_save')
+        .eq('user_id', userData.email);
+      setSavePosts(saveData);
+
+      if (saveError) {
+        console.error('북마크한 게시글 정보를 가져오지 못했습니다.', saveError);
+        return;
+      }
+
+      let savePostIds = JSON.parse(saveData[0]?.post_save, '[]');
+      try {
+        const savePostDetails = await Promise.all(
+          savePostIds.map(async (postId) => {
+            const { data: savedPostData, error } = await supabase.from('posts').select('*').eq('id', postId);
+
+            if (error) {
+              console.error('북마크한 게시글의 상세 정보를 가져오지 못했습니다.', error);
+              return null;
+            }
+            return savedPostData;
+          })
+        );
+        setSavePosts(savePostDetails.filter((post) => post !== null));
+      } catch (error) {
+        console.error('오류', error);
       }
     };
+
     fetchData();
   }, []);
 
   const handleDeleteData = async (id) => {
     if (confirm('게시글을 삭제하시겠습니까?')) {
       const { data, error } = await supabase.from('posts').delete().eq('id', id).select('*');
-      console.log(data);
-      if (data) {
-        setPosts(data);
-      } else {
+      const userData = await getUser();
+      const { data: setPost } = await supabase.from('posts').select('*').eq('user_id', userData.email);
+      setPosts(setPost);
+
+      if (error) {
         console.error('삭제 실패', error);
       }
     } else {
       return false;
     }
   };
-  //삭제 함수만들기
-  //사용자가 삭제를 눌렀을때 실행
-  //onclick에 데이터 삭제하고 다시 가져오도록한다.
-  //setPost 업데이트
 
   return (
     <>
@@ -76,15 +152,17 @@ const MyPage = ({ user, setUser }) => {
         <StylePostWrap>
           <div>
             <StylePostTitle>✏️ 내가 쓴 게시글</StylePostTitle>
-            <WrittenPost posts={posts} handleDeleteData={handleDeleteData} />
+            <WrittenPost key={posts.id} posts={posts} handleDeleteData={handleDeleteData} />
           </div>
 
           <div>
             <StylePostTitle>💜 좋아요</StylePostTitle>
+            <LikedPost key={posts.id} posts={likedPosts} />
           </div>
 
           <div>
             <StylePostTitle>📌 북마크</StylePostTitle>
+            <SavedPost key={posts.id} posts={savePosts} />
           </div>
         </StylePostWrap>
         <MobileMenu />
@@ -97,7 +175,7 @@ export default MyPage;
 
 const StyleWrap = styled.div`
   max-width: 1240px;
-  margin: 5rem auto;
+  margin: 8rem auto;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -113,7 +191,7 @@ const StyleWrap = styled.div`
 const Title = styled.h1`
   text-align: center;
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
 
   @media screen and (max-width: 500px) {
     margin: 2rem 0 1rem;
@@ -227,7 +305,7 @@ const StylePostTitle = styled.h1`
 
 const ProfileEmail = styled.span`
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   margin-top: 10px;
   color: var(--font);
   margin-left: 1.55rem;
