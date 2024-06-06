@@ -53,23 +53,34 @@ const StMoreButton = styled.button`
 
 const ShowPostList = () => {
   usePosts();
-  const postList = useSelector((state) => state.postList);
+  const initialPostList = useSelector((state) => state.postList);
+  const sortType = useSelector((state) => state.sortType.type);
+  const category = useSelector((state) => state.category.category);
+  const subCategory = useSelector((state) => state.category.subCategory);
   const [showList, setShowList] = useState([]);
   const [postUser, setPostUser] = useState([]);
 
   //console.log('postList', postList);
 
-  // const createAt = postList.map((post) => {
-  //   const date = post.created_at;
-  //   const postDate = `${date.slice(0, 4)}${date.slice(5, 7)}${date.slice(8, 10)}${date.slice(11, 13)}${date.slice(
-  //     14,
-  //     16
-  //   )}${date.slice(17, 19)}`;
+  const postList = initialPostList.map((post) => {
+    const postDate = new Date(post.created_at).getTime();
+    return { ...post, postDate };
+  });
 
-  //   return setShowList((prev) => [...prev, { created_at: postDate }]);
-  // });
+  useEffect(() => {
+    const sortedPosts = getSortedPost();
+    setShowList(sortedPosts.slice(0, 12));
+  }, [initialPostList, sortType]);
 
-  //console.log(createAt);
+  const getSortedPost = () => {
+    let sortedPosts = [...postList];
+    if (sortType === 'popular') {
+      sortedPosts.sort((a, b) => b.popularity - a.popularity);
+    } else if (sortType === 'latest') {
+      sortedPosts.sort((a, b) => b.postDate - a.postDate);
+    }
+    return sortedPosts;
+  };
 
   // const createdAt = postList[1].created_at;
   // console.log(postList);
@@ -88,17 +99,15 @@ const ShowPostList = () => {
 
   // export const stringPostDate = `${year}.${month}.${day} ${hour}:${min}:${sec}`;
 
+  //회원 정보 가져오기
   useEffect(() => {
-    // let detail = postList.filter((post)=>post.id === )
     const fetchMembers = async () => {
-      //console.log(user);
       const { data, error } = await supabase.from('member').select('user_id, user_name, user_imageSrc');
       setPostUser(data);
       if (error) {
         console.log('error =>', error);
       } else {
-        //console.log('data =>', data);
-        //console.log(user);
+        console.log('data =>', data);
       }
     };
     fetchMembers();
@@ -108,17 +117,35 @@ const ShowPostList = () => {
     setShowList(postList.slice(0, 12));
   }, [postList]);
 
+  useEffect(() => {
+    if (!subCategory) {
+      setShowList(postList.slice(0, 12));
+      return;
+    }
+
+    const filteredList = postList.filter((post) => {
+      if (category === 'brand') return post.product_brand === subCategory;
+      if (category === 'flavor') return post.product_taste === subCategory;
+      if (category === 'type') return post.product_type === subCategory;
+      return true;
+    });
+
+    setShowList(filteredList.slice(0, 12));
+  }, [postList, category, subCategory]);
+
   const moreShowList = () => {
-    showList.length <= 12 ? setShowList(postList) : setShowList(postList.slice(0, 12));
+    const sortedPosts = getSortedPost();
+    showList.length <= 12 ? setShowList(sortedPosts) : setShowList(sortedPosts.slice(0, 12));
   };
+
   return (
     <StWrapper>
-      <SortButtons showList={showList} setShowList={setShowList} />
+      <SortButtons />
       <CategoryTabs />
       <StContainer>
         {showList.map((post) => {
-          const user = postUser.find((el) => el.user_id === post.user_id);
-          return <PostItem key={post.id} post={post} user={user} />;
+          const userImg = postUser.find((el) => el.user_id === post.user_id);
+          return <PostItem key={post.id} post={post} userImg={userImg} />;
         })}
       </StContainer>
       <StMoreButton onClick={moreShowList}>{showList.length <= 12 ? '더보기' : '줄이기'}</StMoreButton>

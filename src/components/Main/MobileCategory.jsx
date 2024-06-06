@@ -14,20 +14,18 @@ const StMobileCategory = styled.ul`
   @media (min-width: 1120px) {
     display: none;
   }
+  @media (max-width: 800px) {
+    padding: 10px 0px;
+  }
 
-  button {
+  li {
     font-size: 20px;
-    border: transparent;
-    background-color: transparent;
     cursor: pointer;
     color: #969696;
+
     @media (max-width: 800px) {
       font-size: 15px;
     }
-  }
-
-  @media (max-width: 800px) {
-    padding: 10px 0px;
   }
 `;
 
@@ -38,28 +36,23 @@ const MobileCategory = () => {
     return category === className ? 'active' : '';
   };
   const onClickHandler = (newCategory) => {
-    if (category === newCategory) {
-      dispatch(setCategory(''));
-    } else {
-      dispatch(setCategory(newCategory));
-    }
+    // if (category === newCategory) {
+    //   dispatch(setCategory(''));
+    // } else {
+    //   dispatch(setCategory(newCategory));
+    // }
+    dispatch(setCategory(newCategory));
   };
   return (
     <StMobileCategory>
-      <li>
-        <button className={getClassName('brand')} onClick={() => onClickHandler('brand')}>
-          브랜드별
-        </button>
+      <li className={getClassName('brand')} onClick={() => onClickHandler('brand')}>
+        브랜드별
       </li>
-      <li>
-        <button className={getClassName('flavor')} onClick={() => onClickHandler('flavor')}>
-          맛별
-        </button>
+      <li className={getClassName('flavor')} onClick={() => onClickHandler('flavor')}>
+        맛별
       </li>
-      <li>
-        <button className={getClassName('type')} onClick={() => onClickHandler('type')}>
-          콘/바/컵
-        </button>
+      <li button className={getClassName('type')} onClick={() => onClickHandler('type')}>
+        콘/바/컵
       </li>
     </StMobileCategory>
   );

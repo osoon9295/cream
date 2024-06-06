@@ -3,14 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import WrittenPost from './../components/WrittenPost';
 import LikedPost from './../components/LikedPost';
+import SavedPost from './../components/SavedPost';
 import { getUser } from '../api/api.auth';
 import supabase from '../api/api.supabase';
+import MobileMenu from '../layout/MobileMenu';
 
 const MyPage = ({ user, setUser }) => {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [posts, setPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
+  const [savePosts, setSavePosts] = useState([]);
   const [profileUrl, setProfileUrl] = useState('');
 
   useEffect(() => {
@@ -55,24 +58,54 @@ const MyPage = ({ user, setUser }) => {
         return;
       }
 
-      const likedPostIds = likeData[0]?.post_heart || [];
-      console.log('likedPostIds', likedPostIds);
+      let likedPostIds = JSON.parse(likeData[0].post_heart);
+      try {
+        const likedPostDetails = await Promise.all(
+          likedPostIds.map(async (postId) => {
+            const { data: likedPostData, error } = await supabase.from('posts').select('*').eq('id', postId);
 
-      const likedPostDetails = likedPostIds.map(async (postId) => {
-        const { data: likedPostData, error: likedPostError } = await supabase
-          .from('posts')
-          .select('*')
-          .eq('id', postId)
-          .single();
-        setLikedPosts(likedPostData);
+            if (error) {
+              console.error('좋아요한 게시글의 상세 정보를 가져오지 못했습니다.', error);
+              return null;
+            }
+            return likedPostData;
+          })
+        );
+        setLikedPosts(likedPostDetails.filter((post) => post !== null));
+      } catch (error) {
+        console.error('오류', error);
+      }
 
-        if (likedPostError) {
-          console.error('좋아요한 게시글의 상세 정보를 가져오지 못했습니다.', likedPostError);
-          return null;
-        }
-        return likedPostData;
-      });
+      const { data: saveData, error: saveError } = await supabase
+        .from('user_info')
+        .select('post_save')
+        .eq('user_id', userData.email);
+      setSavePosts(saveData);
+
+      if (saveError) {
+        console.error('북마크한 게시글 정보를 가져오지 못했습니다.', saveError);
+        return;
+      }
+
+      let savePostIds = JSON.parse(saveData[0]?.post_save, '[]');
+      try {
+        const savePostDetails = await Promise.all(
+          savePostIds.map(async (postId) => {
+            const { data: savedPostData, error } = await supabase.from('posts').select('*').eq('id', postId);
+
+            if (error) {
+              console.error('북마크한 게시글의 상세 정보를 가져오지 못했습니다.', error);
+              return null;
+            }
+            return savedPostData;
+          })
+        );
+        setSavePosts(savePostDetails.filter((post) => post !== null));
+      } catch (error) {
+        console.error('오류', error);
+      }
     };
+
     fetchData();
   }, []);
 
@@ -129,8 +162,10 @@ const MyPage = ({ user, setUser }) => {
 
           <div>
             <StylePostTitle>📌 북마크</StylePostTitle>
+            <SavedPost key={posts.id} posts={savePosts} />
           </div>
         </StylePostWrap>
+        <MobileMenu />
       </StyleWrap>
     </>
   );

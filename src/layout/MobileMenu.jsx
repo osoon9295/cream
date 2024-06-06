@@ -1,6 +1,7 @@
 import { GoHome, GoSearch, GoBookmark, GoPerson, GoPencil } from 'react-icons/go';
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const StMobileNav = styled.ul`
   display: flex;
@@ -20,6 +21,7 @@ const StMobileNav = styled.ul`
   li {
     text-align: center;
     font-size: 12px;
+    cursor: pointer;
 
     @media (max-width: 800px) {
       font-size: 9px;
@@ -48,9 +50,10 @@ const StMobileNav = styled.ul`
 `;
 
 const MobileMenu = () => {
+  const navigate = useNavigate();
   return (
     <StMobileNav>
-      <li>
+      <li onClick={() => navigate(`/`)}>
         <GoHome size="40" />
         <span>HOME</span>
       </li>
@@ -62,11 +65,11 @@ const MobileMenu = () => {
         <GoBookmark size="40" />
         <span>SAVED</span>
       </li>
-      <li>
+      <li onClick={() => navigate(`/mypage`)}>
         <GoPerson size="40" />
         <span>MY</span>
       </li>
-      <li>
+      <li onClick={() => navigate(`/createPost`)}>
         <GoPencil size="40" />
         <span>WRITE</span>
       </li>

@@ -2,33 +2,45 @@ import React from 'react';
 import usePosts from '../customHook/usePosts';
 import styled from 'styled-components';
 import { IoHeart } from 'react-icons/io5';
+import { IoCloseOutline } from 'react-icons/io5';
 
 const LikedPost = ({ posts }) => {
   usePosts();
+  console.log(posts);
+
   return (
     <>
       <PostWrap>
         {posts.map((post) => {
+          if (!post || post.length === 0 || !post[0]) {
+            return null;
+          }
+
+          const { id, product_imageSrc, product_name, post_content, popularity, created_at } = post[0];
+          if (!id || !product_imageSrc || !product_name || !post_content || !popularity || !created_at) {
+            return null;
+          }
+
           return (
             <PostList key={post.id}>
               <ImgWrap>
-                <PostImg src={post.product_imageSrc} />
+                <PostImg src={post[0].product_imageSrc} />
               </ImgWrap>
               <ContentWrap>
                 <PostTitleWrap>
-                  <PostTitle>{post.product_name}</PostTitle>
+                  <PostTitle>{post[0].product_name}</PostTitle>
                 </PostTitleWrap>
-                <PostComment>{post.post_content}</PostComment>
+                <PostComment>{post[0].post_content}</PostComment>
                 <PostHeart>
                   <IoHeart style={{ verticalAlign: 'middle', marginRight: '5px' }} />
-                  {post.popularity}
+                  {post[0].popularity}
                 </PostHeart>
               </ContentWrap>
 
-              <PostDate>{post.created_at}</PostDate>
+              <PostDate>{post[0].created_at.slice(0, 10)}</PostDate>
 
               <EditBtns>
-                <Button>수정</Button>|<Button>삭제</Button>
+                <IoCloseOutline />
               </EditBtns>
             </PostList>
           );

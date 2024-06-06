@@ -81,7 +81,7 @@ const CancelButton = styled.button`
   height: 2.4rem;
   border-radius: 1.5rem;
   border: 1px solid black;
-  background-color: #fff;
+  background-color: transparent;
   color: black;
   display: ${(props) => props.display};
   justify-content: center;
