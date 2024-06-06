@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import { IoLogoGithub } from 'react-icons/io';
+import styled from 'styled-components';
 
 export default function Footer() {
   return (
@@ -24,8 +24,7 @@ export default function Footer() {
 const FooterWrap = styled.div`
   width: 100%;
   border-top: 1px solid var(--border-color);
-  padding: 3rem 20px;
-
+  margin-top: 10rem;
   @media screen and (max-width: 500px) {
     display: none;
   }
@@ -33,7 +32,7 @@ const FooterWrap = styled.div`
 
 const InnerWrap = styled.div`
   max-width: 1240px;
-  margin: 0 auto;
+  margin: 3rem auto;
   display: flex;
   justify-content: center;
   flex-direction: column;

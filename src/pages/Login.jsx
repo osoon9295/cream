@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { checkSignIn, getUser, signIn } from '../api/api.auth';
+import { checkSignIn, signIn } from '../api/api.auth';
 import * as S from '../styles/Auth.styled';
 import Input from './../components/Input';
 
@@ -35,18 +35,24 @@ const StyleLink = styled(Link)`
   cursor: pointer;
 `;
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const email = e.target.email.value;
-  const pw = e.target.pw.value;
-
-  await signIn(email, pw);
-  await getUser();
-  console.log('wad');
-  console.log(getUser(), checkSignIn());
-};
-
 export default function Login() {
+  const navigat = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const pw = e.target.pw.value;
+
+    await signIn(email, pw);
+    const logInChk = await checkSignIn();
+    if (logInChk) {
+      alert('로그인 되었습니다.');
+      navigat('/');
+    } else {
+      alert('비밀번호나 아이디가 틀렸습니다.');
+    }
+  };
+
   return (
     <S.AuthForm onSubmit={handleSubmit} method="post">
       <h1>로그인</h1>

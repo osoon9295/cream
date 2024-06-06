@@ -2,39 +2,44 @@ import React from 'react';
 import usePosts from '../customHook/usePosts';
 import styled from 'styled-components';
 import { IoHeart } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
-import { GoPencil } from 'react-icons/go';
 import { IoCloseOutline } from 'react-icons/io5';
 
-const WrittenPost = ({ posts, handleDeleteData }) => {
+const SavedPost = ({ posts }) => {
   usePosts();
-  const navigate = useNavigate();
-
   return (
     <>
       <PostWrap>
         {posts.map((post) => {
+          if (!post || post.length === 0 || !post[0]) {
+            return null;
+          }
+
+          const { id, product_imageSrc, product_name, post_content, popularity, created_at } = post[0];
+          if (!id || !product_imageSrc || !product_name || !post_content || !popularity || !created_at) {
+            return null;
+          }
+
+          console.log(post[0]);
           return (
             <PostList key={post.id}>
               <ImgWrap>
-                <PostImg src={post.product_imageSrc} />
+                <PostImg src={post[0].product_imageSrc} />
               </ImgWrap>
               <ContentWrap>
                 <PostTitleWrap>
-                  <PostTitle>{post.product_name}</PostTitle>
+                  <PostTitle>{post[0].product_name}</PostTitle>
                 </PostTitleWrap>
-                <PostComment>{post.post_content}</PostComment>
+                <PostComment>{post[0].post_content}</PostComment>
                 <PostHeart>
                   <IoHeart style={{ verticalAlign: 'middle', marginRight: '5px' }} />
-                  {post.popularity}
+                  {post[0].popularity}
                 </PostHeart>
               </ContentWrap>
 
-              <PostDate>{post.created_at.slice(0, 10)}</PostDate>
+              <PostDate>{post[0].created_at.slice(0, 10)}</PostDate>
 
               <EditBtns>
-                <GoPencil onClick={() => navigate(`/modifyPost/${post.id}`)} style={{ marginRight: '10px' }} />
-                <IoCloseOutline onClick={() => handleDeleteData(post.id)} />
+                <IoCloseOutline />
               </EditBtns>
             </PostList>
           );
@@ -44,7 +49,7 @@ const WrittenPost = ({ posts, handleDeleteData }) => {
   );
 };
 
-export default WrittenPost;
+export default SavedPost;
 
 const PostWrap = styled.ul`
   display: flex;
