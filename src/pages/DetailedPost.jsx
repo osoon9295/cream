@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { TagBox } from '../components/post/Tag';
 import { checkSignIn } from '../api/api.auth';
-import { IoBookmarkOutline, IoHeartOutline, IoHeart, IoBookmark } from 'react-icons/io5';
 import MobileMenu from '../layout/MobileMenu';
+import { GoBookmark, GoBookmarkFill, GoHeart, GoHeartFill } from 'react-icons/go';
 
 const PostInner = styled.div`
   max-width: 1120px;
@@ -231,10 +231,10 @@ const DetailedPost = () => {
                 <PostDate>{date}</PostDate>
               </div>
               <div style={{ display: 'flex', gap: '10px' }}>
-                {/* <IoHeart style={{ fontSize: '23px', cursor: 'pointer', color: 'red' }} /> */}
-                <IoHeartOutline style={{ fontSize: '25px', cursor: 'pointer', color: 'red' }} />
-                <IoBookmark style={{ fontSize: '25px', cursor: 'pointer', color: 'grey' }} />
-                {/* <IoBookmarkOutline style={{ fontSize: '22px', cursor: 'pointer', color: 'grey' }} /> */}
+                {/* <GoHeart size={22} /> */}
+                <GoHeartFill size={22} color="var(--theme-color)" />
+                {/* <GoBookmark size={22} /> */}
+                <GoBookmarkFill size={22} />
               </div>
             </PostInfo>
             <PostBox>
