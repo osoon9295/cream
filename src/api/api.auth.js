@@ -103,7 +103,7 @@ export const getUser = async () => {
       return null;
     }
 
-    console.log('User data:', user);
+    // console.log('User data:', user);
     return user;
   } catch (error) {
     console.log('Error:', error);
@@ -136,6 +136,6 @@ export const checkNicknameDuplicate = async (nickname) => {
 export const checkSignIn = async () => {
   const session = await supabase.auth.getSession();
   const isSignIn = !!session.data.session;
-  console.log(session.data, isSignIn);
+  // console.log(session.data, isSignIn);
   return isSignIn;
 };
