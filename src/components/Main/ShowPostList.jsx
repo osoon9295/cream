@@ -8,7 +8,6 @@ import CategoryTabs from './CategoryTabs';
 import supabase from '../../api/api.supabase';
 
 const StWrapper = styled.main`
-  /* background-color: blue; */
   width: 100%;
   margin: 5% auto;
   display: flex;
@@ -98,23 +97,6 @@ const ShowPostList = () => {
     return sortedPosts;
   };
 
-  // const createdAt = postList[1].created_at;
-  // console.log(postList);
-  // console.log(createdAt);
-
-  //postList,
-  // let postDate = new Date();
-  // let year = postDate.getFullYear();
-  // let month = ('0' + (postDate.getMonth() + 1)).slice(-2);
-  // let day = ('0' + postDate.getDate()).slice(-2);
-  // let hour = ('0' + postDate.getHours()).slice(-2);
-  // let min = ('0' + postDate.getMinutes()).slice(-2);
-  // let sec = ('0' + postDate.getSeconds()).slice(-2);
-
-  // postDate = Number(`${year}${month}${day}${hour}${min}${sec}`);
-
-  // export const stringPostDate = `${year}.${month}.${day} ${hour}:${min}:${sec}`;
-
   //회원 정보 가져오기
   useEffect(() => {
     const fetchMembers = async () => {
@@ -131,19 +113,14 @@ const ShowPostList = () => {
 
   useEffect(() => {
     setShowList(postList.slice(0, 12));
-  }, [postList]);
+  }, [initialPostList]);
 
   useEffect(() => {
-    if (!subCategory) {
-      setShowList(postList.slice(0, 12));
-      return;
-    }
-
     const filteredList = postList.filter((post) => {
+      if (!subCategory) return true;
       if (category === 'brand') return post.product_brand === subCategory;
       if (category === 'flavor') return post.product_taste === subCategory;
       if (category === 'type') return post.product_type === subCategory;
-      // console.log(category);
       return true;
     });
 
