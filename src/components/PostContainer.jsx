@@ -32,6 +32,7 @@ const StTitle = styled.div`
   border-bottom: 1px solid #efefef;
   font-size: 2rem;
   color: #484848;
+  box-sizing: border-box;
 `;
 
 const PostBox = styled.div`
