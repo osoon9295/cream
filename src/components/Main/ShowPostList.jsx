@@ -53,12 +53,8 @@ const StMoreButton = styled.button`
 const ShowPostList = () => {
   usePosts();
   const initialPostList = useSelector((state) => state.postList);
-  const sortType = useSelector((state) => state.sortType);
+  const sortType = useSelector((state) => state.sortType.type);
   const [showList, setShowList] = useState([]);
-  // const [currentItems, setCurrentItems] = useState(1);
-  // const postsPerItem = 12;
-
-  // console.log(sortType);
 
   const postList = initialPostList.map((post) => {
     const postDate = new Date(post.created_at).getTime();
@@ -66,30 +62,28 @@ const ShowPostList = () => {
   });
 
   useEffect(() => {
-    setShowList(postList.slice(0, 12));
-  }, [initialPostList]);
+    const sortedPosts = getSortedPost();
+    setShowList(sortedPosts.slice(0, 12));
+  }, [initialPostList, sortType]);
 
-  console.log(sortType.type);
-
-  useEffect(() => {
-    if (sortType.type === 'popular') {
-      const popularityRank = [...postList].sort((a, b) => b.popularity - a.popularity);
-      setShowList(popularityRank);
-    } else if (sortType.type === 'latest') {
-      const latestRank = [...postList].sort((a, b) => b.postDate - a.postDate);
-      setShowList(latestRank);
-    } else {
-      setShowList(postList);
+  const getSortedPost = () => {
+    let sortedPosts = [...postList];
+    if (sortType === 'popular') {
+      sortedPosts.sort((a, b) => b.popularity - a.popularity);
+    } else if (sortType === 'latest') {
+      sortedPosts.sort((a, b) => b.postDate - a.postDate);
     }
-  }, [sortType]);
+    return sortedPosts;
+  };
 
   const moreShowList = () => {
-    showList.length <= 12 ? setShowList(postList) : setShowList(postList.slice(0, 12));
+    const sortedPosts = getSortedPost();
+    showList.length <= 12 ? setShowList(sortedPosts) : setShowList(sortedPosts.slice(0, 12));
   };
 
   return (
     <StWrapper>
-      <SortButtons showList={showList} postList={postList} />
+      <SortButtons />
       <CategoryTabs />
       <StContainer>
         {showList.map((post) => {
