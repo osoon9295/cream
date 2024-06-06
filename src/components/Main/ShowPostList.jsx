@@ -19,11 +19,10 @@ const StWrapper = styled.main`
 const StContainer = styled.ul`
   /* background-color: beige; */
   max-width: 1240px;
-  width: 70%;
   /* height: 120%; */
   display: grid;
 
-  padding: 3%;
+  padding: 3% 0;
   /* gap: 3%; */
 
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -127,11 +126,12 @@ const ShowPostList = () => {
       if (category === 'brand') return post.product_brand === subCategory;
       if (category === 'flavor') return post.product_taste === subCategory;
       if (category === 'type') return post.product_type === subCategory;
+      // console.log(category);
       return true;
     });
 
     setShowList(filteredList.slice(0, 12));
-  }, [postList, category, subCategory]);
+  }, [initialPostList, category, subCategory]);
 
   const moreShowList = () => {
     const sortedPosts = getSortedPost();

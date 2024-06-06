@@ -74,6 +74,11 @@ const SubmitButton = styled.button`
   margin-left: 67%;
   font-size: 0.8rem;
   cursor: pointer;
+  &:hover {
+    border-color: transparent;
+    background-color: #fff;
+    color: grey;
+  }
 `;
 
 const CancelButton = styled.button`
@@ -89,6 +94,11 @@ const CancelButton = styled.button`
   margin-left: 15px;
   font-size: 0.8rem;
   cursor: pointer;
+  &:hover {
+    border-color: transparent;
+    background-color: #fff;
+    color: grey;
+  }
 `;
 
 const PostContainer = ({ postId }) => {
@@ -123,6 +133,14 @@ const PostContainer = ({ postId }) => {
   }, []);
 
   const AddHandler = async () => {
+    if (!name) {
+      alert('제품명을 입력해주세요 !');
+      return;
+    }
+    if (!content) {
+      alert('아이스크림 리뷰를 남겨주세요 !');
+      return;
+    }
     const users = await getUser();
     const { data, error } = await supabase.from('posts').insert({
       id: uuid(),
@@ -144,6 +162,14 @@ const PostContainer = ({ postId }) => {
   };
 
   const ModifyHandler = async () => {
+    if (name) {
+      alert('제품명을 입력해주세요 !');
+      return;
+    }
+    if (content) {
+      alert('아이스크림 리뷰를 남겨주세요 !');
+      return;
+    }
     const users = await getUser();
     const { data, error } = await supabase
       .from('posts')

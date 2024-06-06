@@ -5,9 +5,7 @@ import { changeType } from '../../store/slices/sortTypeSlice';
 
 const StSortButtonsWrapper = styled.div`
   width: 100%;
-  padding: 3% 0 0 5%;
   border-bottom: 1px solid #bdbdbd;
-
   display: flex;
   justify-content: center;
 `;
@@ -23,7 +21,7 @@ const StSortButton = styled.button`
   background-color: transparent;
   color: #bdbdbd;
   border: none;
-  font-size: 150%;
+  font-size: 1.45rem;
   padding: 0 0 1% 0;
 `;
 
