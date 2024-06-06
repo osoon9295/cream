@@ -1,20 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CiSearch } from 'react-icons/ci';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { signOut } from '../api/api.auth';
-import useCheckSignIn from '../customHook/useCheckSignIn';
+import { fetchUser, logOut } from '../store/slices/authSlice';
 
 export default function Header() {
-  const signChk = useCheckSignIn();
+  const dispatch = useDispatch();
+  const { user, isSignedIn } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
 
   return (
     <HeaderWrap>
       <TopAuth>
-        {signChk ? (
+        {isSignedIn ? (
           <AuthInner>
             <li>
-              <button style={{ all: 'unset', cursor: 'pointer' }} onClick={signOut}>
+              <p>{user ? user.email : ''}님 환영합니다.</p>
+            </li>
+            <li>
+              <button
+                style={{ all: 'unset', cursor: 'pointer' }}
+                onClick={() => {
+                  alert('로그아웃 되었습니다.');
+                  dispatch(logOut());
+                }}
+              >
                 로그아웃
               </button>
             </li>
