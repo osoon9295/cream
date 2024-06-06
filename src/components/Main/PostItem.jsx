@@ -19,6 +19,7 @@ const StImage = styled.img`
   width: 100%;
   border-radius: 5%;
   cursor: pointer;
+
   height: 17.5rem;
   @media screen and (max-width: 1240px) {
     height: 15rem;
