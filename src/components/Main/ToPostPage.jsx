@@ -7,18 +7,18 @@ const StToPostPageButton = styled.button`
   border: none;
   border-radius: 50%;
   background-color: #99ff89;
-  width: 50px;
-  height: 50px;
-
-  font-size: 26px;
-  color: black;
+  width: 4.5rem;
+  height: 4.5rem;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  font-size: 25px;
+  color: var(--font);
 
   display: flex;
   align-items: center;
   justify-content: center;
   position: fixed;
   right: 75px;
-  bottom: 100px;
+  bottom: 20%;
 
   cursor: pointer;
 

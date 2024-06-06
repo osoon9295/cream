@@ -7,11 +7,11 @@ const StTopButton = styled.button`
   border: none;
   border-radius: 50%;
   background-color: #ededed;
-  width: 50px;
-  height: 50px;
-
-  font-size: 30px;
-  color: black;
+  width: 4.5rem;
+  height: 4.5rem;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  font-size: 25px;
+  color: var(--font);
 
   display: flex;
   align-items: center;
@@ -25,12 +25,6 @@ const StTopButton = styled.button`
   }
 
   cursor: pointer;
-
-  &:active {
-    background-color: black;
-    color: #ededed;
-    cursor: pointer;
-  }
 `;
 
 const ToTopButton = () => {
