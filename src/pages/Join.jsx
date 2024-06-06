@@ -65,6 +65,7 @@ export default function Join() {
 
     signUp(email, pw, name, image);
     alert('회원가입 되었습니다.');
+
     navigat('/');
   };
 
