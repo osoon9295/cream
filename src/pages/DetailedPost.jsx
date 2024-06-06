@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IoBookmark, IoHeartOutline } from 'react-icons/io5';
+import { GoBookmarkFill, GoHeartFill } from 'react-icons/go';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -231,10 +231,10 @@ const DetailedPost = () => {
                 <PostDate>{date}</PostDate>
               </div>
               <div style={{ display: 'flex', gap: '10px' }}>
-                {/* <IoHeart style={{ fontSize: '23px', cursor: 'pointer', color: 'red' }} /> */}
-                <IoHeartOutline style={{ fontSize: '25px', cursor: 'pointer', color: 'red' }} />
-                <IoBookmark style={{ fontSize: '25px', cursor: 'pointer', color: 'grey' }} />
-                {/* <IoBookmarkOutline style={{ fontSize: '22px', cursor: 'pointer', color: 'grey' }} /> */}
+                {/* <GoHeart size={22} /> */}
+                <GoHeartFill size={22} color="var(--theme-color)" />
+                {/* <GoBookmark size={22} /> */}
+                <GoBookmarkFill size={22} />
               </div>
             </PostInfo>
             <PostBox>
