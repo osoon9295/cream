@@ -5,14 +5,15 @@ import { useNavigate } from 'react-router-dom';
 
 const StMobileNav = styled.ul`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   position: fixed;
   bottom: 0;
   width: 100vw;
-  padding: 16px 66px;
+  padding: 10px 0;
   border-top: 1px solid #cfcfcf;
   box-sizing: border-box;
   background-color: #fff;
+  z-index: 9;
 
   @media (min-width: 1120px) {
     display: none;
@@ -38,14 +39,14 @@ const StMobileNav = styled.ul`
   }
 
   svg {
-    @media (max-width: 800px) {
-      width: 25px;
-      height: 25px;
+    @media (max-width: 1120px) {
+      width: 1.5rem;
+      height: auto;
+      margin-bottom: 3px;
     }
   }
   @media (max-width: 800px) {
     gap: 30px;
-    padding: 2px 30px;
   }
 `;
 

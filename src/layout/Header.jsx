@@ -12,17 +12,19 @@ export default function Header() {
   return (
     <HeaderWrap>
       <TopAuth>
-        <AuthInner>
-          <li>
-            <a href="/login">로그인</a>
-          </li>
-          <li>
-            <a href="/join">회원가입</a>
-          </li>
-          <li>
-            <a href="/mypage">마이페이지</a>
-          </li>
-        </AuthInner>
+        <AuthWrap>
+          <AuthInner>
+            <li>
+              <a href="/login">로그인</a>
+            </li>
+            <li>
+              <a href="/join">회원가입</a>
+            </li>
+            <li>
+              <a href="/mypage">마이페이지</a>
+            </li>
+          </AuthInner>
+        </AuthWrap>
       </TopAuth>
 
       <InnerWrap>
@@ -94,6 +96,7 @@ const TopAuth = styled.div`
     display: none;
   }
 `;
+const AuthWrap = styled.div``;
 
 const AuthInner = styled.ul`
   max-width: 1240px;
@@ -104,18 +107,23 @@ const AuthInner = styled.ul`
   color: var(--font);
   font-size: 0.7rem;
   gap: 15px;
-  padding: 0 20px;
+  @media screen and (min-width: 500px) and (max-width: 1240px) {
+    padding: 0 20px;
+  }
 `;
 
 const LogoWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 20px 0;
   align-items: center;
   position: relative;
 
   @media screen and (max-width: 500px) {
     justify-content: center;
+  }
+  @media screen and (min-width: 500px) and (max-width: 1240px) {
+    padding: 20px;
   }
 `;
 
