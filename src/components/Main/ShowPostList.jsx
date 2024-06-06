@@ -111,9 +111,9 @@ const ShowPostList = () => {
     fetchMembers();
   }, []);
 
-  useEffect(() => {
-    setShowList(postList.slice(0, 12));
-  }, [initialPostList]);
+  // useEffect(() => {
+  //   setShowList(postList.slice(0, 12));
+  // }, [initialPostList]);
 
   useEffect(() => {
     const filteredList = postList.filter((post) => {
