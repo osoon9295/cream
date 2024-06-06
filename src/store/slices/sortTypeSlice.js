@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { type: '' };
+const initialState = { type: 'popular' };
 
 const sortTypeSlice = createSlice({
   name: 'sortType',

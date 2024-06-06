@@ -103,6 +103,7 @@ const TopAuth = styled.div`
     display: none;
   }
 `;
+const AuthWrap = styled.div``;
 
 const AuthInner = styled.ul`
   max-width: 1240px;
@@ -113,18 +114,23 @@ const AuthInner = styled.ul`
   color: var(--font);
   font-size: 0.7rem;
   gap: 15px;
-  padding: 0 20px;
+  @media screen and (min-width: 500px) and (max-width: 1240px) {
+    padding: 0 20px;
+  }
 `;
 
 const LogoWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 20px 0;
   align-items: center;
   position: relative;
 
   @media screen and (max-width: 500px) {
     justify-content: center;
+  }
+  @media screen and (min-width: 500px) and (max-width: 1240px) {
+    padding: 20px;
   }
 `;
 
