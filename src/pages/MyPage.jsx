@@ -11,8 +11,8 @@ const MyPage = ({ user, setUser }) => {
   const [posts, setPosts] = useState([]);
   const [profileUrl, setProfileUrl] = useState('');
 
-  console.log(user);
-  console.log('nickname', nickname);
+  //console.log(user);
+  //console.log('nickname', nickname);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -39,6 +39,8 @@ const StIdAndLikeButtons = styled.div`
 const StPostUserId = styled.span`
   font-size: 130%;
   color: #484848;
+  display: flex;
+  align-items: center;
 
   @media screen and (max-width: 600px) {
     font-size: 90%;
@@ -86,6 +88,10 @@ const StPostContent = styled.p`
   }
 `;
 
+const StNickname = styled.p`
+  font-size: 1rem;
+`;
+
 const StPostDate = styled.div`
   /* background-color: aliceblue; */
   width: 100%;
@@ -100,18 +106,18 @@ const StPostDate = styled.div`
 `;
 
 const MainProfileImg = styled.img`
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50px;
   border: 1px solid var(--border-color);
+  margin-right: 10px;
 `;
-const PostItem = ({ post, postUser }) => {
+const PostItem = ({ post, user }) => {
   const { product_imageSrc, product_name, post_content, popularity, created_at } = post;
   const createdAt = created_at;
   const createDate = `${createdAt.slice(0, 10)} ${createdAt.slice(11, 19)}`;
 
-  //const users = { ...postUser };
-  //console.log(postUser);
+  //console.log(user);
   // const [activeButton, setActivButton] = useState(null);
   //console.log(post);
 
@@ -122,7 +128,8 @@ const PostItem = ({ post, postUser }) => {
       </Link>
       <StIdAndLikeButtons>
         <StPostUserId>
-          <MainProfileImg />
+          <MainProfileImg src={user?.user_imageSrc} />
+          <StNickname>{user?.user_name}</StNickname>
         </StPostUserId>
         <StPopularity>
           <StLikeButton>

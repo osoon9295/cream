@@ -57,7 +57,7 @@ const ShowPostList = () => {
   const [showList, setShowList] = useState([]);
   const [postUser, setPostUser] = useState([]);
 
-  console.log('postList', postList);
+  //console.log('postList', postList);
 
   // const createAt = postList.map((post) => {
   //   const date = post.created_at;
@@ -97,15 +97,12 @@ const ShowPostList = () => {
       if (error) {
         console.log('error =>', error);
       } else {
-        console.log('data =>', data);
+        //console.log('data =>', data);
         //console.log(user);
       }
     };
     fetchMembers();
   }, []);
-
-  // const users = { ...postUser[0] };
-  console.log(postUser);
 
   useEffect(() => {
     setShowList(postList.slice(0, 12));
@@ -120,8 +117,8 @@ const ShowPostList = () => {
       <CategoryTabs />
       <StContainer>
         {showList.map((post) => {
-          postUser.find((el) => el.user_id === post.user_id);
-          return <PostItem key={post.id} post={post} postUser={postUser} />;
+          const user = postUser.find((el) => el.user_id === post.user_id);
+          return <PostItem key={post.id} post={post} user={user} />;
         })}
       </StContainer>
       <StMoreButton onClick={moreShowList}>{showList.length <= 12 ? '더보기' : '줄이기'}</StMoreButton>
