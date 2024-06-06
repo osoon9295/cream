@@ -8,7 +8,6 @@ import PostItem from './PostItem';
 import SortButtons from './SortButtons';
 
 const StWrapper = styled.main`
-  /* background-color: blue; */
   width: 100%;
   margin: 5% auto;
   display: flex;
@@ -117,16 +116,11 @@ const ShowPostList = () => {
   }, [initialPostList]);
 
   useEffect(() => {
-    if (!subCategory) {
-      setShowList(postList.slice(0, 12));
-      return;
-    }
-
     const filteredList = postList.filter((post) => {
+      if (!subCategory) return true;
       if (category === 'brand') return post.product_brand === subCategory;
       if (category === 'flavor') return post.product_taste === subCategory;
       if (category === 'type') return post.product_type === subCategory;
-      // console.log(category);
       return true;
     });
 
