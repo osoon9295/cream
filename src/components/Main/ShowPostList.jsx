@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PostItem from './PostItem';
 import SortButtons from './SortButtons';
 import usePosts from '../../customHook/usePosts';
@@ -53,12 +53,10 @@ const StMoreButton = styled.button`
 const ShowPostList = () => {
   usePosts();
   const initialPostList = useSelector((state) => state.postList);
-  const sortType = useSelector((state) => state.sortType);
+  const sortType = useSelector((state) => state.sortType.type);
+  const category = useSelector((state) => state.category.category);
+  const subCategory = useSelector((state) => state.category.subCategory);
   const [showList, setShowList] = useState([]);
-  // const [currentItems, setCurrentItems] = useState(1);
-  // const postsPerItem = 12;
-
-  // console.log(sortType);
 
   const postList = initialPostList.map((post) => {
     const postDate = new Date(post.created_at).getTime();
@@ -66,30 +64,44 @@ const ShowPostList = () => {
   });
 
   useEffect(() => {
-    setShowList(postList.slice(0, 12));
-  }, [initialPostList]);
+    const sortedPosts = getSortedPost();
+    setShowList(sortedPosts.slice(0, 12));
+  }, [initialPostList, sortType]);
 
-  console.log(sortType.type);
+  const getSortedPost = () => {
+    let sortedPosts = [...postList];
+    if (sortType === 'popular') {
+      sortedPosts.sort((a, b) => b.popularity - a.popularity);
+    } else if (sortType === 'latest') {
+      sortedPosts.sort((a, b) => b.postDate - a.postDate);
+    }
+    return sortedPosts;
+  };
 
   useEffect(() => {
-    if (sortType.type === 'popular') {
-      const popularityRank = [...postList].sort((a, b) => b.popularity - a.popularity);
-      setShowList(popularityRank);
-    } else if (sortType.type === 'latest') {
-      const latestRank = [...postList].sort((a, b) => b.postDate - a.postDate);
-      setShowList(latestRank);
-    } else {
-      setShowList(postList);
+    if (!subCategory) {
+      setShowList(postList.slice(0, 12));
+      return;
     }
-  }, [sortType]);
+
+    const filteredList = postList.filter((post) => {
+      if (category === 'brand') return post.product_brand === subCategory;
+      if (category === 'flavor') return post.product_taste === subCategory;
+      if (category === 'type') return post.product_type === subCategory;
+      return true;
+    });
+
+    setShowList(filteredList.slice(0, 12));
+  }, [postList, category, subCategory]);
 
   const moreShowList = () => {
-    showList.length <= 12 ? setShowList(postList) : setShowList(postList.slice(0, 12));
+    const sortedPosts = getSortedPost();
+    showList.length <= 12 ? setShowList(sortedPosts) : setShowList(sortedPosts.slice(0, 12));
   };
 
   return (
     <StWrapper>
-      <SortButtons showList={showList} postList={postList} />
+      <SortButtons />
       <CategoryTabs />
       <StContainer>
         {showList.map((post) => {
