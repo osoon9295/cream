@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import PostItem from './PostItem';
-import SortButtons from './SortButtons';
+import styled from 'styled-components';
+import supabase from '../../api/api.supabase';
 import usePosts from '../../customHook/usePosts';
 import CategoryTabs from './CategoryTabs';
-import supabase from '../../api/api.supabase';
+import PostItem from './PostItem';
+import SortButtons from './SortButtons';
 
 const StWrapper = styled.main`
   /* background-color: blue; */
@@ -98,23 +98,6 @@ const ShowPostList = () => {
     return sortedPosts;
   };
 
-  // const createdAt = postList[1].created_at;
-  // console.log(postList);
-  // console.log(createdAt);
-
-  //postList,
-  // let postDate = new Date();
-  // let year = postDate.getFullYear();
-  // let month = ('0' + (postDate.getMonth() + 1)).slice(-2);
-  // let day = ('0' + postDate.getDate()).slice(-2);
-  // let hour = ('0' + postDate.getHours()).slice(-2);
-  // let min = ('0' + postDate.getMinutes()).slice(-2);
-  // let sec = ('0' + postDate.getSeconds()).slice(-2);
-
-  // postDate = Number(`${year}${month}${day}${hour}${min}${sec}`);
-
-  // export const stringPostDate = `${year}.${month}.${day} ${hour}:${min}:${sec}`;
-
   //회원 정보 가져오기
   useEffect(() => {
     const fetchMembers = async () => {
@@ -131,7 +114,7 @@ const ShowPostList = () => {
 
   useEffect(() => {
     setShowList(postList.slice(0, 12));
-  }, [postList]);
+  }, [initialPostList]);
 
   useEffect(() => {
     if (!subCategory) {
