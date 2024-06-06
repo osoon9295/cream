@@ -1,6 +1,8 @@
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { checkSignIn, signIn } from '../api/api.auth';
+import { fetchUser } from '../store/slices/authSlice';
 import * as S from '../styles/Auth.styled';
 import Input from './../components/Input';
 
@@ -36,7 +38,8 @@ const StyleLink = styled(Link)`
 `;
 
 export default function Login() {
-  const navigat = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,7 +50,8 @@ export default function Login() {
     const logInChk = await checkSignIn();
     if (logInChk) {
       alert('로그인 되었습니다.');
-      navigat('/');
+      dispatch(fetchUser());
+      navigate('/');
     } else {
       alert('비밀번호나 아이디가 틀렸습니다.');
     }
