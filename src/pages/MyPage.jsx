@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import WrittenPost from './../components/WrittenPost';
 import { getUser } from '../api/api.auth';
 import supabase from '../api/api.supabase';
+import MobileMenu from '../layout/MobileMenu';
 
 const MyPage = ({ user, setUser }) => {
   const navigate = useNavigate();
@@ -86,6 +87,7 @@ const MyPage = ({ user, setUser }) => {
             <StylePostTitle>📌 북마크</StylePostTitle>
           </div>
         </StylePostWrap>
+        <MobileMenu />
       </StyleWrap>
     </>
   );

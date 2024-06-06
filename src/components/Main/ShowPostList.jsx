@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PostItem from './PostItem';
 import SortButtons from './SortButtons';
 import usePosts from '../../customHook/usePosts';
@@ -54,6 +54,8 @@ const ShowPostList = () => {
   usePosts();
   const initialPostList = useSelector((state) => state.postList);
   const sortType = useSelector((state) => state.sortType.type);
+  const category = useSelector((state) => state.category.category);
+  const subCategory = useSelector((state) => state.category.subCategory);
   const [showList, setShowList] = useState([]);
 
   const postList = initialPostList.map((post) => {
@@ -75,6 +77,22 @@ const ShowPostList = () => {
     }
     return sortedPosts;
   };
+
+  useEffect(() => {
+    if (!subCategory) {
+      setShowList(postList.slice(0, 12));
+      return;
+    }
+
+    const filteredList = postList.filter((post) => {
+      if (category === 'brand') return post.product_brand === subCategory;
+      if (category === 'flavor') return post.product_taste === subCategory;
+      if (category === 'type') return post.product_type === subCategory;
+      return true;
+    });
+
+    setShowList(filteredList.slice(0, 12));
+  }, [postList, category, subCategory]);
 
   const moreShowList = () => {
     const sortedPosts = getSortedPost();

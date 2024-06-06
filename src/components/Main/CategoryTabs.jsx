@@ -35,42 +35,40 @@ const StLi = styled.li`
   border-radius: 100px;
   text-align: center;
   font-size: 20px;
+  letter-spacing: 2px;
   color: #2e2e2e;
   cursor: pointer;
   @media (max-width: 800px) {
     width: 60px;
     font-size: 12px;
   }
-
-  button {
-    all: unset;
-    width: inherit;
-
-    letter-spacing: 2px;
-  }
 `;
 const CategoryTabs = () => {
   const dispatch = useDispatch();
   const category = useSelector((state) => state.category.category);
   // console.log(category)
-  const categories = {
-    brand: ['오리온', '빙그레', '롯데제과', '해태제과', '매일유업'],
-    flavor: ['바닐라', '딸기', '초코', '기타'],
-    type: ['콘', '바', '컵']
-  };
+  //수정
+  // const categories = {
+  //   brand: ['오리온', '빙그레', '롯데제과', '해태제과', '매일유업'],
+  //   flavor: ['바닐라', '딸기', '초코', '기타'],
+  //   type: ['콘', '바', '컵']
+  // };
+  const categories = useSelector((state) => state.category.categories);
+  //
   const [clickedItem, setClickedItem] = useState('');
   const currentCategoryTabs = categories[category] || [];
   // console.log(currentCategoryTabs);
   const handleTabClick = (tab) => {
-    if (clickedItem === tab) {
-      setClickedItem('');
-      dispatch(setSubCategory(''));
-    } else {
-      setClickedItem(tab);
-      dispatch(setSubCategory(tab));
-    }
-    // setClickedItem(tab);
-    // dispatch(setSubCategory(tab));
+    // if (clickedItem === tab) {
+    //   setClickedItem('');
+    //   dispatch(setSubCategory(''));
+    // } else {
+    //   setClickedItem(tab);
+    //   dispatch(setSubCategory(tab));
+    // }
+    const newClickItem = clickedItem === tab ? '' : tab;
+    setClickedItem(newClickItem);
+    dispatch(setSubCategory(newClickItem));
   };
   return (
     <>
@@ -78,8 +76,8 @@ const CategoryTabs = () => {
         <ul>
           {currentCategoryTabs.map((tab) => {
             return (
-              <StLi key={tab} $active={clickedItem == tab}>
-                <button onClick={() => handleTabClick(tab)}>{tab}</button>
+              <StLi key={tab} $active={clickedItem == tab} onClick={() => handleTabClick(tab)}>
+                {tab}
               </StLi>
             );
           })}
