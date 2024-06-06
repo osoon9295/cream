@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { IoBookmarkOutline, IoHeartOutline } from 'react-icons/io5';
+import { GoBookmark, GoBookmarkFill, GoHeart, GoHeartFill } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { checkSignIn, getUser } from '../../api/api.auth';
 import supabase from '../../supabase';
-import { GoHeart, GoHeartFill, GoBookmark, GoBookmarkFill } from 'react-icons/go';
 
 const StPostItem = styled.div`
   border-radius: 5%;
@@ -241,7 +240,7 @@ const PostItem = ({ post, userImg }) => {
   return (
     <StPostItem>
       <ProductImage>
-        <Link to="/detailed">
+        <Link to={`/detailed/${id}`}>
           <StImage src={product_imageSrc} alt={product_name} />
         </Link>
       </ProductImage>
@@ -261,7 +260,7 @@ const PostItem = ({ post, userImg }) => {
       <StPostContentWrapper>
         <StPostContent>{post_content}</StPostContent>
       </StPostContentWrapper>
-      <StPostUserId to="/detailed">
+      <StPostUserId to={`/detailed/${id}`}>
         <MainProfileImg src={userImg?.user_imageSrc} />
         <StNickname>{userImg?.user_name}</StNickname>
       </StPostUserId>

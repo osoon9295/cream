@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import supabase from '../supabase';
-import { deletePost } from '../store/slices/postSlice';
-import { useNavigate } from 'react-router-dom';
-import usePosts from '../customHook/usePosts';
+import { GoBookmarkFill, GoHeartFill } from 'react-icons/go';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { TagBox } from '../components/post/Tag';
 import { checkSignIn } from '../api/api.auth';
+import { TagBox } from '../components/post/Tag';
+import usePosts from '../customHook/usePosts';
 import MobileMenu from '../layout/MobileMenu';
-import { GoBookmark, GoBookmarkFill, GoHeart, GoHeartFill } from 'react-icons/go';
+import { deletePost } from '../store/slices/postSlice';
+import supabase from '../supabase';
 
 const PostInner = styled.div`
   max-width: 1120px;
@@ -156,7 +156,7 @@ const DetailedPost = () => {
     }
   };
 
-  const postId = '7c75a64d-8238-277e-b7a7-ac6d50c20bcd';
+  const postId = useParams();
 
   // const postId = '6a9f75d4-0586-6dcd-8f2f-c16c675f4499';
 
@@ -177,7 +177,7 @@ const DetailedPost = () => {
   };
 
   if (isSuccess) {
-    detail = posts.filter((post) => post.id === postId)[0];
+    detail = posts.filter((post) => post.id === postId.id)[0];
     date = detail.created_at.split('T')[0];
     user = detail.user_id;
   }
@@ -203,7 +203,7 @@ const DetailedPost = () => {
               <StButton
                 style={{ display: isSignIn ? 'block' : 'none' }}
                 onClick={() => {
-                  navigate('/modifyPost');
+                  navigate(`/modifyPost/${postId.id}`);
                 }}
               >
                 수정
