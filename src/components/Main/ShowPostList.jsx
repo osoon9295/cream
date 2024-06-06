@@ -1,53 +1,74 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import PostItem from './PostItem';
-import SortButtons from './SortButtons';
+import styled from 'styled-components';
+import supabase from '../../api/api.supabase';
 import usePosts from '../../customHook/usePosts';
 import CategoryTabs from './CategoryTabs';
-import supabase from '../../api/api.supabase';
+import PostItem from './PostItem';
+import SortButtons from './SortButtons';
 
 const StWrapper = styled.main`
-  /* background-color: blue; */
   width: 100%;
-  margin: 4% auto;
+  margin: 3rem auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media screen and (min-width: 320px) and (max-width: 499px) {
+    margin: 2rem auto;
+  }
 `;
 
 const StContainer = styled.ul`
-  /* background-color: beige; */
   max-width: 1240px;
-  /* height: 120%; */
+  overflow: hidden;
   display: grid;
+  padding-bottom: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
+  gap: 30px;
 
-  padding: 3% 0;
-  /* gap: 3%; */
-
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 1240px) {
     width: 90%;
-    grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
-    /* gap: 1% 3%; */
+  }
+  @media screen and (min-width: 800px) and (max-width: 1120px) {
+    grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+  }
+  @media screen and (min-width: 601px) and (max-width: 800px) {
+    grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+  }
+  @media screen and (min-width: 500px) and (max-width: 600px) {
+    grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+  }
+
+  @media screen and (min-width: 320px) and (max-width: 499px) {
+    grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+  }
+  @media screen and (max-width: 319px) {
+    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
   }
 `;
 
 const StMoreButton = styled.button`
-  background-color: #ededed;
-  width: 120px;
-  min-height: 40px;
-  border-radius: 20px;
-  font-size: 16px;
-  padding: 8px 16px;
+  background-color: var(--default-color);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  padding: 15px 30px;
   border: none;
+  &:hover {
+    cursor: pointer;
+    background: var(--border-color);
+  }
 
   @media screen and (max-width: 600px) {
     width: 100px;
     font-size: 14px;
     padding: 6px 12px;
   }
+`;
+
+const GridWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 const ShowPostList = () => {
@@ -58,8 +79,6 @@ const ShowPostList = () => {
   const subCategory = useSelector((state) => state.category.subCategory);
   const [showList, setShowList] = useState([]);
   const [postUser, setPostUser] = useState([]);
-
-  //console.log('postList', postList);
 
   const postList = initialPostList.map((post) => {
     const postDate = new Date(post.created_at).getTime();
@@ -81,23 +100,6 @@ const ShowPostList = () => {
     return sortedPosts;
   };
 
-  // const createdAt = postList[1].created_at;
-  // console.log(postList);
-  // console.log(createdAt);
-
-  //postList,
-  // let postDate = new Date();
-  // let year = postDate.getFullYear();
-  // let month = ('0' + (postDate.getMonth() + 1)).slice(-2);
-  // let day = ('0' + postDate.getDate()).slice(-2);
-  // let hour = ('0' + postDate.getHours()).slice(-2);
-  // let min = ('0' + postDate.getMinutes()).slice(-2);
-  // let sec = ('0' + postDate.getSeconds()).slice(-2);
-
-  // postDate = Number(`${year}${month}${day}${hour}${min}${sec}`);
-
-  // export const stringPostDate = `${year}.${month}.${day} ${hour}:${min}:${sec}`;
-
   //회원 정보 가져오기
   useEffect(() => {
     const fetchMembers = async () => {
@@ -112,21 +114,16 @@ const ShowPostList = () => {
     fetchMembers();
   }, []);
 
-  useEffect(() => {
-    setShowList(postList.slice(0, 12));
-  }, [postList]);
+  // useEffect(() => {
+  //   setShowList(postList.slice(0, 12));
+  // }, [initialPostList]);
 
   useEffect(() => {
-    if (!subCategory) {
-      setShowList(postList.slice(0, 12));
-      return;
-    }
-
     const filteredList = postList.filter((post) => {
+      if (!subCategory) return true;
       if (category === 'brand') return post.product_brand === subCategory;
       if (category === 'flavor') return post.product_taste === subCategory;
       if (category === 'type') return post.product_type === subCategory;
-      // console.log(category);
       return true;
     });
 
@@ -142,12 +139,14 @@ const ShowPostList = () => {
     <StWrapper>
       <SortButtons />
       <CategoryTabs />
-      <StContainer>
-        {showList.map((post) => {
-          const userImg = postUser.find((el) => el.user_id === post.user_id);
-          return <PostItem key={post.id} post={post} userImg={userImg} />;
-        })}
-      </StContainer>
+      <GridWrap>
+        <StContainer>
+          {showList.map((post) => {
+            const userImg = postUser.find((el) => el.user_id === post.user_id);
+            return <PostItem key={post.id} post={post} userImg={userImg} />;
+          })}
+        </StContainer>
+      </GridWrap>
       <StMoreButton onClick={moreShowList}>{showList.length <= 12 ? '더보기' : '줄이기'}</StMoreButton>
     </StWrapper>
   );

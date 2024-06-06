@@ -5,7 +5,7 @@ import { changeType } from '../../store/slices/sortTypeSlice';
 
 const StSortButtonsWrapper = styled.div`
   width: 100%;
-  border-bottom: 1px solid #bdbdbd;
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: center;
 `;
@@ -15,18 +15,28 @@ const StSortButtons = styled.div`
   width: 100%;
   display: flex;
   gap: 30px;
+  @media screen and (max-width: 1240px) {
+    width: 90%;
+  }
 `;
 
 const StSortButton = styled.button`
   background-color: transparent;
-  color: #bdbdbd;
+  color: var(--font);
   border: none;
   font-size: 1.45rem;
   padding: 0 0 1% 0;
+  cursor: pointer;
+  @media screen and (min-width: 600px) and (max-width: 1240px) {
+    font-size: 1.2rem;
+  }
+  @media screen and (max-width: 600px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const SortButtons = () => {
-  const [activeButton, setActiveButton] = useState(null);
+  const [activeButton, setActiveButton] = useState('popular');
   const dispatch = useDispatch();
   const sortType = useSelector((state) => state.sortType);
 
@@ -45,13 +55,13 @@ const SortButtons = () => {
           onClick={() => handleSortChange('popular')}
           style={{ color: activeButton === 'popular' ? 'black' : '#bdbdbd' }}
         >
-          {activeButton === 'popular' ? '✨인기게시물' : '인기게시물'}
+          {activeButton === 'popular' ? '✨ 인기게시물' : '인기게시물'}
         </StSortButton>
         <StSortButton
           onClick={() => handleSortChange('latest')}
           style={{ color: activeButton === 'latest' ? 'black' : '#bdbdbd' }}
         >
-          {activeButton === 'latest' ? '✨최신게시물' : '최신게시물'}
+          {activeButton === 'latest' ? '🎉 최신게시물' : '최신게시물'}
         </StSortButton>
       </StSortButtons>
     </StSortButtonsWrapper>

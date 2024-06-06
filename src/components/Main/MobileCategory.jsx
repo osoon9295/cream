@@ -22,9 +22,15 @@ const StMobileCategory = styled.ul`
     font-size: 20px;
     cursor: pointer;
     color: #969696;
-
+    @media (max-width: 1120px) {
+      font-size: 1rem;
+    }
     @media (max-width: 800px) {
-      font-size: 15px;
+      font-size: 0.8rem;
+    }
+
+    @media screen and (min-width: 320px) and (max-width: 499px) {
+      font-size: 0.8rem;
     }
   }
 `;

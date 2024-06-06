@@ -1,18 +1,21 @@
 import { GoHome, GoSearch, GoBookmark, GoPerson, GoPencil } from 'react-icons/go';
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 const StMobileNav = styled.ul`
   display: flex;
-  justify-content: space-between;
-  position: fixed;
+  justify-content: space-around;
+  position: sticky;
   bottom: 0;
+  left: 0;
   width: 100vw;
-  padding: 16px 66px;
+  padding: 10px 0;
   border-top: 1px solid #cfcfcf;
   box-sizing: border-box;
   background-color: #fff;
+  z-index: 9;
+  color: var(--border-color);
 
   @media (min-width: 1120px) {
     display: none;
@@ -38,39 +41,46 @@ const StMobileNav = styled.ul`
   }
 
   svg {
-    @media (max-width: 800px) {
-      width: 25px;
-      height: 25px;
+    @media (max-width: 1120px) {
+      width: 1.5rem;
+      height: auto;
+      margin-bottom: 3px;
     }
   }
   @media (max-width: 800px) {
     gap: 30px;
-    padding: 2px 30px;
   }
 `;
 
 const MobileMenu = () => {
   const navigate = useNavigate();
+  const [seletedMenu, setSelectedMenu] = useState('home');
+
+  const handleNavigate = (path, menu) => {
+    setSelectedMenu(menu);
+    navigate(path);
+  };
+
   return (
     <StMobileNav>
-      <li onClick={() => navigate(`/`)}>
-        <GoHome size="40" />
+      <li onClick={() => handleNavigate(`/`, 'home')}>
+        <GoHome size="40" color={seletedMenu === 'home' ? 'var(--font)' : 'var(--border-color)'} />
         <span>HOME</span>
       </li>
       <li>
         <GoSearch size="40" />
         <span>PRODUCT</span>
       </li>
-      <li>
+      <li onClick={() => handleNavigate(`/mypage`, 'mypage')}>
         <GoBookmark size="40" />
         <span>SAVED</span>
       </li>
-      <li onClick={() => navigate(`/mypage`)}>
-        <GoPerson size="40" />
+      <li onClick={() => handleNavigate(`/mypage`, 'mypage')}>
+        <GoPerson size="40" color={seletedMenu === 'mypage' ? 'var(--font)' : 'var(--border-color)'} />
         <span>MY</span>
       </li>
-      <li onClick={() => navigate(`/createPost`)}>
-        <GoPencil size="40" />
+      <li onClick={() => handleNavigate(`/CreatePost`, 'CreatePost')}>
+        <GoPencil size="40" color={seletedMenu === 'CreatePost' ? 'var(--font)' : 'var(--border-color)'} />
         <span>WRITE</span>
       </li>
     </StMobileNav>

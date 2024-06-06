@@ -1,8 +1,11 @@
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { checkSignIn, getUser, signIn } from '../api/api.auth';
+import { checkSignIn, signIn } from '../api/api.auth';
+import { fetchUser } from '../store/slices/authSlice';
 import * as S from '../styles/Auth.styled';
 import Input from './../components/Input';
+import MobileMenu from '../layout/MobileMenu';
 
 const StyleBtns = styled.div`
   max-width: 25rem;
@@ -35,18 +38,26 @@ const StyleLink = styled(Link)`
   cursor: pointer;
 `;
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const email = e.target.email.value;
-  const pw = e.target.pw.value;
-
-  await signIn(email, pw);
-  await getUser();
-  console.log('wad');
-  console.log(getUser(), checkSignIn());
-};
-
 export default function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const pw = e.target.pw.value;
+
+    await signIn(email, pw);
+    const logInChk = await checkSignIn();
+    if (logInChk) {
+      alert('로그인 되었습니다.');
+      dispatch(fetchUser());
+      navigate('/');
+    } else {
+      alert('비밀번호나 아이디가 틀렸습니다.');
+    }
+  };
+
   return (
     <S.AuthForm onSubmit={handleSubmit} method="post">
       <h1>로그인</h1>
@@ -56,6 +67,7 @@ export default function Login() {
         <StyleSubmit type="submit" value="로그인" />
         <StyleLink to="/join">회원가입</StyleLink>
       </StyleBtns>
+      <MobileMenu />
     </S.AuthForm>
   );
 }

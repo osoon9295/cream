@@ -15,8 +15,9 @@ import { useNavigate } from 'react-router-dom';
 
 const PostInner = styled.div`
   max-width: 1240px;
-  width: 70vw;
+  width: 80vw;
   height: 100%;
+  gap: 30px;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -25,25 +26,30 @@ const PostInner = styled.div`
 
 const StTitle = styled.div`
   margin: auto;
-  margin-top: 8%;
-  padding: 30px;
+  margin: 5rem 0 3rem;
+  padding: 0 0 30px;
   display: flex;
   justify-content: center;
   border-bottom: 1px solid #efefef;
-  font-size: 2rem;
+  font-size: 1.3rem;
   color: #484848;
   box-sizing: border-box;
 `;
 
 const PostBox = styled.div`
   width: 100%;
-  min-height: 50px;
-  padding: 3%;
+
+  padding-bottom: 30px;
   border-bottom: 1px solid #efefef;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  overflow: hidden;
+
+  @media screen and (max-width: 890px) {
+    flex-direction: column;
+  }
 `;
 
 const PostTitle = styled.div`
@@ -52,15 +58,15 @@ const PostTitle = styled.div`
   font-weight: 600;
   color: #484848;
   padding: 10px 0;
+  @media screen and (max-width: 890px) {
+    width: 100%;
+  }
 `;
 
 const SubmitBox = styled.div`
   width: 100%;
-  height: 4.5rem;
+  padding: 1.5rem 0;
   background-color: #efefef;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
 `;
 
 const SubmitButton = styled.button`
@@ -72,7 +78,6 @@ const SubmitButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 67%;
   font-size: 0.8rem;
   cursor: pointer;
   &:hover {
@@ -92,7 +97,6 @@ const CancelButton = styled.button`
   display: ${(props) => props.display};
   justify-content: center;
   align-items: center;
-  margin-left: 15px;
   font-size: 0.8rem;
   cursor: pointer;
   &:hover {
@@ -100,6 +104,14 @@ const CancelButton = styled.button`
     background-color: #fff;
     color: grey;
   }
+`;
+
+const ButtonWrap = styled.div`
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: end;
+  gap: 15px;
 `;
 
 const PostContainer = ({ postId }) => {
@@ -254,10 +266,12 @@ const PostContainer = ({ postId }) => {
         </PostBox>
       </PostInner>
       <SubmitBox>
-        <SubmitButton onClick={postId ? ModifyHandler : AddHandler}>{postId ? '수정' : '등록'}</SubmitButton>
-        <CancelButton onClick={CancelHandler} display={postId ? 'flex' : 'none'}>
-          취소
-        </CancelButton>
+        <ButtonWrap>
+          <SubmitButton onClick={postId ? ModifyHandler : AddHandler}>{postId ? '수정' : '등록'}</SubmitButton>
+          <CancelButton onClick={CancelHandler} display={postId ? 'flex' : 'none'}>
+            취소
+          </CancelButton>
+        </ButtonWrap>
       </SubmitBox>
     </>
   );

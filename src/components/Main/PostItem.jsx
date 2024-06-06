@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { checkSignIn, getUser } from '../../api/api.auth';
 import supabase from '../../supabase';
+import { GoHeart, GoHeartFill, GoBookmark, GoBookmarkFill } from 'react-icons/go';
 
 const StPostItem = styled.div`
-  width: 90%;
-  height: 90%;
   border-radius: 5%;
   display: flex;
   flex-direction: column;
@@ -18,10 +17,30 @@ const StPostItem = styled.div`
 `;
 
 const StImage = styled.img`
-  width: 230px;
-  height: 230px;
+  width: 100%;
   border-radius: 5%;
   cursor: pointer;
+
+  height: 17.5rem;
+  @media screen and (max-width: 1240px) {
+    height: 15rem;
+  }
+
+  @media screen and (min-width: 800px) and (max-width: 1120px) {
+    height: 15rem;
+  }
+
+  @media screen and (min-width: 600px) and (max-width: 800px) {
+    height: 12rem;
+  }
+
+  @media screen and (min-width: 320px) and (max-width: 600px) {
+    height: 10rem;
+  }
+
+  @media screen and (max-width: 319px) {
+    height: 13rem;
+  }
 `;
 
 const StIdAndLikeButtons = styled.div`
@@ -30,6 +49,7 @@ const StIdAndLikeButtons = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding: 5% 0 0 0;
+  align-items: center;
 `;
 
 const StPostUserId = styled(Link)`
@@ -37,13 +57,19 @@ const StPostUserId = styled(Link)`
   color: #484848;
   display: flex;
   align-items: center;
-
+  width: 100%;
+  border-top: 1px solid var(--default-color);
+  padding-top: 6px;
   @media screen and (max-width: 600px) {
     font-size: 90%;
   }
 `;
 
-const StLikeButton = styled.button``;
+const StLikeButton = styled.button`
+  border: none;
+  background: none;
+  padding: 0;
+`;
 
 const StPopularity = styled.span`
   display: flex;
@@ -59,14 +85,13 @@ const StPopularity = styled.span`
 `;
 
 const StPostContentWrapper = styled.div`
-  font-size: 80%;
+  font-size: 0.85rem;
   width: 100%;
-  height: 200%;
+  height: 25px;
   padding: 3% 0;
 `;
 
 const StPostContent = styled.p`
-  height: 25px;
   overflow: hidden;
   white-space: normal;
   display: -webkit-box;
@@ -75,12 +100,13 @@ const StPostContent = styled.p`
   color: #7e7e7e;
 
   @media screen and (max-width: 600px) {
-    font-size: 50%;
+    font-size: 0.8rem;
   }
 `;
 
 const StNickname = styled.p`
-  font-size: 1rem;
+  font-size: 0.8rem;
+  border-top: 1px solid var(--default-color);
 `;
 
 const StPostDate = styled.div`
@@ -88,16 +114,22 @@ const StPostDate = styled.div`
   display: flex;
   justify-content: left;
   color: #d0d0d0;
+  font-size: 0.8rem;
+  padding-top: 5px;
   @media screen and (max-width: 600px) {
     font-size: 50%;
   }
 `;
 const MainProfileImg = styled.img`
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.2rem;
+  height: 1.2rem;
   border-radius: 50px;
   border: 1px solid var(--border-color);
-  margin-right: 10px;
+  margin-right: 8px;
+`;
+
+const ProductImage = styled.div`
+  width: 100%;
 `;
 const PostItem = ({ post, userImg }) => {
   const { id, product_imageSrc, product_name, post_content, popularity, created_at } = post;
@@ -208,28 +240,38 @@ const PostItem = ({ post, userImg }) => {
 
   return (
     <StPostItem>
-      <Link to="/detailed">
-        <StImage src={product_imageSrc} alt={product_name} />
-      </Link>
-      <StIdAndLikeButtons>
-        <StPostUserId to="/detailed">
-          {product_name}
-          <MainProfileImg src={userImg?.user_imageSrc} />
-          <StNickname>{userImg?.user_name}</StNickname>
-        </StPostUserId>
+      <ProductImage>
+        <Link to="/detailed">
+          <StImage src={product_imageSrc} alt={product_name} />
+        </Link>
+      </ProductImage>
 
+      <StIdAndLikeButtons>
+        <ProductName>{product_name}</ProductName>
         <StPopularity>
-          <StLikeButton onClick={handleHeartUp}>{heartChk ? <p>ㅁ</p> : <IoHeartOutline />}</StLikeButton>
+          <StLikeButton onClick={handleHeartUp}>
+            {heartChk ? <GoHeartFill size={22} color="var(--theme-color)" /> : <GoHeart size={22} />}
+          </StLikeButton>
           {popularityNum}
-          <IoBookmarkOutline color={saveChk ? 'red' : 'yellow'} size={27} onClick={handleSaveUp} />
+          <StLikeButton onClick={handleSaveUp}>
+            {saveChk ? <GoBookmarkFill size={22} /> : <GoBookmark size={22} />}{' '}
+          </StLikeButton>
         </StPopularity>
       </StIdAndLikeButtons>
       <StPostContentWrapper>
         <StPostContent>{post_content}</StPostContent>
       </StPostContentWrapper>
+      <StPostUserId to="/detailed">
+        <MainProfileImg src={userImg?.user_imageSrc} />
+        <StNickname>{userImg?.user_name}</StNickname>
+      </StPostUserId>
       <StPostDate>{createDate}</StPostDate>
     </StPostItem>
   );
 };
 
 export default PostItem;
+
+const ProductName = styled.p`
+  font-size: 1rem;
+`;

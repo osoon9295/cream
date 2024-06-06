@@ -7,6 +7,7 @@ import SavedPost from './../components/SavedPost';
 import { getUser } from '../api/api.auth';
 import supabase from '../api/api.supabase';
 import MobileMenu from '../layout/MobileMenu';
+import { GoHeart, GoBookmark, GoPencil } from 'react-icons/go';
 
 const MyPage = ({ user, setUser }) => {
   const navigate = useNavigate();
@@ -139,13 +140,16 @@ const MyPage = ({ user, setUser }) => {
 
         <StyleTotalWrap>
           <div>
+            <GoPencil style={{ marginRight: '5px', verticalAlign: 'middle' }} />
             게시글<Count>{posts.length}</Count>
           </div>
           <div>
-            좋아요<Count>{`0`}</Count>
+            <GoHeart style={{ marginRight: '5px', verticalAlign: 'middle' }} />
+            좋아요<Count>{likedPosts.length}</Count>
           </div>
           <div>
-            북마크<Count>{`0`}</Count>
+            <GoBookmark style={{ marginRight: '5px', verticalAlign: 'middle' }} />
+            북마크<Count>{savePosts.length}</Count>
           </div>
         </StyleTotalWrap>
 
@@ -165,8 +169,8 @@ const MyPage = ({ user, setUser }) => {
             <SavedPost key={posts.id} posts={savePosts} />
           </div>
         </StylePostWrap>
-        <MobileMenu />
       </StyleWrap>
+      <MobileMenu />
     </>
   );
 };
@@ -175,23 +179,26 @@ export default MyPage;
 
 const StyleWrap = styled.div`
   max-width: 1240px;
-  margin: 8rem auto;
+  margin: 5rem auto;
   height: auto;
   display: flex;
   flex-direction: column;
   gap: 30px;
-  padding: 0 20px;
+  @media screen and (max-width: 1240px) {
+    width: 90%;
+  }
 
   @media screen and (max-width: 500px) {
-    padding: 0 20px;
     gap: 20px;
+    margin: 0 auto;
+    margin-bottom: 5rem;
   }
 `;
 
 const Title = styled.h1`
   text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 5rem;
+  font-size: 1.3rem;
+  margin-bottom: 3rem;
 
   @media screen and (max-width: 500px) {
     margin: 2rem 0 1rem;
@@ -207,7 +214,7 @@ const StyleProfileWrap = styled.div`
   border-radius: 15px;
   padding: 50px 50px;
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 600px) {
     flex-direction: column;
     gap: 20px;
     padding: 20px 30px;

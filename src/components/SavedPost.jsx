@@ -55,7 +55,15 @@ const PostWrap = styled.ul`
   display: flex;
   gap: 30px;
   flex-direction: column;
+  flex-wrap: wrap;
   justify-content: flex-start;
+  @media screen and (min-width: 400px) and (max-width: 750px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  @media screen and (min-width: 320px) and (max-width: 400px) {
+    flex-direction: row;
+  }
 `;
 const PostList = styled.li`
   display: flex;
@@ -65,6 +73,16 @@ const PostList = styled.li`
   padding: 0px 0 30px;
   align-items: center;
   justify-content: space-between;
+  @media screen and (min-width: 400px) and (max-width: 750px) {
+    width: calc(50% - 15px);
+    flex-direction: column;
+    border: none;
+    padding: 0;
+  }
+  @media screen and (min-width: 320px) and (max-width: 400px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 const PostImg = styled.img`
@@ -83,28 +101,65 @@ const ImgWrap = styled.div`
   height: 12rem;
   position: relative;
   margin-right: 20px;
+  @media screen and (min-width: 600px) and (max-width: 800px) {
+    height: 11rem;
+  }
+  @media screen and (min-width: 500px) and (max-width: 750px) {
+    width: 100%;
+    height: 14rem;
+    margin: 0;
+  }
+  @media screen and (min-width: 320px) and (max-width: 500px) {
+    width: 100%;
+    height: 11rem;
+    margin: 0;
+  }
 `;
 
 const ContentWrap = styled.div`
   padding: 10px;
   flex: auto;
+  @media screen and (min-width: 320px) and (max-width: 750px) {
+    padding: 12px 0;
+    width: 100%;
+  }
 `;
 
 const PostTitleWrap = styled.div`
   margin-bottom: 20px;
+  @media screen and (min-width: 320px) and (max-width: 640px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const PostTitle = styled.h2`
   font-weight: 600;
   font-size: 1.1rem;
+  @media screen and (min-width: 320px) and (max-width: 640px) {
+    font-size: 1rem;
+  }
 `;
 
 const PostComment = styled.p`
   font-size: 0.9rem;
+  line-height: 1.2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  @media screen and (min-width: 320px) and (max-width: 640px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const EditBtns = styled.div`
   color: #999999;
+  @media screen and (min-width: 320px) and (max-width: 750px) {
+    width: 100%;
+    margin: 0;
+    text-align: right;
+  }
 `;
 
 const PostDate = styled.p`
@@ -112,6 +167,12 @@ const PostDate = styled.p`
   font-size: 0.9rem;
   color: #999999;
   text-align: center;
+  @media screen and (min-width: 320px) and (max-width: 750px) {
+    width: 100%;
+    margin: 0;
+    text-align: left;
+    font-size: 0.8rem;
+  }
 `;
 
 const Button = styled.button`

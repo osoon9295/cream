@@ -8,30 +8,39 @@ import styled from 'styled-components';
 import { TagBox } from '../components/post/Tag';
 import { checkSignIn } from '../api/api.auth';
 import { IoBookmarkOutline, IoHeartOutline, IoHeart, IoBookmark } from 'react-icons/io5';
+import MobileMenu from '../layout/MobileMenu';
 
 const PostInner = styled.div`
-  max-width: 1240px;
-  width: 70vw;
-  height: 100vh;
+  max-width: 1120px;
   margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 5rem;
+  @media screen and (max-width: 1240px) {
+    width: 90%;
+  }
 `;
 
 const PostTitle = styled.div`
   max-width: 1240px;
-  width: 100%;
+  justify-content: space-between;
   box-sizing: border-box;
-  margin-top: 8%;
-  padding-left: 18.5%;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #efefef;
-  font-size: 2rem;
-  color: #484848;
+  margin: 5rem auto 0;
+  padding-bottom: 15px;
+  font-size: 1.8rem;
+  color: var(--font);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  border-bottom: 1px solid var(--border-color);
+  align-items: center;
+
+  @media screen and (max-width: 1240px) {
+    padding: 20px;
+    margin: 3rem auto 0;
+    font-size: 1.3rem;
+  }
 `;
 
 const StButton = styled.button`
@@ -51,28 +60,32 @@ const StButton = styled.button`
 
 const PostInfo = styled.div`
   width: 100%;
-  height: 4rem;
-  border-bottom: 1px solid #efefef;
   font-size: 1rem;
   color: #484848;
   display: flex;
   align-items: center;
-  margin-top: 7%;
-  padding-left: 10%;
+  margin-top: 3rem;
   padding-bottom: 10px;
-`;
-
-const ProfileImg = styled.div`
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background-color: #efefef;
-  margin-right: 10px;
-  overflow: hidden;
-  display: flex;
   justify-content: center;
 `;
 
+const ProfileImg = styled.div`
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: #efefef;
+  margin-right: 15px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  @media screen and (max-width: 800px) {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+`;
+const Img = styled.img`
+  width: 100%;
+`;
 const PostDate = styled.div`
   width: 6rem;
   color: #c0c0c0;
@@ -82,39 +95,45 @@ const PostDate = styled.div`
 const PostBox = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: row;
-  gap: 11%;
-  flex-wrap: wrap;
-  margin: 5% 0;
+  gap: 30px;
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const PostImg = styled.div`
-  width: 17rem;
+  width: 100%;
+
   aspect-ratio: 1.5 / 2;
-  border-radius: 10%;
+  border-radius: 15px;
   background-color: #efefef;
   overflow: hidden;
   margin-top: 12px;
   display: flex;
-  justify-content: center;
+  @media screen and (max-width: 600px) {
+    height: 22rem;
+  }
 `;
 
 const TagContainer = styled.div`
-  width: 20rem;
+  width: 100%;
   border-bottom: 1px solid #efefef;
   box-sizing: border-box;
-  padding: 10% 0;
+  padding: 15px 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 10px;
+  @media screen and (max-width: 600px) {
+    padding: 0 0 15px 0;
+  }
 `;
 
 const PostContent = styled.div`
-  width: 80%;
+  width: 100%;
   font-size: 1rem;
   color: #484848;
-  padding: 10%;
+  padding: 15px;
   margin-bottom: 10%;
 `;
 
@@ -202,19 +221,19 @@ const DetailedPost = () => {
           <PostInner>
             <PostInfo>
               <ProfileImg>
-                <img
+                <Img
                   src={userInfo.user_imageSrc ? userInfo.user_imageSrc : '/public/img/default-img.png'}
                   style={{ height: '100%', objectFit: 'cover' }}
                 />
               </ProfileImg>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', flex: 'auto' }}>
                 {userInfo.user_name}
                 <PostDate>{date}</PostDate>
               </div>
-              <div style={{ display: 'flex', gap: '8px', marginLeft: '63%' }}>
+              <div style={{ display: 'flex', gap: '10px' }}>
                 {/* <IoHeart style={{ fontSize: '23px', cursor: 'pointer', color: 'red' }} /> */}
-                <IoHeartOutline style={{ fontSize: '23px', cursor: 'pointer', color: 'red' }} />
-                <IoBookmark style={{ fontSize: '22px', cursor: 'pointer', color: 'grey' }} />
+                <IoHeartOutline style={{ fontSize: '25px', cursor: 'pointer', color: 'red' }} />
+                <IoBookmark style={{ fontSize: '25px', cursor: 'pointer', color: 'grey' }} />
                 {/* <IoBookmarkOutline style={{ fontSize: '22px', cursor: 'pointer', color: 'grey' }} /> */}
               </div>
             </PostInfo>
@@ -225,7 +244,7 @@ const DetailedPost = () => {
                   style={{ height: '100%', objectFit: 'cover' }}
                 />
               </PostImg>
-              <div>
+              <div style={{ width: '100%' }}>
                 <TagContainer>
                   <TagBox>{detail.product_brand}</TagBox>
                   <TagBox>{detail.product_taste}</TagBox>
@@ -235,6 +254,7 @@ const DetailedPost = () => {
               </div>
             </PostBox>
           </PostInner>
+          <MobileMenu />
         </>
       )}
     </>

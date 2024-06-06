@@ -1,9 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { checkEmailDuplicate, checkNicknameDuplicate, signUp } from '../api/api.auth';
 import Input from '../components/Input';
 import InputImage from '../components/InputImage';
 import * as S from '../styles/Auth.styled';
+import MobileMenu from '../layout/MobileMenu';
 
 const StyleSubmit = styled.input`
   border: 0;
@@ -30,6 +31,8 @@ const StyleLink = styled(Link)`
 `;
 
 export default function Join() {
+  const navigat = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -62,6 +65,9 @@ export default function Join() {
     }
 
     signUp(email, pw, name, image);
+    alert('회원가입 되었습니다.');
+
+    navigat('/');
   };
 
   return (
@@ -74,6 +80,7 @@ export default function Join() {
       <Input isRequired={true} name="name" placeholder="닉네임" />
       <StyleSubmit type="submit" value="회원가입" />
       <StyleLink to="/login">로그인</StyleLink>
+      <MobileMenu />
     </S.AuthForm>
   );
 }
