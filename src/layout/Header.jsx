@@ -1,28 +1,37 @@
 import React from 'react';
 import { CiSearch } from 'react-icons/ci';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { RiHome2Line } from 'react-icons/ri';
-import { RiHome2Fill } from 'react-icons/ri';
-import { GoBookmark } from 'react-icons/go';
-import { GoBookmarkFill } from 'react-icons/go';
-import { RiUser3Line } from 'react-icons/ri';
-import { RiUser3Fill } from 'react-icons/ri';
+import { signOut } from '../api/api.auth';
+import useCheckSignIn from '../customHook/useCheckSignIn';
 
 export default function Header() {
+  const signChk = useCheckSignIn();
+
   return (
     <HeaderWrap>
       <TopAuth>
-        <AuthInner>
-          <li>
-            <a href="/login">로그인</a>
-          </li>
-          <li>
-            <a href="/join">회원가입</a>
-          </li>
-          <li>
-            <a href="/mypage">마이페이지</a>
-          </li>
-        </AuthInner>
+        {signChk ? (
+          <AuthInner>
+            <li>
+              <button style={{ all: 'unset', cursor: 'pointer' }} onClick={signOut}>
+                로그아웃
+              </button>
+            </li>
+            <li>
+              <Link to="/mypage">마이페이지</Link>
+            </li>
+          </AuthInner>
+        ) : (
+          <AuthInner>
+            <li>
+              <Link to="/login">로그인</Link>
+            </li>
+            <li>
+              <Link to="/join">회원가입</Link>
+            </li>
+          </AuthInner>
+        )}
       </TopAuth>
 
       <InnerWrap>
