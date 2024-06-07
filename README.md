@@ -5,23 +5,25 @@
 <br/>
 
 # 👥 팀원
-|이보영 👑|방지영|이준혁 |양이준|ㅤㅤ홍유나ㅤㅤ|
-|----------|-------------|-----------------|------------|--------|
-|          |             |ㅤㅤ![6-245-1-135](https://github.com/osoon9295/cream/assets/119604616/34262d93-dee4-4b2e-b38a-589addc59a0e)|ㅤ![10-454-35-500](https://github.com/osoon9295/cream/assets/119604616/f46344dd-3240-4b6e-926c-047be0ce1349)         |  ㅤㅤ![12-93-3-126](https://github.com/osoon9295/cream/assets/119604616/75c4d722-6b29-434c-afbf-78b3b382571f)      |
-|ㅤ 메인| ㅤ게시글 CRUD | 로그인 / 회원가입  | 마이페이지 |ㅤㅤㅤ메인|
-|          |             |                 |            |        |
+이보영 👑|방지영|이준혁|양이준|홍유나|
+|:---:|:---:|:---:|:---:|:---:|
+|![2-131-43-130](https://github.com/osoon9295/cream/assets/119604616/23713ba6-c60d-41c3-892e-dbfd16e8d145)|![2-223-13-418](https://github.com/osoon9295/cream/assets/119604616/bde80794-97ff-4ee7-a2c7-6921901a01f3)|![6-245-1-135](https://github.com/osoon9295/cream/assets/119604616/5d78af98-841e-4ea6-aa08-979de8b43d2b)|![10-454-35-500](https://github.com/osoon9295/cream/assets/119604616/8748463c-9a13-4708-89d2-a66210a26016)|![12-93-3-126](https://github.com/osoon9295/cream/assets/119604616/cc394ee5-862e-440e-97d7-9d4cca9ca0dc)|
+|메인|게시글 CRUD|로그인 / 회원가입|마이페이지|메인|
+
 
 <br>
 
 
+
 # 💻 기술환경 / 스택 및 부가 라이브러리
-<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white">
 <img src="https://img.shields.io/badge/VITE-646CFF?style=for-the-badge&logo=vite&logoColor=white">
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white">
+<img src="https://img.shields.io/badge/REACT_ROUTER-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white">
 <img src="https://img.shields.io/badge/STYLED-COMPONENTS-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">
 <img src="https://img.shields.io/badge/REDUX-764ABC?style=for-the-badge&logo=redux&logoColor=white">
 <img src="https://img.shields.io/badge/SUPABASE-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white">
 <img src="https://img.shields.io/badge/VERCEL-000000?style=for-the-badge&logo=vercel&logoColor=white">
-<img src="https://img.shields.io/badge/REACT_ROUTER-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white">
+
 
 # 🔗 프로젝트 구조
 ```
