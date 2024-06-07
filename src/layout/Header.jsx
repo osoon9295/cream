@@ -8,6 +8,7 @@ import { fetchUser, logOut } from '../store/slices/authSlice';
 export default function Header() {
   const dispatch = useDispatch();
   const { user, isSignedIn } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -27,6 +28,7 @@ export default function Header() {
                 onClick={() => {
                   alert('로그아웃 되었습니다.');
                   dispatch(logOut());
+                  navigate('/');
                 }}
               >
                 로그아웃
