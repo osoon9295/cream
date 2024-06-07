@@ -67,10 +67,10 @@ const PostList = styled.li`
   display: flex;
   flex-direction: row;
   border-bottom: 1px solid var(--border-color);
-  overflow: hidden;
   padding: 0px 0 30px;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   @media screen and (min-width: 400px) and (max-width: 750px) {
     width: calc(50% - 15px);
     flex-direction: column;
@@ -116,7 +116,10 @@ const ImgWrap = styled.div`
 
 const ContentWrap = styled.div`
   padding: 10px;
-  flex: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 60%;
   @media screen and (min-width: 320px) and (max-width: 750px) {
     padding: 12px 0;
     width: 100%;
@@ -144,8 +147,6 @@ const PostComment = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
   @media screen and (min-width: 320px) and (max-width: 640px) {
     font-size: 0.8rem;
   }
