@@ -15,9 +15,9 @@ const TagBox = styled.button`
   cursor: pointer;
 `;
 
-const BrandTag = ['오리온', '빙그레', '롯데제과', '해태제과', '매일유업'];
+const BrandTag = ['빙그레', '롯데제과', '해태제과', '매일유업', '기타'];
 const FlavorTag = ['딸기', '바닐라', '초코', '민트초코', '기타'];
-const TypeTag = ['콘', '바', '컵'];
+const TypeTag = ['콘', '바', '컵', '기타'];
 
 const Tag = ({ tagArr, brand, flavor, type, setBrand, setFlavor, setType }) => {
   const BrandHandler = (e) => {

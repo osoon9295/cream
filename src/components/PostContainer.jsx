@@ -119,7 +119,7 @@ const PostContainer = ({ postId }) => {
   const [image, setImage] = useState(
     'https://ifzzsqrbvtphsikwxkms.supabase.co/storage/v1/object/public/avatars/default-img.png'
   );
-  const [brand, setBrand] = useState('오리온');
+  const [brand, setBrand] = useState('빙그레');
   const [flavor, setFlavor] = useState('딸기');
   const [type, setType] = useState('콘');
 
