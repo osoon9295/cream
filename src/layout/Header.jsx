@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchUser, logOut } from '../store/slices/authSlice';
 
