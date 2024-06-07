@@ -5,9 +5,9 @@ const initialState = {
   subCategory: '',
   // 수정
   categories: {
-    brand: ['오리온', '빙그레', '롯데제과', '해태제과', '매일유업'],
+    brand: ['빙그레', '롯데제과', '해태제과', '매일유업', '기타'],
     flavor: ['바닐라', '딸기', '초코', '기타'],
-    type: ['콘', '바', '컵']
+    type: ['콘', '바', '컵', '기타']
   }
   // activeState: [false. false. false]
 };
