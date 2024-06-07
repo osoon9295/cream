@@ -116,7 +116,9 @@ const ButtonWrap = styled.div`
 const PostContainer = ({ postId }) => {
   const [name, setName] = useState('');
   const [content, setContent] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(
+    'https://ifzzsqrbvtphsikwxkms.supabase.co/storage/v1/object/public/avatars/default-img.png'
+  );
   const [brand, setBrand] = useState('오리온');
   const [flavor, setFlavor] = useState('딸기');
   const [type, setType] = useState('콘');
@@ -126,7 +128,6 @@ const PostContainer = ({ postId }) => {
 
   usePosts();
   const posts = useSelector((state) => state.postList);
-  console.log(posts);
 
   useEffect(() => {
     if (!postId) {
@@ -134,7 +135,6 @@ const PostContainer = ({ postId }) => {
     }
     if (postId) {
       const modify = posts.filter((post) => post.id === postId)[0];
-      console.log(modify);
       setName(modify.product_name);
       setContent(modify.post_content);
       setImage(modify.product_imageSrc);
@@ -166,10 +166,9 @@ const PostContainer = ({ postId }) => {
       product_taste: flavor
     });
     if (error) {
-      console.log(error);
     } else {
       alert('게시글이 등록되었습니다.');
-      console.log('Data', data);
+      navigate('/');
     }
   };
 
@@ -198,10 +197,8 @@ const PostContainer = ({ postId }) => {
       })
       .eq('id', postId);
     if (error) {
-      console.log(error);
     } else {
       alert('게시글이 수정되었습니다.');
-      console.log('Data', data);
     }
     dispatch(changePost);
     navigate(-1);
