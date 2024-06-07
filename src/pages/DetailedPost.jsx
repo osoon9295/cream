@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { GoBookmarkFill, GoHeartFill } from 'react-icons/go';
+import { GoBookmark, GoBookmarkFill, GoHeart, GoHeartFill } from 'react-icons/go';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { checkSignIn } from '../api/api.auth';
+import { checkSignIn, getUser } from '../api/api.auth';
 import { TagBox } from '../components/post/Tag';
 import usePosts from '../customHook/usePosts';
 import MobileMenu from '../layout/MobileMenu';
@@ -158,6 +158,10 @@ const DetailedPost = () => {
 
   const postId = useParams();
 
+  const [popularityNum, setPopularityNum] = useState();
+  const [heartChk, setHeartChk] = useState(false);
+  const [saveChk, setSaveChk] = useState(false);
+
   // const postId = '6a9f75d4-0586-6dcd-8f2f-c16c675f4499';
 
   let detail = null;
@@ -167,6 +171,7 @@ const DetailedPost = () => {
   const fetchMembers = async (user) => {
     const { data, error } = await supabase.from('member').select('*').eq('user_id', user);
     console.log(data);
+    setPopularityNum(data[0].popularity);
     if (error) {
       console.log('error =>', error);
     } else {
@@ -175,6 +180,23 @@ const DetailedPost = () => {
       setUserInfo(data[0]);
     }
   };
+  useEffect(() => {
+    const fetchUser = async () => {
+      let loginChk = await checkSignIn();
+      if (!loginChk) return false;
+      let user = await getUser();
+
+      const { data: userInfo } = await supabase.from('user_info').select('*').eq('user_id', user.email);
+      if (userInfo && userInfo.length > 0) {
+        const heart = JSON.parse(userInfo[0].post_heart).find((heartId) => heartId === postId.id);
+        const save = JSON.parse(userInfo[0].post_save).find((saveId) => saveId === postId.id);
+
+        heart && setHeartChk(true);
+        save && setSaveChk(true);
+      }
+    };
+    fetchUser();
+  }, [postId]);
 
   if (isSuccess) {
     detail = posts.filter((post) => post.id === postId.id)[0];
@@ -231,10 +253,8 @@ const DetailedPost = () => {
                 <PostDate>{date}</PostDate>
               </div>
               <div style={{ display: 'flex', gap: '10px' }}>
-                {/* <GoHeart size={22} /> */}
-                <GoHeartFill size={22} color="var(--theme-color)" />
-                {/* <GoBookmark size={22} /> */}
-                <GoBookmarkFill size={22} />
+                {heartChk ? <GoHeartFill size={22} color="var(--theme-color)" /> : <GoHeart size={22} />}
+                {saveChk ? <GoBookmarkFill size={22} /> : <GoBookmark size={22} />}
               </div>
             </PostInfo>
             <PostBox>
