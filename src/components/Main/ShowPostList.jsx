@@ -142,7 +142,9 @@ const ShowPostList = () => {
           })}
         </StContainer>
       </GridWrap>
-      {showList.length > 12 && <StMoreButton onClick={moreShowList}>{isMore ? '줄이기' : '더보기'}</StMoreButton>}
+      {initialPostList.length > 12 && (
+        <StMoreButton onClick={moreShowList}>{isMore ? '줄이기' : '더보기'}</StMoreButton>
+      )}
     </StWrapper>
   );
 };
