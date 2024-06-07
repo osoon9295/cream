@@ -8,8 +8,8 @@ import MobileMenu from '../layout/MobileMenu';
 const MainPage = () => {
   return (
     <div>
-      <MainCategory />
       <Carousel />
+      <MainCategory />
       <ShowPostList />
       <ToPostPage />
       <ToTopButton />

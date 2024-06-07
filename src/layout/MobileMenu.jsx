@@ -67,10 +67,10 @@ const MobileMenu = () => {
         <GoHome size="40" color={seletedMenu === 'home' ? 'var(--font)' : 'var(--border-color)'} />
         <span>HOME</span>
       </li>
-      <li>
+      {/* <li>
         <GoSearch size="40" />
         <span>PRODUCT</span>
-      </li>
+      </li> */}
       <li onClick={() => handleNavigate(`/mypage`, 'mypage')}>
         <GoBookmark size="40" />
         <span>SAVED</span>

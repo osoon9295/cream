@@ -18,13 +18,14 @@ const StToPostPageButton = styled.button`
   justify-content: center;
   position: fixed;
   right: 75px;
-  bottom: 20%;
+  bottom: 130px;
   cursor: pointer;
 
   @media (max-width: 1240px) {
     width: 3rem;
     height: 3rem;
     font-size: 18px;
+    bottom: 100px;
   }
 
   @media (max-width: 1120px) {
