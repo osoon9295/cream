@@ -43,8 +43,8 @@ const ToPostPage = () => {
   const navigate = useNavigate();
 
   return (
-    <StToPostPageButton>
-      <SlPencil onClick={() => navigate(`/createPost`)} />
+    <StToPostPageButton onClick={() => navigate(`/createPost`)}>
+      <SlPencil />
     </StToPostPageButton>
   );
 };

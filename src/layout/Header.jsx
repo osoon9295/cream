@@ -26,7 +26,6 @@ export default function Header() {
               <button
                 style={{ all: 'unset', cursor: 'pointer' }}
                 onClick={() => {
-                  alert('로그아웃 되었습니다.');
                   dispatch(logOut());
                   navigate('/');
                 }}
