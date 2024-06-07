@@ -14,6 +14,11 @@
 
 <br>
 
+# 🎞 PPT
+
+<a href="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/321d8fa5-4496-4840-92b4-dfb383e03527/A09_%E1%84%80%E1%85%AE%E1%84%80%E1%85%AE%E1%84%8F%E1%85%A9%E1%86%AB_PPT.pdf?id=0bfc8742-e894-46de-9b87-9e1e4121cf29&table=block&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1717819200000&signature=5S0Ke37rX6tIdcOigfDYddI7KkxdEtLvQI0Vc0vV82c&downloadName=A09_%E1%84%80%E1%85%AE%E1%84%80%E1%85%AE%E1%84%8F%E1%85%A9%E1%86%AB_PPT.pdf"><img src="https://ifh.cc/g/20sgm3.jpg" ></a>
+
+<br>
 
 
 # 💻 기술환경 / 스택 및 부가 라이브러리
@@ -26,6 +31,7 @@
 <img src="https://img.shields.io/badge/SUPABASE-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white">
 <img src="https://img.shields.io/badge/VERCEL-000000?style=for-the-badge&logo=vercel&logoColor=white">
 
+<br>
 
 # 🔗 프로젝트 구조
 <br>
@@ -77,15 +83,17 @@
         📄 postSlice.js
 ```
 
+<br>
+
 # 📂 페이지 구성
 <br>
 
 ![스크린샷 2024-06-06 오후 9 53 57](https://github.com/osoon9295/cream/assets/119604616/ffe69cd9-91df-4279-8aec-332c05235713)
 
+
+<br>
+
+
+
+
 ![footer](https://capsule-render.vercel.app/api?section=footer&type=wave&color=D5E0FC)
-
-
-# PPT
-
-<a href="https://nbcamp2024.slack.com/files/U06LVB06Z4H/F076ZU2C0Q3/a09_______________________ppt.pdf"><img src="https://ifh.cc/g/NaRR5s.jpg" ></a>
-
