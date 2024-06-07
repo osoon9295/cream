@@ -1,10 +1,16 @@
 ![header](https://capsule-render.vercel.app/api?type=wave&color=D5E0FC)
-<a href="https://cream2.vercel.app/"><img src="https://ifh.cc/g/yGy6qL.png"></a>
+
+<a href="https://cream2.vercel.app/"><img src="https://ifh.cc/g/yGy6qL.png"></a> 
+<img src = "https://ifh.cc/g/FG4ovV.png">
+
 ### 아이스크림 덕후들의 커뮤니티 🍦
+
 <br/>
+
 
 # 👥 팀원
 <br>
+
 
 이보영 👑|방지영|이준혁|양이준|홍유나|
 |:---:|:---:|:---:|:---:|:---:|
@@ -13,12 +19,19 @@
 
 <br>
 
-# 🎞 PPT
-
+# 🎞 PPT <img src = "https://ifh.cc/g/73LqBB.png"> 
+<a href="https://www.youtube.com/watch?v=k55rr1uPclE&feature=youtu.be"><img src = "https://ifh.cc/g/dzCDzv.png" width="50px" height="50px"></a>
 <a href="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/37d16db1-378b-4fba-8947-0c59770efb11/A09_%E1%84%80%E1%85%AE%E1%84%80%E1%85%AE%E1%84%8F%E1%85%A9%E1%86%AB_PPT.pdf?id=0bfc8742-e894-46de-9b87-9e1e4121cf29&table=block&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1717819200000&signature=oCPTMjfyujsVP_Ud9F4xxkUyO_D2zpF_qH9vg6JZLl0&downloadName=A09_%E1%84%80%E1%85%AE%E1%84%80%E1%85%AE%E1%84%8F%E1%85%A9%E1%86%AB_PPT.pdf"><img src="https://ifh.cc/g/20sgm3.jpg" ></a>
 
 <br>
 
+# 📂 페이지 구성
+<br>
+
+![스크린샷 2024-06-06 오후 9 53 57](https://github.com/osoon9295/cream/assets/119604616/ffe69cd9-91df-4279-8aec-332c05235713)
+
+
+<br>
 
 # 💻 기술환경 / 스택 및 부가 라이브러리
 <br>
@@ -84,12 +97,6 @@
         📄 postSlice.js
 ```
 <br>
-
-# 📂 페이지 구성
-<br>
-
-![스크린샷 2024-06-06 오후 9 53 57](https://github.com/osoon9295/cream/assets/119604616/ffe69cd9-91df-4279-8aec-332c05235713)
-
 
 
 
