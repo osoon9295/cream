@@ -101,7 +101,7 @@ const StPcCategoryToggle = styled.button`
   align-items: center;
   justify-content: center;
   position: absolute;
-  left: 20%;
+  left: 22%;
   top: 246px;
   width: 118px;
   height: 118px;
@@ -110,6 +110,9 @@ const StPcCategoryToggle = styled.button`
   background-color: #d5e0fc;
   cursor: pointer;
   z-index: -1;
+  @media (min-width: 1240px) and (max-width: 1920px) {
+    left: 50%;
+  }
 
   svg {
     padding-left: 40px;
